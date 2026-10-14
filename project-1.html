@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Project 1 · Poster Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Schibsted+Grotesk:wght@400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<link rel="stylesheet" href="assets/course.css">
+<style>
+:root{--wk:#B4521E;--wk-soft:rgba(180,82,30,.10);--wk-d:#F2A06B;--wk-soft-d:rgba(242,160,107,.14)}
+.log input,.log select,.log textarea{width:100%;min-width:0;border:1px solid var(--line);border-radius:8px;padding:7px 9px;background:var(--surface);color:var(--ink);font:inherit;font-family:var(--f-display);font-size:.92rem}.req{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-bottom:12px}.req div{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--bg);font-family:var(--f-display)}.req b{display:block;font-size:1.3rem;color:var(--wk)}.req small{color:var(--muted)}.prog td:last-child{white-space:nowrap}.st-good{color:var(--good);font-weight:700}.st-todo{color:var(--bad);font-weight:700}.miss{border-left:4px solid var(--bad);padding:8px 12px;background:var(--sunk);border-radius:6px;font-family:var(--f-display);font-size:.9rem;margin-top:10px}.miss.ok{border-color:var(--good)}.log{display:grid;gap:10px}.log .e{border:1px solid var(--line);border-radius:10px;padding:10px;background:var(--bg);display:grid;gap:6px}.log .e .row2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) 140px;gap:6px}@media (max-width:560px){.log .e .row2{grid-template-columns:minmax(0,1fr)}}.idea{display:grid;grid-template-columns:24px minmax(0,1fr) 130px;gap:6px;align-items:center}.idea select{width:auto}.gauge{display:flex;gap:4px;margin:6px 0}.gauge i{flex:1;height:10px;border-radius:3px;background:var(--sunk)}.gauge i.on{background:var(--wk)}#poster{background:#fff;color:#16202B;border:1px solid var(--line);border-radius:6px;padding:18px;font-family:'Schibsted Grotesk',Arial,sans-serif;aspect-ratio:1/1.414;overflow:hidden;display:grid;grid-template-rows:auto auto 1fr 1fr 1fr auto;gap:10px;font-size:11px;line-height:1.35}#poster h2{margin:0;font-size:22px;line-height:1.1;color:#16202B}#poster .sub{color:#5A6675;font-size:11px}#poster .band{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}#poster .cell{border:2px solid var(--wk,#B4521E);border-radius:8px;padding:8px;overflow:hidden;min-height:0}#poster .cell h4{margin:0 0 4px;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#B4521E}#poster .emp{border-width:1px;font-size:10px}#poster .emp .q{min-height:0;padding:4px}#poster img{max-width:100%;max-height:160px;display:block;margin:auto}#poster svg text{fill:#16202B}#poster .foot{color:#5A6675;font-size:9px;display:flex;justify-content:space-between}#print-root{display:none}@media print{body>*:not(#print-root){display:none!important}#print-root{display:block}#print-root #poster{border:0;width:100%;height:auto}@page{size:A3 portrait;margin:10mm}}@media (max-width:700px){#poster{aspect-ratio:auto}#poster .band{grid-template-columns:minmax(0,1fr)}}
+:root{}
+</style>
+</head>
+<body>
+<script src="assets/course.js"></script>
+<script src="assets/ent141.js"></script>
+<script src="assets/kb.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/assistant.js"></script>
+<script>
+const {W} = Lecture; const {store,esc} = ENT141;
+const KEY='ent141-poster-v1';
+let S; try{S=JSON.parse(store.get(KEY)||'null')}catch(e){}
+S=Object.assign({team:{},ints:[],learnInt:'',learnJm:'',pov:{},hmw:'',ideas:[{t:'',tag:''},{t:'',tag:''},{t:'',tag:''}],chosen:-1,why:'',proto:{},fb:{}},S||{});
+const save=()=>store.set(KEY,JSON.stringify(S));
+const empSt=()=>{ try{return JSON.parse(store.get('ent141-lab-emp')||'null')||{}}catch(e){return {}} };
+const jmSt=()=>{ try{return JSON.parse(store.get('ent141-lab-jm')||'null')||{stages:[]}}catch(e){return {stages:[]}} };
+const words=s=>String(s||'').trim().split(/\s+/).filter(Boolean).length;
+const NEEDS=['Education','Health','Social protection','Job opportunities'];
+
+/* gaps per step */
+const GAPS={
+  team:()=>{ const t=S.team,g=[]; if(!t.name) g.push('team name'); if(!t.members) g.push('members'); if(!t.need) g.push('social need'); if(!t.sdg) g.push('SDG target'); if(!t.user) g.push('user group'); if(!t.pain) g.push('pain point'); return g.length?['Fill in: '+g.join(', ')+'.']:[]; },
+  ints:()=>{ const g=[]; const n=S.ints.filter(i=>i.who&&i.quotes).length; if(n<3) g.push(`Log at least 3 interviews with quotes (you have ${n}). “Many interviews” earns the top band.`); if(S.ints.some(i=>i.who&&words(i.quotes)<15)) g.push('Some interviews have very short notes: add direct quotes and answers to “why?”.'); if(words(S.learnInt)<25) g.push('Write what you learned from the interviews (25+ words).'); return g; },
+  emp:()=>{ const e=empSt(),g=[]; ['who','says','thinks','does','feels'].forEach(k=>{ if(!String(e[k]||'').trim()) g.push(k); }); return g.length?['Empathy map is missing: '+g.join(', ')+'.']:[]; },
+  jm:()=>{ const j=jmSt(),g=[]; const named=j.stages.filter(s=>s.s&&s.a).length; if(named<4) g.push(`Name at least 4 stages with an action (you have ${named}).`); if(!j.stages.some(s=>s.f<0)) g.push('Show at least one negative feeling (a pain point).'); if(words(S.learnJm)<25) g.push('Write what you learned from the journey map (25+ words).'); return g; },
+  def:()=>{ const p=S.pov,g=[]; if(!p.user||!p.need||!p.insight) g.push('Complete the point of view: user, need and insight.'); const n=S.hmw.split('\n').filter(l=>/^how might we/i.test(l.trim())).length; if(n<2) g.push(`Write at least 2 “How might we…” questions (you have ${n}).`); return g; },
+  sol:()=>{ const g=[]; const ok=S.ideas.filter(i=>i.t.trim()); if(ok.length<3) g.push(`List at least 3 solutions (you have ${ok.length}).`); ['risky','easy','favourite'].forEach(t=>{ if(!ok.some(i=>i.tag===t)) g.push(`Tag one solution as “${t}”.`); }); if(S.chosen<0||!S.ideas[S.chosen]||!S.ideas[S.chosen].t) g.push('Choose one solution.'); if(words(S.why)<30) g.push('Justify your choice (30+ words): link it to the interviews and the journey map.'); return g; },
+  proto:()=>{ const p=S.proto,g=[]; if(!p.type) g.push('Choose a prototype type.'); if(words(p.desc)<15) g.push('Describe the prototype (15+ words).'); if(!p.img) g.push('Add a photo or image of your prototype.'); return g; },
+  fb:()=>{ const f=S.fb,g=[]; [['user','interviewee'],['prof','Professor'],['guide','guidelines']].forEach(([k,l])=>{ if(words(f[k])<5) g.push(`Feedback from the ${l}.`); }); if(words(f.changed)<15) g.push('What you changed, the risks you took, the directions you dropped.'); return g.length?['Missing: '+g.join(' ')]:[]; }
+};
+const STEPS=[['team','1 · Team and topic','Part 1'],['ints','2 · Interviews','Part 2'],['emp','3 · Empathy map','Part 2'],['jm','4 · Journey map','Part 3'],['def','5 · Define: POV and HMW','Part 1'],['sol','6 · Solutions','Part 4'],['proto','7 · Prototype','Part 5'],['fb','8 · Feedback and changes','Part 1']];
+const missBox=k=>{ const g=GAPS[k](); return `<div class="miss ${g.length?'':'ok'}">${g.length?'<b>Still missing</b><br>'+g.map(esc).join('<br>'):'<b>Complete.</b> This part is ready for the poster.'}</div>`; };
+function live(el,k){ const m=document.createElement('div'); m.className='live'; el.appendChild(m); const upd=()=>{ m.innerHTML=missBox(k); }; upd(); el.addEventListener('input',()=>setTimeout(upd,0)); el.addEventListener('change',()=>setTimeout(upd,0)); el.addEventListener('click',()=>setTimeout(upd,0)); }
+const inp=(id,label,val,ph,rows)=>rows?`<label for="${id}">${label}</label><textarea id="${id}" rows="${rows}" placeholder="${esc(ph||'')}">${esc(val||'')}</textarea>`:`<label for="${id}">${label}</label><input type="text" id="${id}" value="${esc(val||'')}" placeholder="${esc(ph||'')}">`;
+const bind=(el,map)=>Object.entries(map).forEach(([id,fn])=>{ const x=el.querySelector('#'+id); if(x) x.addEventListener('input',()=>{ fn(x.value); save(); }); });
+
+function overview(el){
+  el.innerHTML=`<div class="req"><div><b>30%</b>Team poster<br><small>marked out of 100</small></div><div><b>10%</b>Presentation<br><small>graded individually</small></div><div><b>Week 9</b>Poster and presentation<br><small>exact date on Moodle</small></div><div><b>5</b>Parts in the rubric<br><small>process · interviews · journey · solutions · prototype</small></div></div>
+  <table class="tbl prog"><thead><tr><th>Step</th><th>Rubric</th><th>Status</th></tr></thead><tbody>${STEPS.map(([k,t,p],i)=>{ const g=GAPS[k](); return `<tr><td><a href="#s${i+1}" data-go="${i+1}">${t}</a></td><td>${p}</td><td class="${g.length?'st-todo':'st-good'}">${g.length?g.length+' to fix':'done'}</td></tr>`; }).join('')}<tr><td><a href="#s9" data-go="9">9 · Poster</a></td><td>All</td><td>preview and print</td></tr></tbody></table>
+  <p class="mono" style="color:var(--muted)">Saves in this browser only. Work on one shared laptop, or copy each step into your team document.</p>`;
+  el.querySelectorAll('[data-go]').forEach(a=>a.addEventListener('click',e=>{ e.preventDefault(); document.querySelectorAll('.toc ol li button')[+a.dataset.go].click(); }));
+}
+function stepTeam(el){
+  let wsdg=''; try{ const w=JSON.parse(store.get('ent141-sdg')||'null'); if(w&&w.p&&!S.team.sdg) wsdg=`SDG ${w.p} (${ENT141.SDGS[w.p-1]}), target `; }catch(e){}
+  const t=S.team;
+  el.innerHTML=`<div class="ins">${inp('t-name','Team name',t.name)}${inp('t-mem','Members',t.members,'Name 1, Name 2, Name 3…')}
+   <label for="t-need">Social need</label><select id="t-need"><option value="">— choose —</option>${NEEDS.map(n=>`<option ${t.need===n?'selected':''}>${n}</option>`).join('')}</select>
+   ${inp('t-sdg','SDG and target (from Week 3, e.g. “SDG 4, target 4.4”)',t.sdg||wsdg,'SDG 4, target 4.4')}
+   ${inp('t-user','User group: who has the problem? (people you can interview)',t.user,'First-year students who commute by bus')}
+   <label for="t-for">The pain point is for</label><select id="t-for">${['customers/clients','employees','both'].map(n=>`<option ${t.for===n?'selected':''}>${n}</option>`).join('')}</select>
+   ${inp('t-pain','Pain point in one sentence (your first guess; interviews will test it)',t.pain,'',2)}</div>`;
+  if(wsdg&&!t.sdg){ t.sdg=wsdg; save(); }
+  bind(el,{'t-name':v=>t.name=v,'t-mem':v=>t.members=v,'t-sdg':v=>t.sdg=v,'t-user':v=>t.user=v,'t-pain':v=>t.pain=v});
+  el.querySelector('#t-need').addEventListener('change',e=>{ t.need=e.target.value; save(); }); el.querySelector('#t-for').addEventListener('change',e=>{ t.for=e.target.value; save(); });
+  live(el,'team');
+}
+function stepInts(el){
+  const draw=()=>{ const n=S.ints.filter(i=>i.who&&i.quotes).length;
+    el.innerHTML=`<div class="gauge">${[1,2,3,4,5].map(i=>`<i class="${i<=n?'on':''}"></i>`).join('')}</div><p class="mono" style="margin:0 0 8px;color:var(--muted)">${n} interview${n===1?'':'s'} logged · rubric: 0 = poor, 1 = acceptable, many = excellent</p>
+    <div class="log">${S.ints.map((x,i)=>`<div class="e" data-i="${i}"><div class="row2"><input type="text" data-f="who" placeholder="Who (role, age group; no full names)" value="${esc(x.who)}" aria-label="Interviewee ${i+1}"><input type="text" data-f="where" placeholder="Where / when" value="${esc(x.where)}" aria-label="Where ${i+1}"><select data-f="m" aria-label="Method ${i+1}">${['Interview','Observation','Both'].map(m=>`<option ${x.m===m?'selected':''}>${m}</option>`).join('')}</select></div><textarea data-f="quotes" rows="3" placeholder="Direct quotes and answers to “why?”" aria-label="Notes ${i+1}">${esc(x.quotes)}</textarea><textarea data-f="surp" rows="2" placeholder="What surprised us" aria-label="Surprise ${i+1}">${esc(x.surp)}</textarea><button type="button" class="btn ghost del" style="justify-self:start">Remove</button></div>`).join('')}</div>
+    <div class="row" style="margin:10px 0"><button type="button" class="btn add">+ Add interview</button></div>
+    <div class="ins">${inp('li','What did we learn from the interviews? (patterns across people, not one story)',S.learnInt,'',4)}</div>`;
+    el.querySelector('.add').addEventListener('click',()=>{ S.ints.push({who:'',where:'',m:'Interview',quotes:'',surp:''}); save(); draw(); });
+    el.querySelectorAll('.e').forEach(e=>{ const i=+e.dataset.i; e.querySelectorAll('[data-f]').forEach(f=>f.addEventListener('input',()=>{ S.ints[i][f.dataset.f]=f.value; save(); })); e.querySelector('[data-f=m]').addEventListener('change',ev=>{ S.ints[i].m=ev.target.value; save(); }); e.querySelector('.del').addEventListener('click',()=>{ S.ints.splice(i,1); save(); draw(); }); });
+    bind(el,{li:v=>S.learnInt=v}); live(el,'ints'); };
+  if(!S.ints.length) S.ints.push({who:'',where:'',m:'Interview',quotes:'',surp:''}); draw();
+}
+function stepEmp(el){ const b=document.createElement('div'); el.appendChild(b); ENT141.empathyMap(b,{key:'ent141-lab-emp'}); live(el,'emp'); }
+function stepJm(el){ const b=document.createElement('div'); el.appendChild(b); ENT141.journeyMap(b,{key:'ent141-lab-jm'}); const d=document.createElement('div'); d.className='ins'; d.style.marginTop='12px'; d.innerHTML=inp('lj','What did we learn from the journey map? (10 marks: analyse, do not describe)',S.learnJm,'Where does it hurt most, why, and what does that mean for our problem?',4); el.appendChild(d); bind(d,{lj:v=>S.learnJm=v}); live(el,'jm'); }
+function stepDef(el){
+  let w6=null; try{w6=JSON.parse(store.get('ent141-w6-hmw')||'null')}catch(e){}
+  const p=S.pov;
+  el.innerHTML=`${w6&&(w6.user||w6.list)?`<div class="row" style="margin-bottom:8px"><button type="button" class="btn ghost imp">Use our Week 6 draft</button></div>`:''}<div class="ins">${inp('p-u','User',p.user)}${inp('p-n','Need (a verb)',p.need)}${inp('p-i','Insight (from interviews or the journey map)',p.insight,'',2)}<div class="box exam" id="p-out"></div>${inp('p-h','“How might we…” questions, one per line',S.hmw,'How might we…',4)}</div>`;
+  const upd=()=>{ el.querySelector('#p-out').innerHTML=`<b class="lbl">Point of view</b>${p.user&&p.need&&p.insight?`${esc(p.user)} need${/s$/i.test(p.user.trim())?'':'s'} ${esc(p.need)} because ${esc(p.insight)}.`:'—'}`; };
+  bind(el,{'p-u':v=>{p.user=v;upd()},'p-n':v=>{p.need=v;upd()},'p-i':v=>{p.insight=v;upd()},'p-h':v=>S.hmw=v}); upd();
+  const imp=el.querySelector('.imp'); if(imp) imp.addEventListener('click',()=>{ Object.assign(p,{user:w6.user,need:w6.need,insight:w6.insight}); S.hmw=w6.list||S.hmw; save(); el.innerHTML=''; stepDef(el); });
+  live(el,'def');
+}
+function stepSol(el){
+  const draw=()=>{ el.innerHTML=`<p class="mono" style="color:var(--muted);margin:0 0 8px">Tag each solution: risky (bold, uncertain), easy (quick to do), favourite (the team’s choice). The top band needs all three.</p><div class="ins">${S.ideas.map((x,i)=>`<div class="idea" data-i="${i}"><input type="radio" name="ch" ${S.chosen===i?'checked':''} aria-label="Choose solution ${i+1}"><input type="text" data-f="t" value="${esc(x.t)}" placeholder="Solution ${i+1}" aria-label="Solution ${i+1}"><select data-f="tag" aria-label="Tag ${i+1}"><option value="">— tag —</option>${['risky','easy','favourite'].map(t=>`<option ${x.tag===t?'selected':''}>${t}</option>`).join('')}</select></div>`).join('')}
+    <div class="row"><button type="button" class="btn ghost add">+ Solution</button></div>${inp('why','Why did we choose this solution? Link it to the interviews and the journey map.',S.why,'',4)}</div>`;
+    el.querySelectorAll('.idea').forEach(r=>{ const i=+r.dataset.i; r.querySelector('[data-f=t]').addEventListener('input',e=>{ S.ideas[i].t=e.target.value; save(); }); r.querySelector('[data-f=tag]').addEventListener('change',e=>{ S.ideas[i].tag=e.target.value; save(); }); r.querySelector('[type=radio]').addEventListener('change',()=>{ S.chosen=i; save(); }); });
+    el.querySelector('.add').addEventListener('click',()=>{ S.ideas.push({t:'',tag:''}); save(); draw(); }); bind(el,{why:v=>S.why=v}); live(el,'sol'); };
+  draw();
+}
+function stepProto(el){
+  const p=S.proto;
+  el.innerHTML=`<div class="ins"><label for="pr-t">Prototype type (fast, cheap, easy to show)</label><select id="pr-t"><option value="">— choose —</option>${['Sketch or drawing','Storyboard','Paper screens','Canva or Figma mock-up','Cardboard or 3D model','Role-play'].map(o=>`<option ${p.type===o?'selected':''}>${o}</option>`).join('')}</select>
+   ${inp('pr-d','What is it, and what will a user see or do with it?',p.desc,'',3)}
+   <label for="pr-f">Photo or image of the prototype</label><input type="file" id="pr-f" accept="image/*"><div id="pr-img">${p.img?`<img src="${p.img}" alt="Prototype" style="max-width:100%;max-height:260px;border-radius:8px">`:''}</div><small class="mono" id="pr-msg" style="color:var(--muted)"></small></div>`;
+  el.querySelector('#pr-t').addEventListener('change',e=>{ p.type=e.target.value; save(); }); bind(el,{'pr-d':v=>p.desc=v});
+  el.querySelector('#pr-f').addEventListener('change',e=>{ const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=()=>{ const im=new Image(); im.onload=()=>{ const k=Math.min(1,900/Math.max(im.width,im.height)); const c=document.createElement('canvas'); c.width=im.width*k; c.height=im.height*k; c.getContext('2d').drawImage(im,0,0,c.width,c.height); p.img=c.toDataURL('image/jpeg',.8); save(); el.querySelector('#pr-img').innerHTML=`<img src="${p.img}" alt="Prototype" style="max-width:100%;max-height:260px;border-radius:8px">`; el.querySelector('#pr-msg').textContent=store.get(KEY)&&store.get(KEY).includes(p.img.slice(30,80))?'Saved.':'Shown for now, but this browser could not save it: add it again before printing.'; el.dispatchEvent(new Event('change')); }; im.src=r.result; }; r.readAsDataURL(f); });
+  live(el,'proto');
+}
+function stepFb(el){
+  const f=S.fb;
+  el.innerHTML=`<div class="ins">${inp('f-u','Feedback from the people we interviewed (on our prototype)',f.user,'',2)}${inp('f-p','Feedback from the Professor',f.prof,'',2)}${inp('f-g','What the guidelines asked that we checked',f.guide,'',2)}${inp('f-c','What we changed, the risks we took, the directions we dropped',f.changed,'We first thought… but after… we changed to…',4)}</div>`;
+  bind(el,{'f-u':v=>f.user=v,'f-p':v=>f.prof=v,'f-g':v=>f.guide=v,'f-c':v=>f.changed=v}); live(el,'fb');
+}
+function posterHTML(){
+  const e=empSt(), j=jmSt(), t=S.team, ch=S.ideas[S.chosen]||{};
+  const hm=S.hmw.split('\n').filter(l=>l.trim()).slice(0,3);
+  const n=j.stages.length, W0=520, H=110, x=i=>30+i*(W0-60)/Math.max(n-1,1), y=v=>H/2-v*20;
+  const jm=n?`<svg viewBox="0 0 ${W0} ${H+24}" style="width:100%;height:auto"><line x1="10" x2="${W0-10}" y1="${H/2}" y2="${H/2}" stroke="#ccc" stroke-dasharray="3 3"/><path d="${j.stages.map((s,i)=>(i?'L':'M')+x(i)+' '+y(s.f)).join(' ')}" fill="none" stroke="#B4521E" stroke-width="3"/>${j.stages.map((s,i)=>`<circle cx="${x(i)}" cy="${y(s.f)}" r="5" fill="${s.f<0?'#C2410C':'#B4521E'}"/><text x="${x(i)}" y="${H+18}" text-anchor="middle" font-size="10" font-weight="700">${esc((s.s||'').slice(0,16))}</text>`).join('')}</svg>`:'';
+  return `<div id="poster"><div><h2>${esc(hm[0]||t.pain||'How might we…?')}</h2><div class="sub"><b>${esc(t.name||'Team name')}</b> · ${esc(t.members||'Members')} · ${esc(t.need||'Social need')} · ${esc(t.sdg||'SDG target')}</div></div>
+   <div class="cell"><h4>Problem and point of view</h4>${esc(S.pov.user&&S.pov.need?`${S.pov.user} need ${S.pov.need} because ${S.pov.insight||''}.`:(t.pain||''))}</div>
+   <div class="band"><div class="cell"><h4>Interviews · ${S.ints.filter(i=>i.who).length}</h4>${S.ints.filter(i=>i.quotes).slice(0,3).map(i=>`“${esc(i.quotes.split(/[.\n]/)[0].replace(/[“”"]/g,'').trim().slice(0,110))}” <i>— ${esc(i.who)}</i>`).join('<br>')}<br><b>Learned:</b> ${esc(S.learnInt.slice(0,260))}</div>
+     <div class="cell"><h4>Empathy map · ${esc(e.who||'')}</h4><div class="emp" style="display:grid;grid-template-columns:1fr 1fr">${[['Says','says'],['Thinks','thinks'],['Does','does'],['Feels','feels']].map(([l,k])=>`<div class="q"><b>${l}</b>${esc(String(e[k]||'').slice(0,120))}</div>`).join('')}</div></div>
+     <div class="cell"><h4>How might we…</h4>${hm.map(h=>`• ${esc(h)}`).join('<br>')}<br><b>Need:</b> ${esc(t.need||'')}<br><b>Pain point for:</b> ${esc(t.for||'')}</div></div>
+   <div class="band"><div class="cell" style="grid-column:span 2"><h4>Journey map</h4>${jm}<b>Learned:</b> ${esc(S.learnJm.slice(0,240))}</div>
+     <div class="cell"><h4>Solutions</h4>${S.ideas.filter(i=>i.t).map((i,k)=>`${S.ideas.indexOf(i)===S.chosen?'★':'•'} ${esc(i.t)} <i>(${esc(i.tag||'—')})</i>`).join('<br>')}<br><b>Why ${esc(ch.t||'')}:</b> ${esc(S.why.slice(0,220))}</div></div>
+   <div class="band"><div class="cell" style="grid-column:span 2"><h4>Prototype · ${esc(S.proto.type||'')}</h4>${S.proto.img?`<img src="${S.proto.img}" alt="Prototype">`:''}${esc(S.proto.desc||'')}</div><div class="cell"><h4>Feedback → changes</h4>${esc((S.fb.changed||'').slice(0,260))}</div></div>
+   <div class="foot"><span>ENT 141 · Project 1 · Canadian University Dubai</span><span>Instructor: Eng. Nadia Mek</span></div></div>`;
+}
+function stepPoster(el){
+  const all=STEPS.flatMap(([k,t])=>GAPS[k]().map(g=>`<b>${t}:</b> ${esc(g)}`));
+  el.innerHTML=`<div class="miss ${all.length?'':'ok'}" style="margin:0 0 12px">${all.length?`<b>${all.length} item(s) before printing</b><br>${all.join('<br>')}`:'<b>Every part is complete.</b> Print and check it on paper.'}</div><div class="row" style="margin-bottom:10px"><button type="button" class="btn pr">Print or save as PDF (A3)</button><span class="mono" style="color:var(--muted)">The poster is built from Steps 1–8. Edit there, then come back.</span></div>${posterHTML()}`;
+  el.querySelector('.pr').addEventListener('click',()=>{ let r=document.getElementById('print-root'); if(!r){ r=document.createElement('div'); r.id='print-root'; document.body.appendChild(r); } r.innerHTML=posterHTML(); window.print(); });
+}
+const PRES=[['Problem',15,'Who has it; one interview quote.'],['Empathy',15,'What the empathy and journey maps showed.'],['Solutions',15,'Three ideas, and why you chose one.'],['Prototype',10,'Show it. What feedback changed.'],['Hand over',5,'Name the next speaker.']];
+
+Lecture.mount({
+  id:'ent141-lab', week:'P1', course:'ENT 141', short:'Project 1 · Poster Lab', eyebrow:'Project 1 · Poster 30% · Presentation 10%', endLabel:'End',
+  title:'Project 1 · Poster Lab', meta:'Team poster · Week 9 · built from Weeks 3–8',
+  scenes:[
+  { nav:'Overview', title:'Poster Lab · 8 steps to your poster', kind:'activity', full:true,
+    narration:[`Research a sustainable development topic, find a real pain point, and combine the <b>empathy map, journey map, HMW questions, solutions and prototype</b> in one poster. Each step shows what is still missing.`],
+    fig:{label:'Requirements and progress', build:overview} },
+  { nav:'1 · Team and topic', title:'Step 1 · Team and topic', kind:'activity', full:true,
+    narration:[`<b>Task:</b> choose one social need and an SDG target (Week 3). <b>Output:</b> the poster title line.`], fig:{label:'Team and topic', build:stepTeam} },
+  { nav:'2 · Interviews', title:'Step 2 · Interviews', kind:'activity', full:true,
+    narration:[`<b>Task:</b> interview and observe people who have the problem (Week 5). <b>Output:</b> quotes and what you learned. Part 2 · 20 marks.`], fig:{label:'Interview log', build:stepInts} },
+  { nav:'3 · Empathy map', title:'Step 3 · Empathy map', kind:'activity', full:true,
+    narration:[`<b>Task:</b> sort your interview notes into says, thinks, does and feels (Week 5). <b>Output:</b> the empathy map on the poster.`], fig:{label:'Your empathy map', build:stepEmp} },
+  { nav:'4 · Journey map', title:'Step 4 · Journey map', kind:'activity', full:true,
+    narration:[`<b>Task:</b> map the user's steps and feelings, then analyse them (Week 5). <b>Output:</b> the journey map and what you learned. Part 3 · 20 marks.`], fig:{label:'Your journey map', build:stepJm} },
+  { nav:'5 · Define', title:'Step 5 · Define: point of view and HMW', kind:'activity', full:true,
+    narration:[`<b>Task:</b> write the point of view and your “How might we…” questions (Week 6). <b>Output:</b> the problem box on the poster.`], fig:{label:'Point of view and HMW', build:stepDef} },
+  { nav:'6 · Solutions', title:'Step 6 · Solutions', kind:'activity', full:true,
+    narration:[`<b>Task:</b> list at least three solutions tagged risky, easy and favourite, then choose and justify one (Weeks 7–8). Part 4 · 20 marks.`], fig:{label:'Solutions', build:stepSol} },
+  { nav:'7 · Prototype', title:'Step 7 · Prototype', kind:'activity', full:true,
+    narration:[`<b>Task:</b> make the fastest, cheapest version a user can see: a drawing or design is enough. <b>Output:</b> a photo on the poster. Part 5 · 20 marks.`], fig:{label:'Prototype', build:stepProto} },
+  { nav:'8 · Feedback', title:'Step 8 · Feedback and changes', kind:'activity', full:true,
+    narration:[`<b>Task:</b> show what you learned from the interviewee, the Professor and the guidelines, and what you changed. Part 1 · 20 marks.`], fig:{label:'Feedback and changes', build:stepFb} },
+  { nav:'9 · Poster', title:'Step 9 · Your poster', kind:'activity', full:true,
+    narration:[`Your poster is built from Steps 1–8. Print it, or save it as a PDF, and submit as your instructor announces on Moodle.`], fig:{label:'Poster preview', build:stepPoster} },
+  { nav:'Presentation', title:'Presenting the poster', kind:'activity', full:true,
+    narration:[`Your team presents the poster to the instructor; each student is graded <b>individually</b> on communication, confidence and knowledge. Practise your minute.`],
+    fig:{label:'60-second practice timer', build:el=>{ ENT141.timer(el,PRES); const r=document.createElement('div'); r.style.marginTop='16px'; r.innerHTML=`<span class="eyebrow">How it is marked · syllabus</span>`+ENT141.rubHTML(ENT141.RUB_PRES); el.appendChild(r); }} },
+  { nav:'Marking', title:'How the poster is marked', kind:'review', full:true,
+    narration:[`The poster rubric from the syllabus, word for word.`], fig:{label:'Poster rubric · 100 marks → 30%', build:el=>{ el.innerHTML=ENT141.rubHTML(ENT141.RUB_POSTER); }} },
+  ]
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Week 1 · Introduction to Entrepreneurship</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Schibsted+Grotesk:wght@400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<link rel="stylesheet" href="assets/course.css">
+<style>
+:root{--wk:#0F7B6C;--wk-soft:rgba(15,123,108,.10);--wk-d:#4FD1BA;--wk-soft-d:rgba(79,209,186,.14)}
+</style>
+</head>
+<body>
+<script src="assets/course.js"></script>
+<script src="assets/ent141.js"></script>
+<script src="assets/kb.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/assistant.js"></script>
+<script>
+const {W} = Lecture; const {store,esc} = ENT141;
+Lecture.mount({
+  id:'ent141-w1', week:1, clo:'1', course:'ENT 141', short:'Week 1 · Introduction to Entrepreneurship',
+  title:'Overview of the Course · Introduction to Entrepreneurship', meta:'Byers et al (2019) Ch. 1 · 2-hour lecture',
+  scenes:[
+  { nav:'Start here', title:'Why do some people turn problems into ventures?', minutes:5,
+    narration:[`This course takes your team from a real social problem to an idea you can defend. <span class="mono">Topics: Course Material · Course Assignments · Groups formation · What is Entrepreneurship? · Role of Entrepreneurs in the Society. CLO 1.</span>`],
+    src:`Reading: Byers, T., Dorf, R. C., &amp; Nelson, A. J. (2019). <em>Technology ventures: From idea to enterprise</em> (5th ed.), Ch. 1. McGraw-Hill Education.`,
+    fig:{label:`Today's lecture · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`Course material`,10,'l'],[`Course assignments`,15,'l'],[`What is entrepreneurship?`,20,'l'],[`Role in society`,20,'l'],[`Groups formation`,35,'a'],[`Check`,15,'c']])} },
+
+  { nav:'Course material', title:'Course material', minutes:10,
+    narration:[`One textbook and a few short readings. Each lecture page names its reading on the first scene.`],
+    fig:{label:`Syllabus · section 6`, html:`<table class="tbl"><thead><tr><th>Type</th><th>Source</th></tr></thead><tbody>
+      <tr><td>Textbook</td><td>Byers, Dorf &amp; Nelson (2019). <em>Technology ventures: From idea to enterprise</em> (5th ed.). McGraw-Hill.</td></tr>
+      <tr><td>Reference</td><td>Ray &amp; Shaw (2022). <em>Technology Entrepreneurship and Sustainable Development</em>. Springer.</td></tr>
+      <tr><td>Readings</td><td>Kummitha (2019) · Lubberink et al. (2017) · Krzymowski (2020) · Traifeh et al. (2021) · Stanford d.school Process Guide</td></tr></tbody></table>`} },
+
+  { nav:'Course assignments', title:'Course assignments', minutes:15,
+    narration:[`Project 1 is a team <b>poster</b> plus an individual <b>presentation</b> in Week 9. You build it step by step in the <a href="project-1.html">Poster Lab</a>.`],
+    fig:{label:`Assessment weights · syllabus section 8`, build:ENT141.weights, caption:`Exact dates are announced on Moodle.`} },
+
+  { nav:'What is entrepreneurship?', title:'What is entrepreneurship?', minutes:20,
+    narration:[`An <b>entrepreneur</b> spots a problem worth solving and builds a venture to solve it, accepting risk to create value (Byers et al., 2019, Ch. 1).`],
+    src:`Byers et al. (2019), Ch. 1.`,
+    fig:{label:`From problem to value · click or play`, flow:[
+      {t:'Problem',s:'someone struggles',d:'A real, frequent pain for a group of people.'},
+      {t:'Opportunity',s:'worth solving',d:'Enough people have it, and the timing is right.'},
+      {t:'Venture',s:'a team acts',d:'People, money and time committed, with risk.'},
+      {t:'Value',s:'for whom?',d:'Customers, the team and society all gain something.'}]} },
+
+  { nav:'Role in society', title:'Role of entrepreneurs in the society', minutes:20,
+    narration:[`Entrepreneurs create jobs, new services and growth. Careem started in Dubai in July 2012; when Uber completed its $3.1 billion acquisition in January 2020, Careem reported more than one million employment opportunities created in the region.`],
+    src:`Uber Technologies (2020, January 2). Uber completes acquisition of Careem [Press release]. investor.uber.com`,
+    fig:{label:`Careem in numbers · 2020`, html:`<div class="tiles"><div><div class="n">2012</div><div class="t">Founded in Dubai</div></div><div><div class="n">1M+</div><div class="t">Employment opportunities created in the region</div></div><div><div class="n">120</div><div class="t">Cities in 15 countries</div></div><div><div class="n">$3.1bn</div><div class="t">Acquired by Uber</div></div></div>`} },
+
+  { nav:'Groups formation', title:'Activity · Form your team', kind:'activity', minutes:35,
+    narration:[`Form a team, agree how you work, and choose one social need for Project 1: education, health, social protection or job opportunities.`],
+    fig:{label:`Team charter · saves in your browser`, build:el=>W.worksheet(el,{id:'ent141-w1-team',title:'ENT 141 · Team charter',fields:[
+      {l:'Team name',rows:1},{l:'Members and one strength each',rows:3},{l:'Social need we will work on',ph:'education · health · social protection · job opportunities',rows:1},{l:'Who has this problem? (a group you can talk to)',rows:2},{l:'When and where we meet each week',rows:1},{l:'Our rule if someone misses a deadline',rows:2}]})} },
+
+  { nav:'Check', title:'Check your understanding', kind:'check', minutes:15,
+    narration:[`<b>Next week:</b> read Byers et al (2019) Ch. 8 and Lubberink et al (2017).`],
+    fig:{label:`3 questions`, build:el=>W.quiz(el,[
+      {q:'Which statement best describes an entrepreneur?',o:['Someone who owns a large company','Someone who spots a problem worth solving and builds a venture, accepting risk','Someone who invents a new device','Someone who works for the government'],a:1,why:'Owning or inventing is not enough: the entrepreneur pursues an opportunity and accepts risk to create value.'},
+      {q:'Careem’s story shows which role of entrepreneurs in society?',o:['Reducing taxes','Creating jobs and new services','Replacing government transport','Lowering fuel prices'],a:1,why:'Careem reported more than one million employment opportunities created in the region.'},
+      {q:'What is Project 1?',o:['An individual essay','A team poster plus an individual presentation','A final exam','A business plan'],a:1,why:'Poster 30% (team) and presentation 10% (graded individually), Week 9.'}])} },
+  ]
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+/* ENT 141 course assistant · knowledge base.
+   Every answer comes from the course pages, the syllabus or the Project 1 brief.
+   q = question, k = extra words students may use, a = short answer, l = link, r = reading. */
+window.ENT141_KB=[
+/* ---------- course & assessment ---------- */
+{q:'How is the course graded?',k:'grade marks weight worth assessment percentage breakdown',a:'Project 1 Poster 30%, Project 1 Presentation 10%, Project 2 Idea Validation Report 40%, Activity 1 10%, Activity 2 10%.',l:'week-01.html#s2'},
+{q:'When is Project 1 due?',k:'deadline due date poster submission when week 9',a:'Week 9: poster submission and presentation. The exact date is announced on Moodle.',l:'project-1.html#s0'},
+{q:'What goes on the Project 1 poster?',k:'poster content include parts sections requirements brief',a:'Your empathy map, journey map, HMW questions, solutions and prototype, on one sustainable development topic linked to a social need.',l:'project-1.html#s0'},
+{q:'Is Project 1 a team or individual project?',k:'group team individual alone',a:'The poster is a team project. The presentation is graded individually.',l:'project-1.html#s0'},
+{q:'How is the poster marked?',k:'rubric marking criteria marks poster parts',a:'Five parts of 20 marks each: design thinking process, interviews, journey map, solutions, prototype. 100 marks adjusted to 30%.',l:'project-1.html#s11'},
+{q:'How many interviews do we need?',k:'interview number how many enough many',a:'The rubric gives the top band for “many” interviews; one interview is only “acceptable”. Aim for at least 3 to 5 with deep answers.',l:'project-1.html#s2'},
+{q:'How is the presentation graded?',k:'presentation rubric oral individual panel engagement',a:'10 marks: quality of the presentation (5) and panel engagement (5). Each student is graded individually.',l:'project-1.html#s10'},
+{q:'What is Activity 1?',k:'activity 1 video pitch 30 45 seconds forum',a:'An individual 30–45 second video pitch on a topic your instructor assigns, posted on the Moodle forum before the deadline. 10%.',l:'week-04.html#s5'},
+{q:'What is Activity 2?',k:'activity 2 journal article case study week 11',a:'An individual in-class activity on journal articles or case studies, in Week 11. Requirements are published later.',l:'projects.html'},
+{q:'What is Project 2?',k:'project 2 idea validation report evaluation 40',a:'A team Idea Validation Report (40%) on three social innovation ideas, due Week 16. Requirements are published later.',l:'projects.html'},
+{q:'Who is the instructor?',k:'instructor lecturer teacher professor contact',a:'Eng. Nadia Mek. Contact details and office hours are on Moodle.',l:'index.html'},
+{q:'What is the textbook?',k:'book textbook reading byers',a:'Byers, Dorf & Nelson (2019). Technology ventures: From idea to enterprise (5th ed.). Each lecture names its chapter.',l:'week-01.html#s1'},
+{q:'Can I use ChatGPT or AI?',k:'chatgpt ai generative tool allowed plagiarism',a:'Your interviews, maps and ideas must come from your own fieldwork; the rubric marks what you learned from real people. Follow your instructor’s rules on AI tools announced on Moodle.',l:'project-1.html#s0'},
+{q:'How do I print the poster?',k:'print pdf a3 save poster download',a:'Open Step 9 of the Poster Lab and click “Print or save as PDF (A3)”. Choose “Save as PDF” in the print window.',l:'project-1.html#s9'},
+{q:'Does the Poster Lab save my work?',k:'save saved lost browser laptop data',a:'Yes, in this browser only. Work on one shared laptop, or copy each step into your team document.',l:'project-1.html#s0'},
+{q:'How do we form a team?',k:'team group form members charter',a:'Form your team in Week 1 and fill in the team charter: name, strengths, social need, meeting time and rules.',l:'week-01.html#s5'},
+{q:'Which social needs can we choose?',k:'topic social need choose education health jobs protection',a:'Education, health, social protection or job opportunities, linked to a UAE or UN sustainable development goal.',l:'project-1.html#s1'},
+/* ---------- week 1 ---------- */
+{q:'What is entrepreneurship?',k:'entrepreneur definition meaning',a:'An entrepreneur spots a problem worth solving and builds a venture to solve it, accepting risk to create value.',l:'week-01.html#s3',r:'Byers et al. (2019) Ch. 1'},
+{q:'What is the role of entrepreneurs in society?',k:'role society economy jobs impact careem',a:'They create jobs, new services and growth. Careem (Dubai, 2012) reported more than one million employment opportunities in the region by 2020.',l:'week-01.html#s4',r:'Byers et al. (2019) Ch. 1'},
+{q:'What is Careem?',k:'careem uber ride hailing dubai',a:'A ride-hailing company founded in Dubai in 2012 and acquired by Uber for $3.1 billion in January 2020.',l:'week-01.html#s4'},
+/* ---------- week 2 ---------- */
+{q:'What is innovation?',k:'innovation define meaning',a:'An invention or idea that people adopt and that creates value.',l:'week-02.html#s2',r:'Byers et al. (2019) Ch. 8'},
+{q:'What is the difference between innovation and invention?',k:'invention versus vs difference',a:'An invention is a new idea or device; an innovation is one people adopt and that creates value. Pure Harvest adapted existing greenhouse technology to the UAE.',l:'week-02.html#s2',r:'Byers et al. (2019) Ch. 8'},
+{q:'What is innovative thinking?',k:'innovative thinking new value types',a:'Looking for a new way to create value: a product, a process, a business model or a social change.',l:'week-02.html#s1',r:'Lubberink et al. (2017)'},
+{q:'What are the types of innovation?',k:'types product process business model social',a:'Product (Pure Harvest), process (Enviroserve), business model (Kitopi) and social (UAE Food Bank).',l:'week-02.html#s1'},
+{q:'What is creativity?',k:'creativity creative define',a:'Producing ideas that are both new and useful.',l:'week-02.html#s3',r:'Byers et al. (2019) Ch. 8'},
+{q:'How is creativity linked to entrepreneurship?',k:'creativity link entrepreneurship innovation chain',a:'Creativity supplies ideas, innovative thinking turns them into value, entrepreneurship builds the venture that delivers it.',l:'week-02.html#s4'},
+{q:'What is Pure Harvest?',k:'pure harvest greenhouse tomatoes abu dhabi farm',a:'An Abu Dhabi agtech company (2016) that grows produce in climate-controlled desert greenhouses; the UAE imports nearly 80% of its food.',l:'week-02.html#s2'},
+{q:'How do we generate many ideas?',k:'ideas brainstorm generate many idea burst',a:'One idea per line, quantity first, no judging. Then star the ideas that are both new and useful.',l:'week-02.html#s5'},
+/* ---------- week 3 ---------- */
+{q:'What is sustainability?',k:'sustainability sustainable meaning',a:'Staying viable without harming people or the planet: judged on people, planet and profit.',l:'week-03.html#s0',r:'Ray & Shaw (2022) Ch. 1'},
+{q:'What is the triple bottom line?',k:'tbl triple bottom line people planet profit elkington',a:'Elkington’s framework (1994): judge a venture on people, planet and profit, each with something you can count.',l:'week-03.html#s1'},
+{q:'What are the SDGs?',k:'sdg sustainable development goals un 17',a:'17 UN goals and 169 targets adopted in 2015 for 2030. Link your project to a target, not only a goal.',l:'week-03.html#s2'},
+{q:'How do I link my project to an SDG?',k:'link sdg target choose goal',a:'Pick a main goal with the SDG picker, then read its targets on sdgs.un.org and write the target number in Step 1 of the Poster Lab.',l:'week-03.html#s5'},
+{q:'What is sustainable entrepreneurship?',k:'sustainable entrepreneur enviroserve recycling',a:'Earning revenue by solving an environmental or social problem, like Enviroserve’s e-waste recycling in Dubai.',l:'week-03.html#s3'},
+{q:'What is the UAE doing on sustainability?',k:'uae net zero 2050 cop28 sustainability',a:'In October 2021 the UAE became the first MENA country to commit to net zero by 2050, and it hosted COP28 in 2023.',l:'week-03.html#s4',r:'Krzymowski (2020)'},
+/* ---------- week 4 ---------- */
+{q:'What is design thinking?',k:'design thinking dtp define human centred',a:'A human-centred way to solve problems: understand users, try many ideas, test early.',l:'week-04.html#s1',r:'Kummitha (2019)'},
+{q:'What are the steps of design thinking?',k:'steps stages five empathize define ideate prototype test',a:'Empathize, define, ideate, prototype, test, repeated in loops.',l:'week-04.html#s2'},
+{q:'What is the Embrace case?',k:'embrace incubator infant warmer stanford nepal',a:'Stanford students designed a low-cost infant warmer (2007); observing families in Nepal led them to add a model for use at home.',l:'week-04.html#s3'},
+{q:'What is an innovative mindset?',k:'mindset mindsets innovative d.school bias action',a:'The d.school names seven: human values, show don’t tell, craft clarity, embrace experimentation, mindful of process, bias toward action, radical collaboration.',l:'week-04.html#s4'},
+{q:'How long is the video pitch?',k:'pitch length seconds video long',a:'30 to 45 seconds. Practise with the timer on the Activity 1 scene.',l:'week-04.html#s5'},
+/* ---------- week 5 ---------- */
+{q:'What is empathy?',k:'empathy sympathy understand user',a:'Understanding a person’s experience from their point of view: observe, engage and immerse.',l:'week-05.html#s1'},
+{q:'How do I interview for empathy?',k:'interview questions ask tips how',a:'Ask about real past events (“Tell me about the last time…”), then ask why. Avoid leading, yes/no and selling questions.',l:'week-05.html#s2'},
+{q:'What is a leading question?',k:'leading question bad question yes no',a:'A question that suggests the answer, like “Don’t you think the bus is too slow?” Ask about the last real experience instead.',l:'week-05.html#s2'},
+{q:'What is an empathy map?',k:'empathy map says thinks does feels',a:'A map that sorts what you learned into what the user says, thinks, does and feels.',l:'week-05.html#s3'},
+{q:'What is a journey map?',k:'journey map customer stages feelings',a:'A map of the user’s steps and feelings at each stage; the lowest point is usually the pain point to solve.',l:'week-05.html#s4'},
+{q:'What should we learn from the journey map?',k:'journey map learn analysis 10 marks',a:'Analyse where and why it hurts most and what that means for your problem. Obvious comments score only 4–6 of 10.',l:'project-1.html#s4'},
+/* ---------- week 6 ---------- */
+{q:'What is primary data?',k:'primary data first hand collect',a:'Data your team collects first-hand: interviews, observation, surveys or focus groups.',l:'week-06.html#s1',r:'Byers et al. (2019) Ch. 2'},
+{q:'What is secondary data?',k:'secondary data existing statistics reports',a:'Data that already exists, such as UN or government statistics. Use it to show the problem is real.',l:'week-06.html#s1'},
+{q:'Should we use a survey?',k:'survey questionnaire google form',a:'For the poster, interviews and observation come first; a survey only tells you how common the problem is after you understand it.',l:'week-06.html#s1'},
+{q:'What is an insight?',k:'insight observation meaning',a:'A surprising reason behind what users do, found by moving from what you saw and heard to what it means.',l:'week-06.html#s2'},
+{q:'What is a point of view statement?',k:'pov point of view statement user need insight',a:'[user] needs [need] because [insight].',l:'week-06.html#s3'},
+{q:'What is a How Might We question?',k:'hmw how might we question',a:'An open challenge from your point of view, e.g. “How might we help first-year students reach 8 am classes on time without a car?”',l:'week-06.html#s3'},
+{q:'Why is my HMW too narrow?',k:'narrow broad solution app',a:'It already names a solution (an app, a website). Describe the user and need, and leave the solution open.',l:'week-06.html#s5'},
+{q:'How does sustainability fit into the problem definition?',k:'problem sustainability people planet profit define',a:'Check the problem against the triple bottom line: who suffers, what is harmed or wasted, and what it costs.',l:'week-06.html#s4'},
+/* ---------- Project 1 lab ---------- */
+{q:'Where do I start Project 1?',k:'start project 1 lab where begin',a:'Open the Poster Lab and fill in Step 1: team, social need, SDG target, user group and pain point.',l:'project-1.html#s1'},
+{q:'What are risky, easy and favourite solutions?',k:'risky easy favourite solutions tag',a:'Tag each idea: risky (bold, uncertain), easy (quick to do), favourite (the team’s choice). The top band needs three or more covering all three.',l:'project-1.html#s6'},
+{q:'How do we justify our chosen solution?',k:'justify choose why solution justification',a:'Link the choice to what interviewees said and to the lowest point of the journey map. An obvious justification scores 4–6 of 10.',l:'project-1.html#s6'},
+{q:'What prototype should we make?',k:'prototype type drawing design sketch storyboard',a:'The fastest, cheapest version a user can see: a sketch, storyboard, paper screens or a Canva mock-up. A drawing or design is enough.',l:'project-1.html#s7'},
+{q:'How do we show we learned from feedback?',k:'feedback professor interviewee guidelines changed',a:'In Step 8, write feedback from the interviewee, the Professor and the guidelines, and what you changed. Ignoring one of the three costs marks.',l:'project-1.html#s8'},
+{q:'Did we take enough risks?',k:'risk change direction many ideas',a:'The rubric asks if you tried many ideas, took risks and changed direction. Record ideas you dropped and why in Step 8.',l:'project-1.html#s8'},
+{q:'How do I add a photo of our prototype?',k:'photo image upload picture prototype',a:'In Step 7, choose a photo or image. It appears on the poster preview in Step 9.',l:'project-1.html#s7'},
+{q:'How long does each student speak?',k:'speak minute each presentation time',a:'Plan about one minute each with the practice timer; follow the format your instructor announces.',l:'project-1.html#s10'}
+];

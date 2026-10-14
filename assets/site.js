@@ -6,6 +6,7 @@ window.SITE={
   instructor:'Eng. Nadia Mek',
   contact:{email:'', hours:'', room:'', booking:''},
   portal:'',            /* student portal link (grades) */
+  reg:'',               /* team registration form link */
   moodle:'',            /* Moodle course page */
   buttons:[['Lectures','lectures.html'],['Projects','projects.html'],['Toolkit','toolkit.html']],
   clos:[

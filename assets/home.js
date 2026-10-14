@@ -33,7 +33,7 @@ function calendar(el){
 }
 function clos(el){ el.innerHTML=S.clos.map(([c,t])=>`<div><b>${esc(c)}</b>${esc(t)}</div>`).join(''); }
 function links(el){
-  const L=[['🎓 Student portal · grades',S.portal],['📚 Moodle course page',S.moodle],['✉️ Email the professor',C.email?'mailto:'+C.email:''],['📅 Book office hours',/^https?:/.test(C.booking||'')?C.booking:'']];
+  const L=[['Student portal · grades',S.portal],['Moodle course page',S.moodle],['Email the professor',C.email?'mailto:'+C.email:''],['Book office hours',/^https?:/.test(C.booking||'')?C.booking:'']];
   el.innerHTML=L.map(([t,u])=>u?`<a class="lnk" href="${esc(u)}" ${/^http/.test(u)?'target="_blank" rel="noopener"':''}>${t}</a>`:`<span class="lnk off">${t} · coming soon</span>`).join('');
 }
 function subs(el,all){
@@ -51,7 +51,7 @@ function find(form,q,box){
     r.kb.filter(x=>x.s>=1.6).slice(0,3).forEach(x=>items.push(`<a href="${x.e.l}"><b>${esc(x.e.q)}</b>${esc(x.e.a)}<br><small>${esc(A.label(x.e.l))}</small></a>`));
     r.idx.filter(x=>x.s>=2&&!r.kb.slice(0,3).some(k=>k.e.l===x.e.l)).slice(0,4).forEach(x=>items.push(`<a href="${x.e.l}"><b>${esc(x.e.pt)} · ${esc(x.e.n)}</b><small>${esc(x.e.t)}</small></a>`));
     box.innerHTML=items.length?items.join(''):`<p class="mono" style="color:var(--muted)">Try one key word, or ask the assistant.</p>`;
-    box.insertAdjacentHTML('beforeend',`<button type="button" class="btn" id="find-ask" style="justify-self:start">🙂 Ask me: “${esc(v)}”</button>`);
+    box.insertAdjacentHTML('beforeend',`<button type="button" class="btn" id="find-ask" style="justify-self:start">Ask me: “${esc(v)}”</button>`);
     $('find-ask').addEventListener('click',()=>A.open(v)); });
 }
 window.Hub={S,esc,header,wireTheme,faq,calendar,clos,links,subs,ledger,find};

@@ -14,7 +14,9 @@
 </head>
 <body>
 <script src="assets/site.js"></script>
+<script src="assets/supports.js"></script>
 <script src="assets/course.js"></script>
+<script src="assets/onepage.js"></script>
 <script src="assets/ent141.js"></script>
 <script src="assets/kb.js"></script>
 <script src="assets/search-index.js"></script>
@@ -45,7 +47,7 @@ function hmw(el){
   const upd=()=>{ store.set(key,JSON.stringify(st));
     el.querySelector('#h-pov').innerHTML=`<b class="lbl">Point of view</b>${st.user&&st.need&&st.insight?`<b>${esc(st.user)}</b> need${/s$/i.test(st.user.trim())?'':'s'} <b>${esc(st.need)}</b> because <b>${esc(st.insight)}</b>.`:'Fill in user, need and insight.'}`;
     const lines=st.list.split('\n').map(x=>x.trim()).filter(Boolean);
-    el.querySelector('#h-o').innerHTML=lines.length?lines.map(l=>{ const p=[]; if(!/^how might we\b/i.test(l)) p.push('start with “How might we…”'); if(SOLWORDS.test(l)) p.push('too narrow: it already names a solution'); if(l.split(/\s+/).length<7) p.push('too broad: add the user or the need'); return `${p.length?'⚠️':'✅'} ${esc(l)}${p.length?` <small>(${p.join('; ')})</small>`:''}`; }).join('<br>')+(lines.length<3?`<br><b>Add ${3-lines.length} more.</b> Try: amplify the good, remove the bad, or question an assumption.`:''):'Example: <i>How might we help first-year students reach 8 am classes on time without a car?</i>'; };
+    el.querySelector('#h-o').innerHTML=lines.length?lines.map(l=>{ const p=[]; if(!/^how might we\b/i.test(l)) p.push('start with “How might we…”'); if(SOLWORDS.test(l)) p.push('too narrow: it already names a solution'); if(l.split(/\s+/).length<7) p.push('too broad: add the user or the need'); return `${p.length?'!':'✓'} ${esc(l)}${p.length?` <small>(${p.join('; ')})</small>`:''}`; }).join('<br>')+(lines.length<3?`<br><b>Add ${3-lines.length} more.</b> Try: amplify the good, remove the bad, or question an assumption.`:''):'Example: <i>How might we help first-year students reach 8 am classes on time without a car?</i>'; };
   el.querySelectorAll('[data-k]').forEach(i=>i.addEventListener('input',()=>{ st[i.dataset.k]=i.value; upd(); }));
   upd();
 }

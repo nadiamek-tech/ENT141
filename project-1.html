@@ -16,7 +16,9 @@
 </head>
 <body>
 <script src="assets/site.js"></script>
+<script src="assets/supports.js"></script>
 <script src="assets/course.js"></script>
+<script src="assets/onepage.js"></script>
 <script src="assets/ent141.js"></script>
 <script src="assets/kb.js"></script>
 <script src="assets/search-index.js"></script>
@@ -64,8 +66,8 @@ function overview(el){
       if(a.reg==='y') h+=say('Great, let’s start!'); }
     if(a.reg){ h+=q('idea','Do you have an idea or a problem to work on?',[['y','Yes'],['n','No']]);
       if(a.idea==='y') h+=say(`Great, start here: <button type="button" class="cta" data-go="1">Step 1 · Team and topic →</button>`);
-      if(a.idea==='n') h+=say(`No problem, I got you. Choose one:<div class="yn" style="margin-top:8px"><a class="cta" href="toolkit.html#s1">📋 Pick a problem from my bank</a><a class="cta alt" href="toolkit.html#s2">🔍 Find my own problem</a></div>`); }
-    el.innerHTML=`<div class="calm"><b>Confused about what to do? No problem.</b><br>First, take a breath 😮‍💨 You have the coolest professor, who is making your life easier 😄</div>${h}
+      if(a.idea==='n') h+=say(`No problem, I got you. Choose one:<div class="yn" style="margin-top:8px"><a class="cta" href="toolkit.html#s1">Pick a problem from my bank</a><a class="cta alt" href="toolkit.html#s2">Find my own problem</a></div>`); }
+    el.innerHTML=`<div class="calm"><b>Confused about what to do? No problem.</b><br>First, take a breath You have the coolest professor, who is making your life easier</div>${h}
       <details class="progress-d"><summary>See our progress (${STEPS.filter(([k])=>!GAPS[k]().length).length} of ${STEPS.length} steps done)</summary>${progressTable()}<p class="mono" style="color:var(--muted)">Saves in this browser only. Work on one shared laptop.</p></details>`;
     el.querySelectorAll('[data-q]').forEach(b=>b.addEventListener('click',()=>{ a[b.dataset.q]=b.dataset.v; if(b.dataset.q==='team'){ delete a.reg; delete a.idea; } if(b.dataset.q==='reg') delete a.idea; store.set(key,JSON.stringify(a)); draw(); }));
     el.querySelectorAll('[data-go]').forEach(x=>x.addEventListener('click',e=>{ e.preventDefault(); go(+x.dataset.go); }));
@@ -73,7 +75,7 @@ function overview(el){
   draw();
 }
 /* help buzzer on every step */
-function withHelp(items,build){ return el=>{ const w=document.createElement('div'); w.className='sos'; w.innerHTML=`<button type="button" class="sos-b" aria-expanded="false">🆘 Stuck? Get help</button><div class="sos-p" hidden>${items.map(([t,u])=>u.startsWith('ask:')?`<button type="button" class="sos-l" data-ask="${esc(u.slice(4))}">🙂 ${t}</button>`:`<a class="sos-l" href="${u}">${t} →</a>`).join('')}</div>`; el.appendChild(w);
+function withHelp(items,build){ return el=>{ const w=document.createElement('div'); w.className='sos'; w.innerHTML=`<button type="button" class="sos-b" aria-expanded="false">🆘 Stuck? Get help</button><div class="sos-p" hidden>${items.map(([t,u])=>u.startsWith('ask:')?`<button type="button" class="sos-l" data-ask="${esc(u.slice(4))}">${t}</button>`:`<a class="sos-l" href="${u}">${t} →</a>`).join('')}</div>`; el.appendChild(w);
   const b=w.querySelector('.sos-b'), pn=w.querySelector('.sos-p'); b.addEventListener('click',()=>{ pn.hidden=!pn.hidden; b.setAttribute('aria-expanded',!pn.hidden); });
   w.querySelectorAll('[data-ask]').forEach(x=>x.addEventListener('click',()=>window.ENT141Assistant&&ENT141Assistant.open(x.dataset.ask)));
   const inner=document.createElement('div'); el.appendChild(inner); build(inner); }; }

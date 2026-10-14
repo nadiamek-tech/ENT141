@@ -16,7 +16,9 @@
 </head>
 <body>
 <script src="assets/site.js"></script>
+<script src="assets/supports.js"></script>
 <script src="assets/course.js"></script>
+<script src="assets/onepage.js"></script>
 <script src="assets/ent141.js"></script>
 <script src="assets/kb.js"></script>
 <script src="assets/search-index.js"></script>
@@ -58,7 +60,7 @@ const MOMENT=['in the morning rush','during exam week','in the summer heat','dur
 function finder(el){
   const r=a=>a[Math.floor(Math.random()*a.length)];
   const key='ent141-bugs'; const bugs=store.get(key)||'';
-  el.innerHTML=`<div class="prompt" id="pr"></div><div class="row" style="margin:10px 0 16px"><button type="button" class="btn" id="sh">🎲 New prompt</button><span class="mono" style="color:var(--muted)">Imagine it, then go and watch it for real.</span></div>
+  el.innerHTML=`<div class="prompt" id="pr"></div><div class="row" style="margin:10px 0 16px"><button type="button" class="btn" id="sh">New prompt</button><span class="mono" style="color:var(--muted)">Imagine it, then go and watch it for real.</span></div>
    <div class="ins"><label for="bug">Your bug list: 10 things that annoyed you or someone you know this week. One per line.</label><textarea id="bug" rows="7" placeholder="The printer in the library never works&#10;My grandmother cannot read the medicine labels">${esc(bugs)}</textarea><div class="feedback" id="bo"></div></div>`;
   const sh=()=>{ el.querySelector('#pr').textContent=`What frustrates ${r(PERSON)} ${r(PLACE)} ${r(MOMENT)}?`; };
   const t=el.querySelector('#bug'), o=el.querySelector('#bo');
@@ -124,7 +126,7 @@ Lecture.mount({
   scenes:[
   { nav:'Start here', title:'No idea yet? Choose your path', kind:'activity', full:true,
     narration:[`Two ways to start. Both end with a real problem, linked to an SDG target, that you can test with real people.`],
-    fig:{label:'Choose', build:el=>{ el.innerHTML=`<div class="two"><button type="button" data-g="1"><span>📋</span><b>Pick an existing problem</b>Twelve real problem areas with who to interview and where to check the facts.</button><button type="button" data-g="2"><span>🔍</span><b>Find your own problem</b>A prompt generator and a bug list to spot problems around you.</button></div>`; el.querySelectorAll('[data-g]').forEach(b=>b.addEventListener('click',()=>go(+b.dataset.g))); }} },
+    fig:{label:'Choose', build:el=>{ el.innerHTML=`<div class="two"><button type="button" data-g="1"><b>Pick an existing problem</b>Twelve real problem areas with who to interview and where to check the facts.</button><button type="button" data-g="2"><b>Find your own problem</b>A prompt generator and a bug list to spot problems around you.</button></div>`; el.querySelectorAll('[data-g]').forEach(b=>b.addEventListener('click',()=>go(+b.dataset.g))); }} },
   { nav:'Problem bank', title:'Pick an existing problem', kind:'activity', full:true,
     narration:[`Pick one, then check the facts with the source before you use it. “Pick this problem” fills Step 1 of the <a href="project-1.html">Poster Lab</a>.`],
     fig:{label:'Problem bank · filter by social need', build:bank} },

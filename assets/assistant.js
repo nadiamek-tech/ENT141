@@ -41,7 +41,7 @@
 
   /* ---------- page suggestions ---------- */
   const SUGGEST={
-    'index.html':['How is the course graded?','When is Project 1 due?','Where do I start Project 1?'],
+    'index.html':['How do I find a project idea?','When is Project 1 due?','How do I contact the professor?'],
     'projects.html':['What goes on the Project 1 poster?','How is the presentation graded?','What is Activity 1?'],
     'week-01.html':['What is entrepreneurship?','What is the role of entrepreneurs in society?','How do we form a team?'],
     'week-02.html':['What is the difference between innovation and invention?','What is creativity?','What are the types of innovation?'],
@@ -49,8 +49,10 @@
     'week-04.html':['What are the steps of design thinking?','What is Activity 1?','What is an innovative mindset?'],
     'week-05.html':['How do I interview for empathy?','What is an empathy map?','What is a journey map?'],
     'week-06.html':['What is a How Might We question?','What is primary data?','What is a point of view statement?'],
+    'toolkit.html':['How do I find a project idea?','How do I check my idea fits an SDG?','Where do I find data?'],
+    'lectures.html':['What is design thinking?','What is an empathy map?','What is a How Might We question?'],
     'project-1.html':['How many interviews do we need?','What are risky, easy and favourite solutions?','How do I print the poster?']};
-  const TOPICS=['Entrepreneurship','Innovation','Creativity','SDGs','Design thinking','Empathy map','Journey map','HMW','Poster'];
+  const TOPICS=['Find an idea','SDG check','Open data','Survey','Prototype','Pitch','Empathy map','Journey map','Poster'];
 
   /* ---------- UI ---------- */
   let panel,log,chips,input,opened=false;

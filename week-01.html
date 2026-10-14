@@ -13,6 +13,7 @@
 </style>
 </head>
 <body>
+<script src="assets/site.js"></script>
 <script src="assets/course.js"></script>
 <script src="assets/ent141.js"></script>
 <script src="assets/kb.js"></script>
@@ -27,7 +28,7 @@ Lecture.mount({
   { nav:'Start here', title:'Why do some people turn problems into ventures?', minutes:5,
     narration:[`This course takes your team from a real social problem to an idea you can defend. <span class="mono">Topics: Course Material · Course Assignments · Groups formation · What is Entrepreneurship? · Role of Entrepreneurs in the Society. CLO 1.</span>`],
     src:`Reading: Byers, T., Dorf, R. C., &amp; Nelson, A. J. (2019). <em>Technology ventures: From idea to enterprise</em> (5th ed.), Ch. 1. McGraw-Hill Education.`,
-    fig:{label:`Today's lecture · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`Course material`,10,'l'],[`Course assignments`,15,'l'],[`What is entrepreneurship?`,20,'l'],[`Role in society`,20,'l'],[`Groups formation`,35,'a'],[`Check`,15,'c']])} },
+    fig:{label:`Today's lecture · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`Course material`,10,'l'],[`Course assignments`,15,'l'],[`What is entrepreneurship?`,20,'l'],[`Role in society`,20,'l'],[`Groups formation`,35,'a'],[`Think about it`,15,'a']])} },
 
   { nav:'Course material', title:'Course material', minutes:10,
     narration:[`One textbook and a few short readings. Each lecture page names its reading on the first scene.`],
@@ -55,16 +56,15 @@ Lecture.mount({
     fig:{label:`Careem in numbers · 2020`, html:`<div class="tiles"><div><div class="n">2012</div><div class="t">Founded in Dubai</div></div><div><div class="n">1M+</div><div class="t">Employment opportunities created in the region</div></div><div><div class="n">120</div><div class="t">Cities in 15 countries</div></div><div><div class="n">$3.1bn</div><div class="t">Acquired by Uber</div></div></div>`} },
 
   { nav:'Groups formation', title:'Activity · Form your team', kind:'activity', minutes:35,
-    narration:[`Form a team, agree how you work, and choose one social need for Project 1: education, health, social protection or job opportunities.`],
+    narration:[`Form a team, agree how you work, and choose one social need for Project 1: education, health, social protection or job opportunities. No idea yet? Open the <a href="toolkit.html">Toolkit</a>.`],
     fig:{label:`Team charter · saves in your browser`, build:el=>W.worksheet(el,{id:'ent141-w1-team',title:'ENT 141 · Team charter',fields:[
       {l:'Team name',rows:1},{l:'Members and one strength each',rows:3},{l:'Social need we will work on',ph:'education · health · social protection · job opportunities',rows:1},{l:'Who has this problem? (a group you can talk to)',rows:2},{l:'When and where we meet each week',rows:1},{l:'Our rule if someone misses a deadline',rows:2}]})} },
 
-  { nav:'Check', title:'Check your understanding', kind:'check', minutes:15,
-    narration:[`<b>Next week:</b> read Byers et al (2019) Ch. 8 and Lubberink et al (2017).`],
-    fig:{label:`3 questions`, build:el=>W.quiz(el,[
-      {q:'Which statement best describes an entrepreneur?',o:['Someone who owns a large company','Someone who spots a problem worth solving and builds a venture, accepting risk','Someone who invents a new device','Someone who works for the government'],a:1,why:'Owning or inventing is not enough: the entrepreneur pursues an opportunity and accepts risk to create value.'},
-      {q:'Careem’s story shows which role of entrepreneurs in society?',o:['Reducing taxes','Creating jobs and new services','Replacing government transport','Lowering fuel prices'],a:1,why:'Careem reported more than one million employment opportunities created in the region.'},
-      {q:'What is Project 1?',o:['An individual essay','A team poster plus an individual presentation','A final exam','A business plan'],a:1,why:'Poster 30% (team) and presentation 10% (graded individually), Week 9.'}])} },
+  { nav:'Think about it', title:'Think about it', kind:'activity', minutes:15,
+    narration:[`Discuss with your team, then reveal one view. There is no single right answer.`,`<b>Next week:</b> read Byers et al (2019) Ch. 8 and Lubberink et al (2017).`],
+    fig:{label:`Critical thinking · Careem`, build:el=>W.practice(el,[{q:'Careem reported more than one million employment opportunities. Is every job created by a platform a good job? What would you check?',hint:'Pay, hours, safety and security: a job count alone does not show quality.'},
+{q:'When a startup like Careem grows, who gains and who might lose?',hint:"Riders and drivers may gain; taxi companies may lose customers. Every venture changes someone else's market."},
+{q:'Name a business near you that solves a problem. What risk did its founder take?',hint:'Money, time, reputation, a stable job: entrepreneurship always involves a bet.'}],{label:'One view',prefix:''})} },
   ]
 });
 </script>

@@ -179,14 +179,14 @@
 
     const bar=h('header',{class:'bar'});
     bar.innerHTML=`<div class="bar-in">
-      <a class="brand" href="index.html" title="Back to the course map"><b>${esc(cfg.course||'GED 102')}</b><span>← Course map · ${esc(cfg.short)}</span></a>
+      <a class="brand" href="index.html" title="Back to the course map"><b>${esc(cfg.course||'GED 102')}</b><span>← Course home · ${esc(cfg.short)}</span></a>
       <div class="controls">
         <span class="seg-label">Layout</span>
         <div class="seg" role="group" aria-label="Layout">
           <button type="button" data-l="text">Text</button><button type="button" data-l="even">Even</button><button type="button" data-l="diagram">Diagram</button>
         </div>
         <button type="button" class="pill listen" id="listen" aria-pressed="false">▶ Listen</button>
-        <button type="button" class="pill" id="teach" aria-pressed="false" title="Show timings and facilitation notes">Teacher notes</button>
+        ${S.some(x=>x.notes)?'<button type="button" class="pill" id="teach" aria-pressed="false" title="Show timings and facilitation notes">Teacher notes</button>':''}
         <button type="button" class="pill" id="theme" title="Switch light or dark">◐ Theme</button>
       </div></div><div class="progress"><i></i></div>`;
     document.body.appendChild(bar);
@@ -205,8 +205,8 @@
     const setLayout=l=>{ document.body.dataset.layout=l; store.set('ged102-layout',l); segBtns.forEach(b=>b.setAttribute('aria-pressed',b.dataset.l===l)); };
     segBtns.forEach(b=>b.addEventListener('click',()=>setLayout(b.dataset.l))); setLayout(document.body.dataset.layout);
     const teach=bar.querySelector('#teach');
-    const syncTeach=()=>teach.setAttribute('aria-pressed',document.body.classList.contains('teacher'));
-    teach.addEventListener('click',()=>{document.body.classList.toggle('teacher'); store.set('ged102-teacher',document.body.classList.contains('teacher')?'1':'0'); syncTeach();}); syncTeach();
+    if(teach){ const syncTeach=()=>teach.setAttribute('aria-pressed',document.body.classList.contains('teacher'));
+    teach.addEventListener('click',()=>{document.body.classList.toggle('teacher'); store.set('ged102-teacher',document.body.classList.contains('teacher')?'1':'0'); syncTeach();}); syncTeach(); }
     bar.querySelector('#theme').addEventListener('click',toggleTheme);
     const listen=bar.querySelector('#listen');
     listen.addEventListener('click',()=>{ speaking?stop():speak(); });

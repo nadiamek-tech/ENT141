@@ -13,6 +13,7 @@
 </style>
 </head>
 <body>
+<script src="assets/site.js"></script>
 <script src="assets/course.js"></script>
 <script src="assets/ent141.js"></script>
 <script src="assets/kb.js"></script>
@@ -56,10 +57,10 @@ Lecture.mount({
   { nav:'Start here', title:'What exactly are we solving, and for whom?', minutes:5,
     narration:[`Defining turns interview notes into one clear problem and a few “How might we…” questions. <span class="mono">Topics: Primary Data Collection Methods · How Might We (HMW) Questions · Problem Definition &amp; Sustainability. CLO 1 · CLO 3.</span>`],
     src:`Reading: Byers et al. (2019), Ch. 2. · Hasso Plattner Institute of Design at Stanford. <em>An introduction to design thinking: Process guide</em>, Define mode.`,
-    fig:{label:`Today's lecture · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`Primary data`,20,'l'],[`From notes to insight`,15,'l'],[`How might we`,15,'l'],[`Problem and sustainability`,15,'l'],[`Define your problem`,40,'a'],[`Check`,10,'c']])} },
+    fig:{label:`Today's lecture · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`Primary data`,20,'l'],[`From notes to insight`,15,'l'],[`How might we`,15,'l'],[`Problem and sustainability`,15,'l'],[`Define your problem`,40,'a'],[`Think about it`,10,'a']])} },
 
   { nav:'Primary data', title:'Primary data collection methods', minutes:20,
-    narration:[`<b>Primary data</b> is what your team collects first-hand; <b>secondary data</b> already exists, such as UN or government statistics. For the poster, interviews and observation come first.`],
+    narration:[`<b>Primary data</b> is what your team collects first-hand; <b>secondary data</b> already exists, such as UN or government statistics. For the poster, interviews and observation come first; for secondary data, use the <a href="toolkit.html#s4">open data finder</a>.`],
     src:`Byers et al. (2019), Ch. 2. · d.school Process guide.`,
     fig:{label:`Four methods · click to compare`, build:el=>W.picker(el,METHODS,'Select a method.')} },
 
@@ -80,12 +81,11 @@ Lecture.mount({
     narration:[`Use your interview notes. Write the point of view, then three HMW questions; the checks flag the common mistakes. Copy the best into Step 5 of the <a href="project-1.html">Poster Lab</a>.`],
     fig:{label:`POV and HMW builder · saves in your browser`, build:hmw} },
 
-  { nav:'Check', title:'Check your understanding', kind:'check', minutes:10,
-    narration:[`<b>Next week:</b> read Byers et al (2019) Ch. 2 and 3. Bring your best HMW question.`],
-    fig:{label:`3 questions`, build:el=>W.quiz(el,[
-      {q:'Which is primary data?',o:['UN statistics on youth unemployment','Your interview with five commuting students','A newspaper article','A government report'],a:1,why:'You collected it first-hand. The others already exist, so they are secondary data.'},
-      {q:'Which HMW question is “just right”?',o:['How might we improve education?','How might we help first-year students find a study partner in their first month?','How might we build a study-partner app?','How might we make students happy?'],a:1,why:'It names a user and a need without naming a solution. A and D are too broad; C is too narrow.'},
-      {q:'A point of view joins…',o:['Price, product and place','User, need and insight','Goal, target and indicator','Problem, solution and profit'],a:1,why:'d.school format: [user] needs [need] because [insight].'}])} },
+  { nav:'Think about it', title:'Think about it', kind:'activity', minutes:15,
+    narration:[`Discuss with your team, then reveal one view. There is no single right answer.`,`<b>Next week:</b> read Byers et al (2019) Ch. 2 and 3. Bring your best HMW question.`],
+    fig:{label:`Critical thinking · Defining`, build:el=>W.practice(el,[{q:'Is a survey of 200 people better than 5 deep interviews?',hint:'For understanding why, no. For showing how common a problem is, yes. Use them in that order.'},
+{q:'Your HMW question names an app. What do you lose?',hint:'Every non-app solution: a service, a rule change, a campaign. Keep the solution open.'},
+{q:'Your problem matters to you. How do you show it matters to others?',hint:'Quotes from several users plus one number from a trusted open data source.'}],{label:'One view',prefix:''})} },
   ]
 });
 </script>

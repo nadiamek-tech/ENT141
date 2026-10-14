@@ -15,6 +15,7 @@
 </style>
 </head>
 <body>
+<script src="assets/site.js"></script>
 <script src="assets/course.js"></script>
 <script src="assets/ent141.js"></script>
 <script src="assets/kb.js"></script>
@@ -141,9 +142,9 @@ Lecture.mount({
     narration:[`Research a sustainable development topic, find a real pain point, and combine the <b>empathy map, journey map, HMW questions, solutions and prototype</b> in one poster. Each step shows what is still missing.`],
     fig:{label:'Requirements and progress', build:overview} },
   { nav:'1 · Team and topic', title:'Step 1 · Team and topic', kind:'activity', full:true,
-    narration:[`<b>Task:</b> choose one social need and an SDG target (Week 3). <b>Output:</b> the poster title line.`], fig:{label:'Team and topic', build:stepTeam} },
+    narration:[`<b>Task:</b> choose one social need and an SDG target (Week 3). <b>Output:</b> the poster title line. No problem yet? <a href="toolkit.html">Toolkit</a>.`], fig:{label:'Team and topic', build:stepTeam} },
   { nav:'2 · Interviews', title:'Step 2 · Interviews', kind:'activity', full:true,
-    narration:[`<b>Task:</b> interview and observe people who have the problem (Week 5). <b>Output:</b> quotes and what you learned. Part 2 · 20 marks.`], fig:{label:'Interview log', build:stepInts} },
+    narration:[`<b>Task:</b> interview and observe people who have the problem (Week 5). <b>Output:</b> quotes and what you learned. Part 2 · 20 marks. Questions: <a href="toolkit.html#s5">designer</a>.`], fig:{label:'Interview log', build:stepInts} },
   { nav:'3 · Empathy map', title:'Step 3 · Empathy map', kind:'activity', full:true,
     narration:[`<b>Task:</b> sort your interview notes into says, thinks, does and feels (Week 5). <b>Output:</b> the empathy map on the poster.`], fig:{label:'Your empathy map', build:stepEmp} },
   { nav:'4 · Journey map', title:'Step 4 · Journey map', kind:'activity', full:true,
@@ -153,13 +154,13 @@ Lecture.mount({
   { nav:'6 · Solutions', title:'Step 6 · Solutions', kind:'activity', full:true,
     narration:[`<b>Task:</b> list at least three solutions tagged risky, easy and favourite, then choose and justify one (Weeks 7–8). Part 4 · 20 marks.`], fig:{label:'Solutions', build:stepSol} },
   { nav:'7 · Prototype', title:'Step 7 · Prototype', kind:'activity', full:true,
-    narration:[`<b>Task:</b> make the fastest, cheapest version a user can see: a drawing or design is enough. <b>Output:</b> a photo on the poster. Part 5 · 20 marks.`], fig:{label:'Prototype', build:stepProto} },
+    narration:[`<b>Task:</b> make the fastest, cheapest version a user can see: a drawing or design is enough. <b>Output:</b> a photo on the poster. Part 5 · 20 marks. Ideas: <a href="toolkit.html#s6">prototype helper</a>.`], fig:{label:'Prototype', build:stepProto} },
   { nav:'8 · Feedback', title:'Step 8 · Feedback and changes', kind:'activity', full:true,
     narration:[`<b>Task:</b> show what you learned from the interviewee, the Professor and the guidelines, and what you changed. Part 1 · 20 marks.`], fig:{label:'Feedback and changes', build:stepFb} },
   { nav:'9 · Poster', title:'Step 9 · Your poster', kind:'activity', full:true,
     narration:[`Your poster is built from Steps 1–8. Print it, or save it as a PDF, and submit as your instructor announces on Moodle.`], fig:{label:'Poster preview', build:stepPoster} },
   { nav:'Presentation', title:'Presenting the poster', kind:'activity', full:true,
-    narration:[`Your team presents the poster to the instructor; each student is graded <b>individually</b> on communication, confidence and knowledge. Practise your minute.`],
+    narration:[`Your team presents the poster to the instructor; each student is graded <b>individually</b> on communication, confidence and knowledge. Practise your minute; more help in the <a href="toolkit.html#s7">pitch tool</a>.`],
     fig:{label:'60-second practice timer', build:el=>{ ENT141.timer(el,PRES); const r=document.createElement('div'); r.style.marginTop='16px'; r.innerHTML=`<span class="eyebrow">How it is marked · syllabus</span>`+ENT141.rubHTML(ENT141.RUB_PRES); el.appendChild(r); }} },
   { nav:'Marking', title:'How the poster is marked', kind:'review', full:true,
     narration:[`The poster rubric from the syllabus, word for word.`], fig:{label:'Poster rubric · 100 marks → 30%', build:el=>{ el.innerHTML=ENT141.rubHTML(ENT141.RUB_POSTER); }} },

@@ -4,174 +4,59 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>ENT 141 · Innovation and Entrepreneurship 1</title>
-<meta name="description" content="Narrated, visual lectures and project guides for ENT 141 – Fundamentals of Innovation and Entrepreneurship 1, Canadian University Dubai.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Schibsted+Grotesk:wght@400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
 <link rel="stylesheet" href="assets/course.css">
-<style>
-/* Hub layout: masthead with course identity, a 4-step "how it works" strip, then the 16-week map as a ledger grouped by CLO. */
-:root{--c1:#0F7B6C;--c2:#2F55C8;--c3:#B4521E;--c4:#6B4FB8}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--c1:#4FD1BA;--c2:#8AA6FF;--c3:#F2A06B;--c4:#B9A3F5}}
-:root[data-theme="dark"]{--c1:#4FD1BA;--c2:#8AA6FF;--c3:#F2A06B;--c4:#B9A3F5}
-.wrap{max-width:1180px;margin:0 auto;padding-inline:20px;padding-block:0 56px}
-.top{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-block:16px;border-bottom:1px solid var(--line)}
-.top .mono{color:var(--muted)}
-.mast{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:40px;padding-block:48px 36px;align-items:end}
-.mast h1{font-size:clamp(2.2rem,5.2vw,4.2rem);overflow-wrap:anywhere;font-weight:800;letter-spacing:-.035em;line-height:.95}
-.mast h1 span{display:block;color:var(--muted);font-weight:600}
-.mast .code{font-family:var(--f-mono);font-size:.8rem;letter-spacing:.1em;color:var(--muted);margin-bottom:14px;display:block}
-.mast p{margin:0 0 12px;max-width:52ch}
-.byline{font-family:var(--f-display);font-size:.92rem;color:var(--muted)}
-.byline b{color:var(--ink)}
-.trial{font-family:var(--f-display);font-size:.95rem;color:var(--muted);margin:20px 0 0;max-width:46ch}
-.start.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
-html{scroll-behavior:smooth}
-.mast{padding-block:40px 32px}
-.start{display:inline-flex;align-items:center;gap:10px;margin-top:10px;background:var(--ink);color:var(--bg);text-decoration:none;padding:11px 18px;border-radius:10px;font-family:var(--f-display);font-weight:700}
-.how{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border-block:1px solid var(--line);margin-bottom:44px}
-.how div{padding:16px 18px;border-left:1px solid var(--line);font-family:var(--f-display);font-size:.9rem}
-.how div:first-child{border-left:0;padding-left:0}
-.how b{display:block;font-size:1rem;margin-bottom:4px}
-.how .k{font-family:var(--f-mono);font-size:.7rem;border:1px solid var(--line);border-radius:4px;padding:1px 5px;background:var(--surface)}
-h2.sec{font-size:1.5rem;font-weight:800;margin-bottom:6px}
-.sub{font-family:var(--f-display);color:var(--muted);margin:0 0 18px;font-size:.95rem}
-.clos{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:26px}
-.clos div{font-family:var(--f-display);font-size:.88rem;border-top:3px solid var(--cc);padding-top:8px}
-.clos b{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.06em;color:var(--cc);display:block;margin-bottom:2px}
-.ledger{display:grid;gap:0;border-top:1px solid var(--line)}
-.wk{display:grid;grid-template-columns:64px minmax(0,1fr) 150px 130px 110px;gap:16px;align-items:start;padding:14px 0;border-bottom:1px solid var(--line);text-decoration:none;color:var(--ink);position:relative}
-.wk .no{font-family:var(--f-display);font-weight:800;font-size:1.6rem;line-height:1;color:var(--cc);font-variant-numeric:tabular-nums}
-.wk h3{font-size:1.04rem;font-weight:700;margin-bottom:3px}
-.wk ul{margin:0;padding-left:1.05em;font-size:.88rem;color:var(--muted);font-family:var(--f-display)}
-.wk .meta{font-family:var(--f-display);font-size:.84rem;color:var(--muted)}
-.wk .meta b{display:block;font-family:var(--f-mono);font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;font-weight:400}
-.wk .st{justify-self:end;text-align:right}
-.wk.ready{background:linear-gradient(90deg,color-mix(in srgb,var(--cc) 8%,transparent),transparent 70%)}
-.wk.ready:hover h3{text-decoration:underline;text-decoration-color:var(--cc)}
-.wk.ready .open{font-family:var(--f-display);font-weight:700;color:var(--cc);font-size:.9rem;white-space:nowrap}
-.wk:not(.ready) h3{color:var(--muted)}
-.foot{margin-top:28px;font-family:var(--f-display);font-size:.84rem;color:var(--muted)}
-@media (max-width:900px){
-  .mast{grid-template-columns:minmax(0,1fr);gap:20px;padding-block:32px 24px}
-  .how{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .how div:nth-child(3){border-left:0;padding-left:0}
-  .how div{border-top:1px solid var(--line)} .how div:nth-child(-n+2){border-top:0}
-  .clos{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .wk{grid-template-columns:48px minmax(0,1fr);gap:6px 12px}
-  .wk .meta,.wk .st{grid-column:2;justify-self:start;text-align:left}
-}
-@media (max-width:480px){.how{grid-template-columns:minmax(0,1fr)}.how div{border-left:0!important;padding-left:0;border-top:1px solid var(--line)!important}.how div:first-child{border-top:0!important}}
-.proj{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:center;border:1px solid var(--line);border-left:6px solid var(--c3);border-radius:12px;padding:18px 20px;margin-bottom:16px;background:var(--surface);text-decoration:none;color:var(--ink)}
-.proj h3{font-size:1.25rem;font-weight:800;margin-bottom:4px}
-.proj p{margin:0;font-family:var(--f-display);font-size:.92rem;color:var(--muted)}
-.proj .open{font-family:var(--f-display);font-weight:700;color:var(--c3);white-space:nowrap}
-.proj:hover h3{text-decoration:underline}
-@media (max-width:560px){.proj{grid-template-columns:minmax(0,1fr)}}
-.brandrow{display:flex;align-items:center;gap:12px;min-width:0}
-.cudlogo{height:44px;width:auto;display:block;background:#fff;border-radius:8px;padding:4px 8px}
-.find,.faq{margin-bottom:40px}
-.find{margin-top:12px}
-.findbox{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;max-width:640px}
-.findbox input{min-width:0;padding:11px 14px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);font:inherit;font-family:var(--f-display);font-size:1rem}
-.findres{display:grid;gap:6px;margin-top:12px;max-width:760px}
-.findres a{display:block;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);text-decoration:none;color:var(--ink);font-family:var(--f-display);font-size:.92rem}
-.findres a b{display:block;color:var(--wk)}
-.findres a small{color:var(--muted)}
-.faq .acc{max-width:760px}
-</style>
+<link rel="stylesheet" href="assets/home.css">
 </head>
 <body>
-
-<div class="wrap">
-  <div class="top"><span class="brandrow"><img src="assets/cud-logo.png" alt="Canadian University Dubai" class="cudlogo" onerror="this.remove()"><span class="mono">ENT 141</span></span><button type="button" class="pill" id="theme">◐ Theme</button></div>
-
-  <section class="mast">
-    <div>
-      <span class="code">ENT 141 · 2-0-2 · LECTURE 30 HRS · YEAR 1</span>
-      <h1>Innovation &amp; Entrepreneurship 1<span>from social problem to validated idea</span></h1>
-      <p class="trial">A trial of a more interactive way to run this course. Your comments and recommendations are very welcome.</p>
-    </div>
-    <div>
-      <div class="byline">Course lecturer <b>Eng. Nadia Mek</b></div>
-      <div class="row" style="gap:10px"><a class="start" href="#map">Lectures</a><a class="start ghost" href="projects.html">Projects</a><a class="start ghost" href="project-1.html">Poster Lab</a></div>
-    </div>
-  </section>
-
-
-  <section class="find" aria-label="Search the course">
-    <h2 class="sec">Find anything</h2>
-    <form id="find-f" class="findbox" role="search"><input id="find-q" type="search" placeholder="Try: empathy map, HMW, poster, SDG…" aria-label="Search the course" autocomplete="off"><button type="submit" class="btn">Search</button></form>
-    <div id="find-r" class="findres" aria-live="polite"></div>
-  </section>
-
-  <section class="faq" aria-label="Frequently asked questions">
-    <h2 class="sec">FAQ</h2>
-    <div class="acc" id="faq"></div>
-  </section>
-
-  <a class="proj" href="projects.html">
-    <div><span class="eyebrow">Poster 30% · Presentation 10% · Report 40% · Activities 20%</span><h3>Projects</h3><p>Project 1 Poster Lab, presentation tips and Activity 1, plus what is coming next.</p></div>
-    <span class="open">Open →</span>
-  </a>
-
-  <h2 class="sec" id="map">Course map</h2>
-  <p class="sub">Topics as written in the syllabus. Pages open as they are released.</p>
-  <div class="clos">
-    <div style="--cc:var(--c1)"><b>CLO 1</b>Explain the basic concepts of innovation, entrepreneurship, and sustainability, and their value to the society and economy.</div>
-    <div style="--cc:var(--c2)"><b>CLO 2</b>Demonstrate skills of effective teamwork and presentation.</div>
-    <div style="--cc:var(--c3)"><b>CLO 3</b>Evaluate ideas and viable opportunities using the design thinking process.</div>
-    <div style="--cc:var(--c4)"><b>CLO 4</b>Identify key elements of the sustainability framework in the proposed innovative opportunities.</div>
-  </div>
-  <div class="ledger" id="ledger"></div>
-  <p class="foot">Assessment: Project 1 Poster (30%), Project 1 Presentation (10%), Project 2 Idea Validation Report (40%), Activity 1 (10%), Activity 2 (10%). Textbook: Byers, Dorf &amp; Nelson (2019), <em>Technology ventures: From idea to enterprise</em> (5th ed.). Due dates are announced on Moodle.</p>
-</div>
-
+<script src="assets/site.js"></script>
 <script src="assets/scorm.js"></script>
 <script src="assets/course.js"></script>
 <script src="assets/kb.js"></script>
 <script src="assets/search-index.js"></script>
 <script src="assets/assistant.js"></script>
-<script>
-document.getElementById('theme').addEventListener('click',()=>GED102Theme.toggle());
-const WEEKS=[
- [1,'Overview of the Course · Introduction to Entrepreneurship',['Course Material','Course Assignments','Groups formation','What is Entrepreneurship?','Role of Entrepreneurs in the Society'],'1','Byers et al (2019) Ch. 1','','week-01.html'],
- [2,'Introduction to Innovation · Introduction to Creativity',['What is Innovative Thinking','Innovation V/S Invention','What is Creativity?','How is creativity linked to innovative thinking and entrepreneurship?'],'2','Byers et al (2019) Ch. 8, Lubberink et al (2017)','','week-02.html'],
- [3,'Introduction to Sustainability',['The Triple Bottom-line Framework','United Nations Sustainable Development Goals','Understanding Sustainable Entrepreneurship','Sustainability in the UAE'],'1,2, 4','Pradeep and Shaw (2022) Ch. 1, Krzymowski, (2020)','','week-03.html'],
- [4,'Design Thinking Process (DTP) for Sustainable Innovation',['Introduction to Design Thinking Process','Building an Innovative Mindset'],'1,3','Kummitha (2019)','In-class Activities- Activity 1','week-04.html'],
- [5,'DTP Step 1: Empathy',['Empathy Map','Journey Map'],'3','Ch. 2, Stanford DPG','','week-05.html'],
- [6,'DTP Step 2: Defining',['Primary Data Collection Methods','How Might We (HMW) Questions','Problem Definition & Sustainability'],'1,3','Byers et al (2019) Ch. 2, Stanford DPG','','week-06.html'],
- [7,'DTP Step 3: Ideation',['What is Ideation?','Ideation Methods and Techniques'],'1,3','Byers et al (2019) Ch. 2,3, Stanford DPG',''],
- [8,'Idea Evaluation',['Assessing the Ideas – Risky, Easy, and Favorite','How to align the Idea to the Problem?'],'1,3','Traifeh et al (2021)',''],
- [9,'Defending the Idea · Presenting the Idea',['Providing Rationale for the Ideas','Refining the Ideas','How to pitch the project?','Presentation Techniques'],'1,2,3','Byers et al (2019) Ch. 19','Project 1 Poster Submission · Project 1 Presentation'],
- [10,'Entrepreneurial Strategy',['Entrepreneurial Vision & Mission','Goals, Objectives, and Tactics'],'3','Byers et al (2019) Ch. 3',''],
- [11,'Overview of Entrepreneurial Strategies',['Communicating the Mission and Vision','Reviewing the Strategy'],'1','HBR*','In-class Activities · Activity 2'],
- [12,'Market/Industry Analysis',['What is a Market?','PESTLE Analysis'],'3','Byers et al (2019) Ch. 2, 3',''],
- [13,'Value Proposition Canvas (Part 1)',['Customer Portfolio and Analysis'],'3','Byers et al (2019) Ch. 3',''],
- [14,'Value Proposition Canvas (Part 2)',['Product Offering and Evaluation'],'3','Byers et al (2019) Ch. 3',''],
- [15,'Product Differentiation (Part 1)',['Communicating the features and benefits.'],'3','Byers et al (2019) Ch. 4',''],
- [16,'Product Differentiation (Part 2)',['Communicating the features and benefits.'],'3','Byers et al (2019) Ch. 4','Project 2- Idea Validation Report Submission']
-];
-const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-document.getElementById('ledger').innerHTML=WEEKS.map(([n,t,subs,clo,ref,ass,href])=>{
-  const tag=href?'a':'div'; const cc=`var(--c${clo[0]})`;
-  return `<${tag} class="wk${href?' ready':''}" ${href?`href="${href}"`:''} style="--cc:${cc}">
-    <span class="no">${String(n).padStart(2,'0')}</span>
-    <div><h3>${esc(t)}</h3>${subs.length?`<ul>${subs.map(s=>`<li>${esc(s)}</li>`).join('')}</ul>`:''}</div>
-    <div class="meta">${ref?`<b>Reading</b>${esc(ref)}`:''}</div>
-    <div class="meta"><b>CLO</b>${esc(clo)}${ass?`<b style="margin-top:6px">Assessment</b>${ass}`:''}</div>
-    <div class="st">${href?'<span class="open">Open lecture →</span>':'<span class="tag">In preparation</span>'}</div></${tag}>`; }).join('');
+<script src="assets/home.js"></script>
+<div class="wrap">
+  <div id="hdr"></div>
+  <section class="mast">
+    <span class="code" id="m-code"></span>
+    <h1 id="m-title"></h1>
+    <div class="byline">Course lecturer <b id="m-ins"></b></div>
+    <p class="trial">A trial of a more interactive way to run this course. Your comments and recommendations are very welcome.</p>
+    <nav class="big3" id="big3" aria-label="Main sections"></nav>
+    <form id="find-f" class="findbox" role="search"><input id="find-q" type="search" placeholder="Search the course, or ask a question…" aria-label="Search the course" autocomplete="off"><button type="submit" class="btn">Search</button></form>
+    <div id="find-r" class="findres" aria-live="polite"></div>
+  </section>
 
-/* search + FAQ */
-const FAQ=['When is Project 1 due?','What goes on the Project 1 poster?','How is the course graded?','How many interviews do we need?','How is the presentation graded?','What is Activity 1?','Can I use ChatGPT or AI?','How do I print the poster?','Does the Poster Lab save my work?','What is Project 2?'];
-const KBX=window.ENT141_KB||[];
-document.getElementById('faq').innerHTML=FAQ.map(q=>KBX.find(e=>e.q===q)).filter(Boolean).map(e=>`<details><summary>${esc(e.q)}</summary><p>${esc(e.a)} <a href="${e.l}">Open →</a></p></details>`).join('');
-document.getElementById('find-f').addEventListener('submit',ev=>{ ev.preventDefault(); const q=document.getElementById('find-q').value.trim(); const box=document.getElementById('find-r'); if(!q){ box.innerHTML=''; return; }
-  const r=window.ENT141Assistant.search(q); const items=[];
-  r.kb.filter(x=>x.s>=1.6).slice(0,3).forEach(x=>items.push(`<a href="${x.e.l}"><b>${esc(x.e.q)}</b>${esc(x.e.a)}<br><small>${esc(window.ENT141Assistant.label(x.e.l))}</small></a>`));
-  r.idx.filter(x=>x.s>=2&&!r.kb.slice(0,3).some(k=>k.e.l===x.e.l)).slice(0,4).forEach(x=>items.push(`<a href="${x.e.l}"><b>${esc(x.e.pt)} · ${esc(x.e.n)}</b><small>${esc(x.e.t)}</small></a>`));
-  box.innerHTML=items.length?items.join(''):`<p class="mono" style="color:var(--muted)">Try one key word, or ask the assistant.</p><button type="button" class="btn" id="find-ask">🙂 Ask me: “${esc(q)}”</button>`;
-  const fa=document.getElementById('find-ask'); if(fa) fa.addEventListener('click',()=>window.ENT141Assistant.open(q)); });
+  <h2 class="sec">FAQ</h2>
+  <div class="acc" id="faq"></div>
+
+  <h2 class="sec">Semester calendar</h2>
+  <p class="sub">Every assessment, in order. Click a row to see what it includes.</p>
+  <div id="cal"></div>
+
+  <h2 class="sec">Upcoming submissions</h2>
+  <p class="sub">All submissions are on Moodle. Use these buttons to reach the right one.</p>
+  <div class="subs" id="subs"></div>
+
+  <h2 class="sec">Course learning outcomes</h2>
+  <div class="clos" id="clos"></div>
+
+  <h2 class="sec">Links</h2>
+  <div class="links" id="links"></div>
+</div>
+<script>
+const H=Hub, S=H.S;
+document.getElementById('hdr').outerHTML=H.header(false); H.wireTheme();
+document.getElementById('m-code').textContent=S.code+' · '+S.meta;
+document.getElementById('m-title').innerHTML=H.esc(S.title)+'<span>'+H.esc(S.subtitle)+'</span>';
+document.getElementById('m-ins').textContent=S.instructor;
+const SUBT={Lectures:'Weekly lectures',Projects:'Poster lab and submissions',Toolkit:'Find an idea, data, prototype, pitch',Labs:'Lab files and guidance',Exams:'Dates, revision and practice'};
+document.getElementById('big3').innerHTML=S.buttons.map(([t,u])=>'<a href="'+u+'">'+t+'<small>'+(SUBT[t]||'')+'</small></a>').join('');
+H.faq(document.getElementById('faq')); H.calendar(document.getElementById('cal')); H.subs(document.getElementById('subs'),true); H.clos(document.getElementById('clos')); H.links(document.getElementById('links'));
+H.find(document.getElementById('find-f'),document.getElementById('find-q'),document.getElementById('find-r'));
 </script>
 </body>
 </html>

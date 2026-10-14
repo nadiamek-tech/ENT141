@@ -13,6 +13,7 @@
 </style>
 </head>
 <body>
+<script src="assets/site.js"></script>
 <script src="assets/course.js"></script>
 <script src="assets/ent141.js"></script>
 <script src="assets/kb.js"></script>
@@ -37,7 +38,7 @@ Lecture.mount({
   { nav:'Start here', title:'How do you solve a problem you do not have yourself?', minutes:5,
     narration:[`Design thinking starts with the people who have the problem, not with your idea. <span class="mono">Topics: Introduction to Design Thinking Process · Building an Innovative Mindset · Activity 1. CLO 1 · CLO 3.</span>`],
     src:`Reading: Kummitha, R. K. R. (2019). Design thinking in social organizations: Understanding the role of user engagement. <em>Creativity and Innovation Management</em>, 28(1), 101–112.`,
-    fig:{label:`Today's lecture · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`What is design thinking?`,15,'l'],[`The five steps`,15,'l'],[`Case: Embrace`,10,'l'],[`Innovative mindset`,20,'l'],[`Activity 1 · pitch`,40,'a'],[`Check`,15,'c']])} },
+    fig:{label:`Today's lecture · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`What is design thinking?`,15,'l'],[`The five steps`,15,'l'],[`Case: Embrace`,10,'l'],[`Innovative mindset`,20,'l'],[`Activity 1 · pitch`,40,'a'],[`Think about it`,15,'a']])} },
 
   { nav:'What is design thinking?', title:'Introduction to the design thinking process', minutes:15,
     narration:[`<b>Design thinking</b> is a human-centred way to solve problems by understanding users, trying many ideas and testing them early. Kummitha (2019) shows the role of engaging users when social organisations innovate.`],
@@ -67,12 +68,11 @@ Lecture.mount({
     narration:[`Individual, 10%. Pitch the topic your instructor assigns in <b>30–45 seconds</b> and post it on the Moodle forum before the deadline. Practise with the timer.`],
     fig:{label:`45-second pitch timer`, build:el=>{ ENT141.timer(el,PITCH); const r=document.createElement('div'); r.style.marginTop='16px'; r.innerHTML=`<span class="eyebrow">How it is marked · syllabus</span>`+ENT141.rubHTML(ENT141.RUB_ACT1); el.appendChild(r); }} },
 
-  { nav:'Check', title:'Check your understanding', kind:'check', minutes:15,
-    narration:[`<b>Next week:</b> read the Stanford d.school Process Guide, Empathize mode.`],
-    fig:{label:`3 questions`, build:el=>W.quiz(el,[
-      {q:'Design thinking starts with…',o:['A business plan','Understanding the people who have the problem','Choosing the cheapest idea','A survey of 1,000 people'],a:1,why:'Empathize comes first: you design for users you understand. A plan or a big survey comes later, if at all.'},
-      {q:'What changed Embrace’s design?',o:['A bigger budget','Observing families in Nepal','A patent','A competitor'],a:1,why:'Field observation showed babies needed warmth at home too, so a home model was added.'},
-      {q:'“Bias toward action” means…',o:['Act before you understand users','Make and try things instead of long discussions','Never change direction','Let the leader decide'],a:1,why:'It favours doing and making over prolonged talk; it does not mean skipping empathy.'}])} },
+  { nav:'Think about it', title:'Think about it', kind:'activity', minutes:15,
+    narration:[`Discuss with your team, then reveal one view. There is no single right answer.`,`<b>Next week:</b> read the Stanford d.school Process Guide, Empathize mode.`],
+    fig:{label:`Critical thinking · Embrace`, build:el=>W.practice(el,[{q:"Embrace's team changed the design after visiting families in Nepal. What would have happened if they had stayed in the lab?",hint:'They would have built a better hospital incubator for clinics that families could not reach.'},
+{q:'Which d.school mindset is hardest for your team? Why?',hint:'Be honest: “bias toward action” is hard for planners; “radical collaboration” is hard when friends think alike.'},
+{q:'Is design thinking only for designers?',hint:'No: it is a process anyone can use. Kummitha (2019) studies it in social organisations.'}],{label:'One view',prefix:''})} },
   ]
 });
 </script>

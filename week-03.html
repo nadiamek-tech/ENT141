@@ -13,6 +13,7 @@
 </style>
 </head>
 <body>
+<script src="assets/site.js"></script>
 <script src="assets/course.js"></script>
 <script src="assets/ent141.js"></script>
 <script src="assets/kb.js"></script>
@@ -29,7 +30,7 @@ Lecture.mount({
   { nav:'Start here', title:'Can a venture be good for people, planet and profit?', minutes:5,
     narration:[`Sustainability asks a venture to stay viable without harming people or the planet. <span class="mono">Topics: The Triple Bottom-line Framework · United Nations Sustainable Development Goals · Understanding Sustainable Entrepreneurship · Sustainability in the UAE. CLO 1 · CLO 2 · CLO 4.</span>`],
     src:`Reading: Ray, P., &amp; Shaw, R. (2022). <em>Technology entrepreneurship and sustainable development</em>, Ch. 1. Springer. · Krzymowski, A. (2020). Sustainable development goals in Arab region – United Arab Emirates’ case study. <em>Problemy Ekorozwoju</em>, 15(1), 211–220.`,
-    fig:{label:`Today's lecture · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`Triple bottom line`,20,'l'],[`The SDGs`,15,'l'],[`Sustainable entrepreneurship`,20,'l'],[`Sustainability in the UAE`,15,'l'],[`Your SDG`,30,'a'],[`Check`,15,'c']])} },
+    fig:{label:`Today's lecture · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`Triple bottom line`,20,'l'],[`The SDGs`,15,'l'],[`Sustainable entrepreneurship`,20,'l'],[`Sustainability in the UAE`,15,'l'],[`Your SDG`,30,'a'],[`Think about it`,15,'a']])} },
 
   { nav:'Triple bottom line', title:'The triple bottom-line framework', minutes:20,
     narration:[`Elkington's <b>triple bottom line</b> (1994) judges a venture on three results: <b>people</b>, <b>planet</b> and <b>profit</b>. Score your team's first idea; each score needs something you can count.`],
@@ -52,15 +53,14 @@ Lecture.mount({
     fig:{label:`Timeline · click in order, oldest first`, build:el=>W.order(el,UAE.map(([y,t])=>({y:+y,t})),'Click the events in the order they happened, oldest first.')} },
 
   { nav:'Your SDG', title:'Activity · Link your social need to an SDG', kind:'activity', minutes:30,
-    narration:[`Choose the main SDG for your team's social need, then write the target number in Step 1 of the <a href="project-1.html">Poster Lab</a>.`],
+    narration:[`Choose the main SDG for your team's social need, then write the target number in Step 1 of the <a href="project-1.html">Poster Lab</a>. Not sure it fits? Use the <a href="toolkit.html#s3">SDG check</a>.`],
     fig:{label:`Choose your SDGs · saves in your browser`, build:el=>ENT141.sdgPicker(el,'ent141-sdg')} },
 
-  { nav:'Check', title:'Check your understanding', kind:'check', minutes:15,
-    narration:[`<b>Next week:</b> read Kummitha (2019). Activity 1 (video pitch) is briefed next week.`],
-    fig:{label:`3 questions`, build:el=>W.quiz(el,[
-      {q:'The triple bottom line measures…',o:['Sales, costs and profit','People, planet and profit','Goals, targets and indicators','Products, prices and places'],a:1,why:'Elkington’s three results are social (people), environmental (planet) and economic (profit).'},
-      {q:'Why link your project to an SDG target, not just a goal?',o:['Targets are shorter','A target says exactly what change you contribute to','Goals are out of date','Only targets are on the UN website'],a:1,why:'Goals are broad; a target (e.g. 4.4) names the specific change your idea supports.'},
-      {q:'What makes Enviroserve a sustainable venture?',o:['It is in Dubai','It earns revenue by solving an environmental problem','It is a charity','It is government owned'],a:1,why:'It is paid to recycle, and recycling reduces landfill and emissions: profit and planet together.'}])} },
+  { nav:'Think about it', title:'Think about it', kind:'activity', minutes:15,
+    narration:[`Discuss with your team, then reveal one view. There is no single right answer.`,`<b>Next week:</b> read Kummitha (2019). Activity 1 (video pitch) is briefed next week.`],
+    fig:{label:`Critical thinking · Enviroserve`, build:el=>W.practice(el,[{q:'Enviroserve makes a profit from recycling. Is it a sustainable entrepreneur or just a business?',hint:'Both can be true: it earns revenue by reducing landfill. Ask whether the planet result is part of the model or a side effect.'},
+{q:'Can a venture score high on profit and low on people and still call itself sustainable?',hint:'Under the triple bottom line, no: all three results must hold over time.'},
+{q:"Look at your team's triangle. Which side is weakest, and what one change would raise it?",hint:'Name a measurable change, such as people served or waste avoided per month.'}],{label:'One view',prefix:''})} },
   ]
 });
 </script>

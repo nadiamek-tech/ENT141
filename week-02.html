@@ -13,6 +13,7 @@
 </style>
 </head>
 <body>
+<script src="assets/site.js"></script>
 <script src="assets/course.js"></script>
 <script src="assets/ent141.js"></script>
 <script src="assets/kb.js"></script>
@@ -43,7 +44,7 @@ Lecture.mount({
   { nav:'Start here', title:'Is every new idea an innovation?', minutes:5,
     narration:[`An idea becomes an innovation only when people use it and it creates value. <span class="mono">Topics: What is Innovative Thinking · Innovation V/S Invention · What is Creativity? · How is creativity linked to innovative thinking and entrepreneurship? CLO 2.</span>`],
     src:`Reading: Byers et al. (2019), Ch. 8. · Lubberink, R., Blok, V., van Ophem, J., van der Velde, G., &amp; Omta, O. (2017). Innovation for society: Towards a typology of developing innovations by social entrepreneurs. <em>Journal of Social Entrepreneurship</em>, 9(1), 52–78.`,
-    fig:{label:`Today's lecture · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`Innovative thinking`,15,'l'],[`Innovation vs invention`,20,'l'],[`What is creativity?`,20,'l'],[`Creativity → entrepreneurship`,15,'l'],[`Idea burst`,30,'a'],[`Check`,15,'c']])} },
+    fig:{label:`Today's lecture · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`Innovative thinking`,15,'l'],[`Innovation vs invention`,20,'l'],[`What is creativity?`,20,'l'],[`Creativity → entrepreneurship`,15,'l'],[`Idea burst`,30,'a'],[`Think about it`,15,'a']])} },
 
   { nav:'Innovative thinking', title:'What is innovative thinking?', minutes:15,
     narration:[`Innovative thinking looks for a new way to create value: a product, a process, a business model or a social change. Lubberink et al. (2017) study how social entrepreneurs develop innovations for society.`],
@@ -71,12 +72,11 @@ Lecture.mount({
     narration:[`As a team, list ideas for the social need you chose in Week 1. Quantity first, judgement later.`],
     fig:{label:`8-minute idea burst · saves in your browser`, build:burst} },
 
-  { nav:'Check', title:'Check your understanding', kind:'check', minutes:15,
-    narration:[`<b>Next week:</b> read Ray &amp; Shaw (2022) Ch. 1 and Krzymowski (2020).`],
-    fig:{label:`3 questions`, build:el=>W.quiz(el,[
-      {q:'What turns an invention into an innovation?',o:['A patent','People adopt it and it creates value','A bigger budget','A famous inventor'],a:1,why:'Innovation is an invention put to use. A patent protects an idea but does not make people use it.'},
-      {q:'Kitopi cooks for many restaurant brands in shared kitchens. Which type of innovation is that?',o:['Product','Process','Business model','Social'],a:2,why:'The food is not new; the way restaurants grow and earn is. Process would be a new way of producing; social would target a social problem first.'},
-      {q:'An idea is creative when it is…',o:['New only','Useful only','New and useful','Approved by a manager'],a:2,why:'A new but useless idea is not creative, and a useful idea that already exists is not new.'}])} },
+  { nav:'Think about it', title:'Think about it', kind:'activity', minutes:15,
+    narration:[`Discuss with your team, then reveal one view. There is no single right answer.`,`<b>Next week:</b> read Ray &amp; Shaw (2022) Ch. 1 and Krzymowski (2020).`],
+    fig:{label:`Critical thinking · Pure Harvest`, build:el=>W.practice(el,[{q:'Pure Harvest adapted technology that already existed. Is that less innovative than inventing something new?',hint:'No: innovation is about value in use. Adapting a known invention to a new place is how most innovations happen.'},
+{q:'Its greenhouses use far less water but need energy for cooling. Is it sustainable? What would you need to know?',hint:'Where the energy comes from, cost per kilo, and food miles saved versus imports. Judge all three bottom lines.'},
+{q:'Think of your idea burst. Which idea is new but not useful, and which is useful but not new?',hint:'Creativity needs both. Combine them: a useful idea delivered in a new way.'}],{label:'One view',prefix:''})} },
   ]
 });
 </script>

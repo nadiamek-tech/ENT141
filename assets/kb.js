@@ -2,6 +2,21 @@
    Every answer comes from the course pages, the syllabus or the Project 1 brief.
    q = question, k = extra words students may use, a = short answer, l = link, r = reading. */
 window.ENT141_KB=[
+/* ---------- help, contact, toolkit ---------- */
+{q:'How do I contact the professor?',k:'email contact professor instructor reach message',a:'By email; the address is in the FAQ on the course home page. Put ENT 141 in the subject line.',l:'index.html'},
+{q:'What are the office hours?',k:'office hours when available meet',a:'The office hours are in the FAQ on the course home page.',l:'index.html'},
+{q:'How do I book office hours?',k:'book booking appointment meeting office hours',a:'See the FAQ on the course home page for the booking link, or email the professor with two times that suit you.',l:'index.html'},
+{q:'What if I miss an activity or the presentation?',k:'miss missed absent sick late activity presentation makeup excuse',a:'Email the professor as soon as possible with the reason and any official document. Follow the attendance and incomplete-work policies in the syllabus.',l:'index.html'},
+{q:'Are there exams in this course?',k:'exam exams midterm final test written quiz',a:'No written exams. You are assessed by Project 1 (poster and presentation), Project 2 (report) and two activities.',l:'index.html'},
+{q:'Where do I submit my work?',k:'submit submission upload moodle where hand in',a:'On Moodle, through the submission buttons on the course home page and the Projects page.',l:'projects.html'},
+{q:'Where do I see my grades?',k:'grades marks results portal',a:'On the student portal; marked work also appears on Moodle. The link is on the course home page.',l:'index.html'},
+{q:'How do I find a project idea?',k:'idea find topic problem lost start no idea brainstorm choose',a:'Open the Toolkit: pick an existing problem from the problem bank, or find your own with the prompt generator and a bug list.',l:'toolkit.html#s0'},
+{q:'Can we pick an existing problem?',k:'existing problem bank list ready pick',a:'Yes. The problem bank has twelve real problem areas with who to interview and where to check the facts. “Pick this problem” fills Step 1 of the Poster Lab.',l:'toolkit.html#s1'},
+{q:'How do I check my idea fits an SDG?',k:'sdg check fit goal target match',a:'Type your problem in the SDG check, open the suggested goals, and find the target that matches. Only a matching target makes the link real.',l:'toolkit.html#s3'},
+{q:'Where do I find data?',k:'data open data statistics numbers source evidence find',a:'Use official open data: Bayanat (UAE), Dubai Pulse, UN SDG Global Database, World Bank, WHO, UNESCO, ILOSTAT. The data finder lists them.',l:'toolkit.html#s4'},
+{q:'How do I design a survey?',k:'survey questionnaire forms design questions',a:'Interview first, then survey to count how common the problem is. The question designer writes both; build the survey in Microsoft Forms.',l:'toolkit.html#s5'},
+{q:'How do I practise my pitch?',k:'pitch practise practice speak speaking coach rehearse ai',a:'Use the pitch builder and timer, then “Rehearse with Coach” in PowerPoint for feedback on pace and filler words.',l:'toolkit.html#s7'},
+{q:'How do I visualise my idea?',k:'visualise visualize show draw design mockup canva',a:'Pick your idea type in the prototype helper: screens, storyboard, model, poster or flowchart, with a free tool for each.',l:'toolkit.html#s6'},
 /* ---------- course & assessment ---------- */
 {q:'How is the course graded?',k:'grade marks weight worth assessment percentage breakdown',a:'Project 1 Poster 30%, Project 1 Presentation 10%, Project 2 Idea Validation Report 40%, Activity 1 10%, Activity 2 10%.',l:'week-01.html#s2'},
 {q:'When is Project 1 due?',k:'deadline due date poster submission when week 9',a:'Week 9: poster submission and presentation. The exact date is announced on Moodle.',l:'project-1.html#s0'},

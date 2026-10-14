@@ -13,6 +13,7 @@
 </style>
 </head>
 <body>
+<script src="assets/site.js"></script>
 <script src="assets/course.js"></script>
 <script src="assets/ent141.js"></script>
 <script src="assets/kb.js"></script>
@@ -35,7 +36,7 @@ Lecture.mount({
   { nav:'Start here', title:'What does your user really do, think and feel?', minutes:5,
     narration:[`Empathy is the base of the poster: interviews, an empathy map and a journey map. <span class="mono">Topics: Empathy Map · Journey Map. CLO 3.</span>`],
     src:`Reading: Hasso Plattner Institute of Design at Stanford. <em>An introduction to design thinking: Process guide</em>, Empathize mode. · Byers et al. (2019), Ch. 2.`,
-    fig:{label:`Today's lecture · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`What is empathy?`,10,'l'],[`Interview for empathy`,20,'l'],[`Empathy map`,20,'l'],[`Journey map`,20,'l'],[`Plan your interviews`,30,'a'],[`Check`,15,'c']])} },
+    fig:{label:`Today's lecture · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`What is empathy?`,10,'l'],[`Interview for empathy`,20,'l'],[`Empathy map`,20,'l'],[`Journey map`,20,'l'],[`Plan your interviews`,30,'a'],[`Think about it`,15,'a']])} },
 
   { nav:'What is empathy?', title:'What is empathy?', minutes:10,
     narration:[`Empathy is understanding a person's experience from their point of view. The d.school asks you to <b>observe</b>, <b>engage</b> and <b>immerse</b>: watch, talk and try it yourself.`],
@@ -56,17 +57,16 @@ Lecture.mount({
     fig:{label:`Illustrative journey · drag the feelings`, build:el=>ENT141.journeyMap(el,{key:'ent141-w5-jm-demo',init:EX_JM}), caption:`Illustrative only. Your team's real map goes in Step 4 of the Poster Lab.`} },
 
   { nav:'Plan your interviews', title:'Activity · Plan your interviews', kind:'activity', minutes:30,
-    narration:[`The poster rubric rewards <b>many</b> interviews with <b>deep</b> answers. Plan at least five, then log each one in Step 2 of the <a href="project-1.html">Poster Lab</a>.`],
+    narration:[`The poster rubric rewards <b>many</b> interviews with <b>deep</b> answers. Plan at least five, then log each one in Step 2 of the <a href="project-1.html">Poster Lab</a>. Need questions? Use the <a href="toolkit.html#s5">question designer</a>.`],
     fig:{label:`Interview plan · saves in your browser`, build:el=>W.worksheet(el,{id:'ent141-w5-plan',title:'ENT 141 · Interview plan',fields:[
       {l:'Who will we interview? (5+ people who have the problem)',rows:3},{l:'Where and when will we meet them?',rows:2},
       {l:'Opening question: “Tell me about the last time…”',rows:2},{l:'Four follow-up questions (no yes/no, no selling)',rows:4},{l:'Who asks, who writes, who observes?',rows:2}]})} },
 
-  { nav:'Check', title:'Check your understanding', kind:'check', minutes:15,
-    narration:[`<b>Next week:</b> read Byers et al (2019) Ch. 2 and the d.school Process Guide, Define mode. Bring your interview notes.`],
-    fig:{label:`3 questions`, build:el=>W.quiz(el,[
-      {q:'Which is the best empathy interview question?',o:['“Would you buy our app?”','“Tell me about the last time you missed a class. Why?”','“Do you like the campus?”','“Don’t you agree parking is bad?”'],a:1,why:'It asks about a real past event and then why. The others sell, close with yes/no, or lead.'},
-      {q:'In an empathy map, “waits under a bridge between orders” goes in…',o:['Says','Thinks','Does','Feels'],a:2,why:'It is an observed action. Says holds quotes, Thinks holds unspoken thoughts, Feels holds emotions.'},
-      {q:'On a journey map, where do you usually look for the problem to solve?',o:['The first stage','The lowest emotional point','The last stage','The stage with the most words'],a:1,why:'The lowest point shows where the user struggles most; that is your pain point.'}])} },
+  { nav:'Think about it', title:'Think about it', kind:'activity', minutes:15,
+    narration:[`Discuss with your team, then reveal one view. There is no single right answer.`,`<b>Next week:</b> read Byers et al (2019) Ch. 2 and the d.school Process Guide, Define mode. Bring your interview notes.`],
+    fig:{label:`Critical thinking · Empathy`, build:el=>W.practice(el,[{q:'Your interviewee says they exercise often, but you see them take the lift every day. Which do you trust? Why?',hint:'What people do usually tells you more than what they say. The gap itself is an insight.'},
+{q:'Is an empathy map of one person enough for your poster?',hint:'No: the rubric rewards many interviews. Look for patterns across people.'},
+{q:'You already know the problem because you have it yourself. Do you still need interviews?',hint:'Yes: your experience is one case. Others may have different reasons and needs.'}],{label:'One view',prefix:''})} },
   ]
 });
 </script>

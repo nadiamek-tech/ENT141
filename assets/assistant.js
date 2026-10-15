@@ -51,7 +51,8 @@
     'week-06.html':['What is a How Might We question?','What is primary data?','What is a point of view statement?'],
     'toolkit.html':['How do I find a project idea?','How do I check my idea fits an SDG?','Where do I find data?'],
     'lectures.html':['What is design thinking?','What is an empathy map?','What is a How Might We question?'],
-    'project-1.html':['How many interviews do we need?','What are risky, easy and favourite solutions?','How do I print the poster?']};
+    'project-1.html':['Where do I start Project 1?','How many interviews do we need?','What are risky, easy and favourite solutions?'],
+    'poster.html':['How do I print the poster?','How do I add a photo of our prototype?','Does the poster save my work?']};
   const TOPICS=['Find an idea','SDG check','Open data','Survey','Prototype','Pitch','Empathy map','Journey map','Poster'];
 
   /* ---------- UI ---------- */

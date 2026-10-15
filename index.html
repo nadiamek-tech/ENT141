@@ -3,61 +3,28 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>ENT 141 · Innovation and Entrepreneurship 1</title>
+<title>ENT 141 Innovation and Entrepreneurship 1</title>
+<meta name="description" content="ENT 141 Fundamentals of Innovation and Entrepreneurship 1: lectures, Project 1 poster guide, toolkit, calendar and help.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Schibsted+Grotesk:wght@400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
 <link rel="stylesheet" href="assets/course.css">
-<link rel="stylesheet" href="assets/home.css">
+<link rel="stylesheet" href="assets/portal.css">
+<style>body{font-family:var(--f-display);background:var(--bg);color:var(--ink);margin:0}:root{--wk:#B4521E;--wk-soft:rgba(180,82,30,.09);--wk-d:#F2A06B;--wk-soft-d:rgba(242,160,107,.14)}</style>
 </head>
-<body>
+<body data-home>
+<div id="hub" data-cur=""></div>
+<main id="portal"></main>
+<footer class="pt-foot">This website is interactive course support. It does not replace classes, attendance or class activities.<br> <b>Eng. Nadia Mek</b></footer>
 <script src="assets/site.js"></script>
-<script src="assets/scorm.js"></script>
 <script src="assets/supports.js"></script>
 <script src="assets/course.js"></script>
 <script src="assets/kb.js"></script>
 <script src="assets/search-index.js"></script>
 <script src="assets/assistant.js"></script>
-<script src="assets/home.js"></script>
-<div class="wrap">
-  <div id="hdr"></div>
-  <section class="mast">
-    <span class="code" id="m-code"></span>
-    <h1 id="m-title"></h1>
-    <div class="byline">Course lecturer <b id="m-ins"></b></div>
-    <p class="trial">A trial of a more interactive way to run this course. Your comments and recommendations are very welcome.</p>
-    <nav class="big3" id="big3" aria-label="Main sections"></nav>
-    <form id="find-f" class="findbox" role="search"><input id="find-q" type="search" placeholder="Search the course, or ask a question…" aria-label="Search the course" autocomplete="off"><button type="submit" class="btn">Search</button></form>
-    <div id="find-r" class="findres" aria-live="polite"></div>
-  </section>
-
-  <h2 class="sec">FAQ</h2>
-  <div class="acc" id="faq"></div>
-
-  <h2 class="sec">Semester calendar</h2>
-  <p class="sub">Every assessment, in order. Click a row to see what it includes.</p>
-  <div id="cal"></div>
-
-  <h2 class="sec">Upcoming submissions</h2>
-  <p class="sub">All submissions are on Moodle. Use these buttons to reach the right one.</p>
-  <div class="subs" id="subs"></div>
-
-  <h2 class="sec">Course learning outcomes</h2>
-  <div class="clos" id="clos"></div>
-
-  <h2 class="sec">Links</h2>
-  <div class="links" id="links"></div>
-</div>
-<script>
-const H=Hub, S=H.S;
-document.getElementById('hdr').outerHTML=H.header(false); H.wireTheme();
-document.getElementById('m-code').textContent=S.code+' · '+S.meta;
-document.getElementById('m-title').innerHTML=H.esc(S.title)+'<span>'+H.esc(S.subtitle)+'</span>';
-document.getElementById('m-ins').textContent=S.instructor;
-const SUBT={Lectures:'Weekly lectures',Projects:'Poster lab and submissions',Toolkit:'Find an idea, data, prototype, pitch',Labs:'Lab files and guidance',Exams:'Dates, revision and practice'};
-document.getElementById('big3').innerHTML=S.buttons.map(([t,u])=>'<a href="'+u+'">'+t+'<small>'+(SUBT[t]||'')+'</small></a>').join('');
-H.faq(document.getElementById('faq')); H.calendar(document.getElementById('cal')); H.subs(document.getElementById('subs'),true); H.clos(document.getElementById('clos')); H.links(document.getElementById('links'));
-H.find(document.getElementById('find-f'),document.getElementById('find-q'),document.getElementById('find-r'));
-</script>
+<script src="assets/professor.js"></script>
+<script src="assets/course-info.js"></script>
+<script src="assets/portal.js"></script>
+<script>Portal.home();</script>
 </body>
 </html>

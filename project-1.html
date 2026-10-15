@@ -3,204 +3,206 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Project 1 · Poster Lab</title>
+<title>Project 1 · Poster · ENT 141</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Schibsted+Grotesk:wght@400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
 <link rel="stylesheet" href="assets/course.css">
+<link rel="stylesheet" href="assets/portal.css">
+<link rel="stylesheet" href="assets/poster.css">
 <style>
-:root{--wk:#B4521E;--wk-soft:rgba(180,82,30,.10);--wk-d:#F2A06B;--wk-soft-d:rgba(242,160,107,.14)}
-.calm{font-family:var(--f-display);font-size:1.05rem;padding:14px 16px;border-radius:12px;background:var(--wk-soft);border-left:5px solid var(--wk);margin-bottom:14px}.ask{margin:14px 0 6px}.ask p{margin:0 0 6px;font-family:var(--f-display);font-weight:800;font-size:1.15rem}.yn{display:flex;flex-wrap:wrap;gap:8px}.yn button{border:2px solid var(--wk);background:var(--surface);color:var(--ink);border-radius:999px;padding:8px 20px;font-family:var(--f-display);font-weight:700;cursor:pointer;font-size:1rem}.yn button[aria-pressed="true"]{background:var(--wk);color:var(--on-wk)}.say{font-family:var(--f-display);font-size:1rem;padding:10px 14px;border-radius:12px;background:var(--sunk);margin:6px 0 4px;max-width:640px;animation:pop .25s ease}@keyframes pop{from{transform:translateY(4px)}to{transform:none}}.cta{display:inline-block;border:0;border-radius:10px;padding:10px 16px;background:var(--wk);color:var(--on-wk)!important;text-decoration:none;font-family:var(--f-display);font-weight:800;cursor:pointer;font-size:1rem;margin-top:4px}.cta.alt{background:#6B4FB8}.progress-d{margin-top:22px;font-family:var(--f-display)}.progress-d summary{cursor:pointer;font-weight:700;color:var(--muted)}.sos{margin-bottom:14px}.sos-b{border:0;border-radius:999px;padding:10px 18px;background:#FFC21A;color:#1B1300;font-family:var(--f-display);font-weight:800;font-size:1rem;cursor:pointer;box-shadow:0 0 0 0 rgba(255,194,26,.7);animation:buzz 2s infinite}@keyframes buzz{0%{box-shadow:0 0 0 0 rgba(255,194,26,.7)}70%{box-shadow:0 0 0 12px rgba(255,194,26,0)}100%{box-shadow:0 0 0 0 rgba(255,194,26,0)}}@media (prefers-reduced-motion:reduce){.sos-b{animation:none}}.sos-p{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;padding:12px;border:2px solid #FFC21A;border-radius:12px;background:var(--bg)}.sos-l{display:inline-block;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:7px 14px;text-decoration:none;font-family:var(--f-display);font-weight:700;font-size:.9rem;cursor:pointer}.log input,.log select,.log textarea{width:100%;min-width:0;border:1px solid var(--line);border-radius:8px;padding:7px 9px;background:var(--surface);color:var(--ink);font:inherit;font-family:var(--f-display);font-size:.92rem}.req{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-bottom:12px}.req div{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--bg);font-family:var(--f-display)}.req b{display:block;font-size:1.3rem;color:var(--wk)}.req small{color:var(--muted)}.prog td:last-child{white-space:nowrap}.st-good{color:var(--good);font-weight:700}.st-todo{color:var(--bad);font-weight:700}.miss{border-left:4px solid var(--bad);padding:8px 12px;background:var(--sunk);border-radius:6px;font-family:var(--f-display);font-size:.9rem;margin-top:10px}.miss.ok{border-color:var(--good)}.log{display:grid;gap:10px}.log .e{border:1px solid var(--line);border-radius:10px;padding:10px;background:var(--bg);display:grid;gap:6px}.log .e .row2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) 140px;gap:6px}@media (max-width:560px){.log .e .row2{grid-template-columns:minmax(0,1fr)}}.idea{display:grid;grid-template-columns:24px minmax(0,1fr) 130px;gap:6px;align-items:center}.idea select{width:auto}.gauge{display:flex;gap:4px;margin:6px 0}.gauge i{flex:1;height:10px;border-radius:3px;background:var(--sunk)}.gauge i.on{background:var(--wk)}#poster{background:#fff;color:#16202B;border:1px solid var(--line);border-radius:6px;padding:18px;font-family:'Schibsted Grotesk',Arial,sans-serif;aspect-ratio:1/1.414;overflow:hidden;display:grid;grid-template-rows:auto auto 1fr 1fr 1fr auto;gap:10px;font-size:11px;line-height:1.35}#poster h2{margin:0;font-size:22px;line-height:1.1;color:#16202B}#poster .sub{color:#5A6675;font-size:11px}#poster .band{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}#poster .cell{border:2px solid var(--wk,#B4521E);border-radius:8px;padding:8px;overflow:hidden;min-height:0}#poster .cell h4{margin:0 0 4px;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#B4521E}#poster .emp{border-width:1px;font-size:10px}#poster .emp .q{min-height:0;padding:4px}#poster img{max-width:100%;max-height:160px;display:block;margin:auto}#poster svg text{fill:#16202B}#poster .foot{color:#5A6675;font-size:9px;display:flex;justify-content:space-between}#print-root{display:none}@media print{body>*:not(#print-root){display:none!important}#print-root{display:block}#print-root #poster{border:0;width:100%;height:auto}@page{size:A3 portrait;margin:10mm}}@media (max-width:700px){#poster{aspect-ratio:auto}#poster .band{grid-template-columns:minmax(0,1fr)}}
-:root{}
+:root{--wk:#B4521E;--wk-soft:rgba(180,82,30,.09);--wk-d:#F2A06B;--wk-soft-d:rgba(242,160,107,.14)}
+body{font-family:var(--f-display);background:var(--bg);color:var(--ink);margin:0}
+.deck{max-width:1120px;margin:0 auto;padding:18px 16px 110px}
+.sl-f{display:none;background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:30px 32px;min-height:min(640px,calc(100vh - 190px));grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:32px;align-items:center}
+.sl-f.on{display:grid;animation:in .25s ease}
+.sl-f.one{grid-template-columns:minmax(0,1fr)}
+@keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.kick{font:600 .78rem var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--wk);display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.kick .mk{background:var(--wk-soft);border-radius:999px;padding:3px 10px;color:var(--ink);letter-spacing:.03em;text-transform:none;font-family:var(--f-display);font-weight:700}
+.sl-f h2{font-size:clamp(1.8rem,4.2vw,2.8rem);line-height:1.05;letter-spacing:-.015em;margin:10px 0 12px}
+.what{font-size:1.15rem;line-height:1.45;margin:0 0 18px;max-width:34em}
+.how{list-style:none;padding:0;margin:0 0 20px;display:grid;gap:10px;counter-reset:h}
+.how li{counter-increment:h;display:grid;grid-template-columns:34px 1fr;gap:10px;align-items:start;font-size:1.02rem;line-height:1.35}
+.how li::before{content:counter(h);width:30px;height:30px;border-radius:50%;background:var(--wk);color:var(--on-wk,#fff);display:grid;place-items:center;font-weight:800;font-size:.9rem}
+.how-t{font:700 .8rem var(--f-mono);text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:0 0 8px}
+.acts{display:flex;flex-wrap:wrap;gap:10px}
+.b{font:700 .98rem var(--f-display);border:1.5px solid var(--wk);background:var(--wk);color:var(--on-wk,#fff);border-radius:999px;padding:10px 18px;text-decoration:none;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.b.g{background:transparent;color:var(--ink);border-color:var(--line)}
+.b.g:hover{border-color:var(--wk)}
+.b[aria-disabled=true]{background:var(--line);border-color:var(--line);color:var(--muted);cursor:default}
+.vis{position:relative;display:grid;gap:10px}
+.vis .lbl{font:600 .75rem var(--f-mono);text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.vis-in{display:grid;grid-template-columns:minmax(0,1fr) 92px;gap:14px;align-items:start}
+.where{display:grid;gap:4px;justify-items:center;font:600 .7rem var(--f-mono);color:var(--muted);text-transform:uppercase;text-align:center}
+.mini{zoom:.44;pointer-events:none}
+.mini-w{max-height:460px;overflow:hidden;border-radius:10px;mask-image:linear-gradient(#000 85%,transparent)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px}
+.chips span{border:1.5px solid var(--line);border-radius:999px;padding:6px 14px;font-weight:700}
+.chips span b{color:var(--wk)}
+/* road map */
+.road{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.road button{font:inherit;color:inherit;text-align:left;border:1.5px solid var(--line);background:var(--bg);border-radius:14px;padding:14px;cursor:pointer;display:grid;gap:6px;position:relative}
+.road button:hover{border-color:var(--wk)}
+.road .n{width:30px;height:30px;border-radius:50%;background:var(--wk);color:var(--on-wk,#fff);display:grid;place-items:center;font-weight:800}
+.road b{font-size:1.02rem}
+.road small{font:600 .74rem var(--f-mono);color:var(--muted)}
+.road .ok{position:absolute;top:12px;right:12px;width:20px;height:20px;border-radius:50%;background:#2E7D5B;color:#fff;font-size:12px;display:none;place-items:center;font-weight:800}
+.road .done .ok{display:grid}
+/* get ready */
+.ready{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.ready>div{border:1.5px solid var(--line);border-radius:16px;padding:18px;display:grid;gap:10px;align-content:start;background:var(--bg)}
+.ready h3{margin:0;font-size:1.25rem}
+.ready p{margin:0;color:var(--muted)}
+.ready .ic{color:var(--wk);line-height:0}
+/* speakers, marks */
+.spk{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.spk div{border-radius:14px;background:var(--wk-soft);padding:14px;text-align:center;display:grid;gap:6px;justify-items:center}
+.spk .av{width:46px;height:46px;border-radius:50%;background:var(--wk);color:var(--on-wk,#fff);display:grid;place-items:center;font-weight:800;font-size:1.1rem}
+.spk small{color:var(--muted);font-weight:600}
+.mbar{display:grid;gap:8px}
+.mbar div{display:grid;grid-template-columns:130px 1fr 44px;gap:10px;align-items:center;font-weight:700;font-size:.95rem}
+.mbar i{display:block;height:16px;border-radius:8px;background:var(--wk)}
+.mbar span:last-child{font:600 .85rem var(--f-mono);color:var(--muted)}
+details.rb{margin-top:10px}
+details.rb>summary{cursor:pointer;font-weight:700;color:var(--wk)}
+/* nav */
+.dnav{position:fixed;left:0;right:0;bottom:0;z-index:35;background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(8px);border-top:1px solid var(--line)}
+.dnav-in{max-width:1120px;margin:0 auto;padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));display:flex;align-items:center;gap:12px}
+.dots{display:flex;gap:6px;flex:1;justify-content:center;flex-wrap:wrap}
+.dots button{width:30px;height:30px;border-radius:50%;border:1.5px solid var(--line);background:var(--surface);color:var(--muted);font:700 .75rem var(--f-mono);cursor:pointer;padding:0}
+.dots button.on{background:var(--wk);border-color:var(--wk);color:var(--on-wk,#fff)}
+.dots button.part{border-color:color-mix(in srgb,var(--wk) 45%,var(--line))}
+.nb{font:700 .95rem var(--f-display);border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:9px 16px;cursor:pointer;white-space:nowrap}
+.nb.next{background:var(--wk);border-color:var(--wk);color:var(--on-wk,#fff)}
+.nb:disabled{opacity:.35;cursor:default}
+.ca-btn,.ls-btn{bottom:84px!important}
+@media (max-width:860px){
+  .sl-f.on{grid-template-columns:minmax(0,1fr);padding:22px 18px;gap:22px;min-height:0}
+  .road,.ready,.spk{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .dots{display:none}
+  .dnav-in{justify-content:space-between}
+  .pos{display:inline!important}
+  .mbar div{grid-template-columns:100px 1fr 40px}
+}
+@media (max-width:420px){.ready{grid-template-columns:minmax(0,1fr)}.vis-in{grid-template-columns:minmax(0,1fr) 64px}}
+.pos{display:none;font:600 .85rem var(--f-mono);color:var(--muted)}
 </style>
 </head>
 <body>
+<div id="hub" data-cur="project"></div>
+<main class="deck" id="deck"></main>
+<nav class="dnav" aria-label="Slides"><div class="dnav-in"><button type="button" class="nb prev">← Back</button><div class="dots" id="dots"></div><span class="pos" id="pos"></span><button type="button" class="nb next">Next →</button></div></nav>
 <script src="assets/site.js"></script>
 <script src="assets/supports.js"></script>
 <script src="assets/course.js"></script>
-<script src="assets/onepage.js"></script>
 <script src="assets/ent141.js"></script>
 <script src="assets/kb.js"></script>
 <script src="assets/search-index.js"></script>
 <script src="assets/assistant.js"></script>
+<script src="assets/professor.js"></script>
+<script src="assets/course-info.js"></script>
+<script src="assets/portal.js"></script>
+<script src="assets/poster.js"></script>
 <script>
-const {W} = Lecture; const {store,esc} = ENT141;
-const KEY='ent141-poster-v1';
-let S; try{S=JSON.parse(store.get(KEY)||'null')}catch(e){}
-S=Object.assign({team:{},ints:[],learnInt:'',learnJm:'',pov:{},hmw:'',ideas:[{t:'',tag:''},{t:'',tag:''},{t:'',tag:''}],chosen:-1,why:'',proto:{},fb:{}},S||{});
-const save=()=>store.set(KEY,JSON.stringify(S));
-const empSt=()=>{ try{return JSON.parse(store.get('ent141-lab-emp')||'null')||{}}catch(e){return {}} };
-const jmSt=()=>{ try{return JSON.parse(store.get('ent141-lab-jm')||'null')||{stages:[]}}catch(e){return {stages:[]}} };
-const words=s=>String(s||'').trim().split(/\s+/).filter(Boolean).length;
-const NEEDS=['Education','Health','Social protection','Job opportunities'];
+Portal.header('project');
+const P=Poster, esc=P.esc, MINE=P.load();
+const REG=(COURSE.links&&COURSE.links.reg)||'';
+const MOODLE=((COURSE.assess.find(a=>a.id==='p1')||{}).submit||{}).link||'';
+const askBtn=q=>`<button type="button" class="b g" data-ask="${esc(q)}">Ask me: ${esc(q)}</button>`;
+const helpBtn=(t,u)=>`<a class="b g" href="${u}">Help: ${esc(t)} →</a>`;
+const SV=d=>`<svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
 
-/* gaps per step */
-const GAPS={
-  team:()=>{ const t=S.team,g=[]; if(!t.name) g.push('team name'); if(!t.members) g.push('members'); if(!t.need) g.push('social need'); if(!t.sdg) g.push('SDG target'); if(!t.user) g.push('user group'); if(!t.pain) g.push('pain point'); return g.length?['Fill in: '+g.join(', ')+'.']:[]; },
-  ints:()=>{ const g=[]; const n=S.ints.filter(i=>i.who&&i.quotes).length; if(n<3) g.push(`Log at least 3 interviews with quotes (you have ${n}). “Many interviews” earns the top band.`); if(S.ints.some(i=>i.who&&words(i.quotes)<15)) g.push('Some interviews have very short notes: add direct quotes and answers to “why?”.'); if(words(S.learnInt)<25) g.push('Write what you learned from the interviews (25+ words).'); return g; },
-  emp:()=>{ const e=empSt(),g=[]; ['who','says','thinks','does','feels'].forEach(k=>{ if(!String(e[k]||'').trim()) g.push(k); }); return g.length?['Empathy map is missing: '+g.join(', ')+'.']:[]; },
-  jm:()=>{ const j=jmSt(),g=[]; const named=j.stages.filter(s=>s.s&&s.a).length; if(named<4) g.push(`Name at least 4 stages with an action (you have ${named}).`); if(!j.stages.some(s=>s.f<0)) g.push('Show at least one negative feeling (a pain point).'); if(words(S.learnJm)<25) g.push('Write what you learned from the journey map (25+ words).'); return g; },
-  def:()=>{ const p=S.pov,g=[]; if(!p.user||!p.need||!p.insight) g.push('Complete the point of view: user, need and insight.'); const n=S.hmw.split('\n').filter(l=>/^how might we/i.test(l.trim())).length; if(n<2) g.push(`Write at least 2 “How might we…” questions (you have ${n}).`); return g; },
-  sol:()=>{ const g=[]; const ok=S.ideas.filter(i=>i.t.trim()); if(ok.length<3) g.push(`List at least 3 solutions (you have ${ok.length}).`); ['risky','easy','favourite'].forEach(t=>{ if(!ok.some(i=>i.tag===t)) g.push(`Tag one solution as “${t}”.`); }); if(S.chosen<0||!S.ideas[S.chosen]||!S.ideas[S.chosen].t) g.push('Choose one solution.'); if(words(S.why)<30) g.push('Justify your choice (30+ words): link it to the interviews and the journey map.'); return g; },
-  proto:()=>{ const p=S.proto,g=[]; if(!p.type) g.push('Choose a prototype type.'); if(words(p.desc)<15) g.push('Describe the prototype (15+ words).'); if(!p.img) g.push('Add a photo or image of your prototype.'); return g; },
-  fb:()=>{ const f=S.fb,g=[]; [['user','interviewee'],['prof','Professor'],['guide','guidelines']].forEach(([k,l])=>{ if(words(f[k])<5) g.push(`Feedback from the ${l}.`); }); if(words(f.changed)<15) g.push('What you changed, the risks you took, the directions you dropped.'); return g.length?['Missing: '+g.join(' ')]:[]; }
-};
-const STEPS=[['team','1 · Team and topic','Part 1'],['ints','2 · Interviews','Part 2'],['emp','3 · Empathy map','Part 2'],['jm','4 · Journey map','Part 3'],['def','5 · Define: POV and HMW','Part 1'],['sol','6 · Solutions','Part 4'],['proto','7 · Prototype','Part 5'],['fb','8 · Feedback and changes','Part 1']];
-const missBox=k=>{ const g=GAPS[k](); return `<div class="miss ${g.length?'':'ok'}">${g.length?'<b>Still missing</b><br>'+g.map(esc).join('<br>'):'<b>Complete.</b> This part is ready for the poster.'}</div>`; };
-function live(el,k){ const m=document.createElement('div'); m.className='live'; el.appendChild(m); const upd=()=>{ m.innerHTML=missBox(k); }; upd(); el.addEventListener('input',()=>setTimeout(upd,0)); el.addEventListener('change',()=>setTimeout(upd,0)); el.addEventListener('click',()=>setTimeout(upd,0)); }
-const inp=(id,label,val,ph,rows)=>rows?`<label for="${id}">${label}</label><textarea id="${id}" rows="${rows}" placeholder="${esc(ph||'')}">${esc(val||'')}</textarea>`:`<label for="${id}">${label}</label><input type="text" id="${id}" value="${esc(val||'')}" placeholder="${esc(ph||'')}">`;
-const bind=(el,map)=>Object.entries(map).forEach(([id,fn])=>{ const x=el.querySelector('#'+id); if(x) x.addEventListener('input',()=>{ fn(x.value); save(); }); });
+/* one slide per part of the poster */
+const PARTS=[
+ {n:1,week:'Week 3',what:'The top of the poster: a short title, your team, the SDG target, and the problem in one or two sentences.',
+  how:['Choose one problem you can see around you.','Find the SDG and the target it fits.','Write who has the problem and what goes wrong for them.'],
+  help:[['Pick a problem','toolkit.html#s1'],['SDG check','toolkit.html#s3']]},
+ {n:2,week:'Week 5',what:'Real words from the people who have the problem.',
+  how:['Talk to at least 3 people who have the problem.','Ask “why?”, and write their exact words.','Write the pattern you noticed across people.'],
+  help:[['Interview questions','toolkit.html#s5']],ask:'How many interviews do we need?'},
+ {n:3,week:'Week 5',what:'One user in four boxes: what they say, think, do and feel.',
+  how:['Pick one person from your interviews.','Sort your notes into the four boxes.','Use their real words in “Says”.'],
+  help:[['Week 5 lecture','week-05.html']],ask:'What is an empathy map?'},
+ {n:4,week:'Week 5',what:'The steps the user goes through, and how they feel at each one.',
+  how:['List 5 steps the user goes through.','Rate the feeling at each step.','Explain the lowest point: that is your pain point.'],
+  help:[['Week 5 lecture','week-05.html']],ask:'What should we learn from the journey map?'},
+ {n:5,week:'Week 6',what:'Your problem turned into a question that invites many ideas.',
+  how:['Start with “How might we…”.','Name the user and the pain point.','Do not put a solution inside the question.'],
+  help:[['Week 6 lecture','week-06.html']],ask:'Why is my HMW too narrow?'},
+ {n:6,week:'Weeks 7–8',what:'At least three ideas, and the one your team chooses.',
+  how:['Write a risky, an easy and a favourite idea.','Choose one.','Explain why, using your interviews and journey map.'],
+  help:[['Week 2: many ideas','week-02.html']],ask:'What are risky, easy and favourite solutions?'},
+ {n:7,week:'Week 8',what:'A quick, cheap version of your idea that people can see.',
+  how:['Draw it on paper, or make it with cardboard or Canva.','Show what the user sees or does.','Take a photo and add it to the poster.'],
+  help:[['Make a prototype','toolkit.html#s6']],ask:'What prototype should we make?'},
+ {n:8,week:'Weeks 8–9',what:'What people said about your prototype, and what you changed.',
+  how:['Show the prototype to users.','Ask your professor for feedback.','Write what you changed and the ideas you dropped.'],
+  help:[['Test questions','toolkit.html#s5']],ask:'How do we show we learned from feedback?'}
+];
 
-const go=i=>document.querySelectorAll('.toc ol li button')[i].click();
-function progressTable(){ return `<table class="tbl prog"><thead><tr><th>Step</th><th>Rubric</th><th>Status</th></tr></thead><tbody>${STEPS.map(([k,t,p],i)=>{ const g=GAPS[k](); return `<tr><td><a href="#s${i+1}" data-go="${i+1}">${t}</a></td><td>${p}</td><td class="${g.length?'st-todo':'st-good'}">${g.length?g.length+' to fix':'done'}</td></tr>`; }).join('')}<tr><td><a href="#s9" data-go="9">9 · Poster</a></td><td>All</td><td>preview and print</td></tr></tbody></table>`; }
-function overview(el){
-  const key='ent141-start'; let a={}; try{a=JSON.parse(store.get(key)||'{}')}catch(e){}
-  const REG=(window.SITE&&SITE.reg)||'';
-  const q=(id,text,opts)=>`<div class="ask"><p>${text}</p><div class="yn">${opts.map(([v,l])=>`<button type="button" data-q="${id}" data-v="${v}" aria-pressed="${a[id]===v}">${l}</button>`).join('')}</div></div>`;
-  const say=html=>`<div class="say">${html}</div>`;
-  const draw=()=>{ let h='';
-    h+=q('team','Do you have a team?',[['y','Yes'],['n','Not yet']]);
-    if(a.team==='n') h+=say(`No problem. Find 2–4 classmates who care about the same kind of problem (education, health, jobs…). Ask your professor in class if you are still alone.`);
-    if(a.team){ h+=q('reg','Is your team registered?',[['y','Yes'],['n','Not yet']]);
-      if(a.reg==='n') h+=say(REG?`No problem. Register here: <a class="cta" href="${REG}" target="_blank" rel="noopener">Register our team ↗</a>`:`No problem. The registration link will appear here soon; your professor will announce it in class.`);
-      if(a.reg==='y') h+=say('Great, let’s start!'); }
-    if(a.reg){ h+=q('idea','Do you have an idea or a problem to work on?',[['y','Yes'],['n','No']]);
-      if(a.idea==='y') h+=say(`Great, start here: <button type="button" class="cta" data-go="1">Step 1 · Team and topic →</button>`);
-      if(a.idea==='n') h+=say(`No problem, I got you. Choose one:<div class="yn" style="margin-top:8px"><a class="cta" href="toolkit.html#s1">Pick a problem from my bank</a><a class="cta alt" href="toolkit.html#s2">Find my own problem</a></div>`); }
-    el.innerHTML=`<div class="calm"><b>Confused about what to do? No problem.</b><br>First, take a breath You have the coolest professor, who is making your life easier</div>${h}
-      <details class="progress-d"><summary>See our progress (${STEPS.filter(([k])=>!GAPS[k]().length).length} of ${STEPS.length} steps done)</summary>${progressTable()}<p class="mono" style="color:var(--muted)">Saves in this browser only. Work on one shared laptop.</p></details>`;
-    el.querySelectorAll('[data-q]').forEach(b=>b.addEventListener('click',()=>{ a[b.dataset.q]=b.dataset.v; if(b.dataset.q==='team'){ delete a.reg; delete a.idea; } if(b.dataset.q==='reg') delete a.idea; store.set(key,JSON.stringify(a)); draw(); }));
-    el.querySelectorAll('[data-go]').forEach(x=>x.addEventListener('click',e=>{ e.preventDefault(); go(+x.dataset.go); }));
-  };
-  draw();
-}
-/* help buzzer on every step */
-function withHelp(items,build){ return el=>{ const w=document.createElement('div'); w.className='sos'; w.innerHTML=`<button type="button" class="sos-b" aria-expanded="false">🆘 Stuck? Get help</button><div class="sos-p" hidden>${items.map(([t,u])=>u.startsWith('ask:')?`<button type="button" class="sos-l" data-ask="${esc(u.slice(4))}">${t}</button>`:`<a class="sos-l" href="${u}">${t} →</a>`).join('')}</div>`; el.appendChild(w);
-  const b=w.querySelector('.sos-b'), pn=w.querySelector('.sos-p'); b.addEventListener('click',()=>{ pn.hidden=!pn.hidden; b.setAttribute('aria-expanded',!pn.hidden); });
-  w.querySelectorAll('[data-ask]').forEach(x=>x.addEventListener('click',()=>window.ENT141Assistant&&ENT141Assistant.open(x.dataset.ask)));
-  const inner=document.createElement('div'); el.appendChild(inner); build(inner); }; }
-const HELP={
-  team:[['Pick a problem from the bank','toolkit.html#s1'],['Find my own problem','toolkit.html#s2'],['Check it fits an SDG','toolkit.html#s3'],['Find data to prove it','toolkit.html#s4']],
-  ints:[['Write my interview questions','toolkit.html#s5'],['How to interview (Week 5)','week-05.html#s2'],['How many interviews do we need?','ask:How many interviews do we need?']],
-  emp:[['See an example empathy map','week-05.html#s3'],['What goes in each box?','ask:What is an empathy map?']],
-  jm:[['See an example journey map','week-05.html#s4'],['What should we learn from it?','ask:What should we learn from the journey map?']],
-  def:[['Write a good HMW (Week 6)','week-06.html#s3'],['POV and HMW builder','week-06.html#s5'],['Why is my HMW too narrow?','ask:Why is my HMW too narrow?']],
-  sol:[['Generate many ideas (Week 2)','week-02.html#s5'],['Risky, easy, favourite?','ask:What are risky, easy and favourite solutions?'],['How do we justify our choice?','ask:How do we justify our chosen solution?']],
-  proto:[['Which prototype for my idea?','toolkit.html#s6'],['How do I add a photo?','ask:How do I add a photo of our prototype?']],
-  fb:[['Questions to test our prototype','toolkit.html#s5'],['Did we take enough risks?','ask:Did we take enough risks?']],
-  poster:[['How do I print the poster?','ask:How do I print the poster?'],['Where do I submit?','ask:Where do I submit my work?']],
-  pres:[['Pitch builder and timer','toolkit.html#s7'],['How is the presentation graded?','ask:How is the presentation graded?']]};
-function stepTeam(el){
-  let wsdg=''; try{ const w=JSON.parse(store.get('ent141-sdg')||'null'); if(w&&w.p&&!S.team.sdg) wsdg=`SDG ${w.p} (${ENT141.SDGS[w.p-1]}), target `; }catch(e){}
-  const t=S.team;
-  el.innerHTML=`<div class="ins">${inp('t-name','Team name',t.name)}${inp('t-mem','Members',t.members,'Name 1, Name 2, Name 3…')}
-   <label for="t-need">Social need</label><select id="t-need"><option value="">— choose —</option>${NEEDS.map(n=>`<option ${t.need===n?'selected':''}>${n}</option>`).join('')}</select>
-   ${inp('t-sdg','SDG and target (from Week 3, e.g. “SDG 4, target 4.4”)',t.sdg||wsdg,'SDG 4, target 4.4')}
-   ${inp('t-user','User group: who has the problem? (people you can interview)',t.user,'First-year students who commute by bus')}
-   <label for="t-for">The pain point is for</label><select id="t-for">${['customers/clients','employees','both'].map(n=>`<option ${t.for===n?'selected':''}>${n}</option>`).join('')}</select>
-   ${inp('t-pain','Pain point in one sentence (your first guess; interviews will test it)',t.pain,'',2)}</div>`;
-  if(wsdg&&!t.sdg){ t.sdg=wsdg; save(); }
-  bind(el,{'t-name':v=>t.name=v,'t-mem':v=>t.members=v,'t-sdg':v=>t.sdg=v,'t-user':v=>t.user=v,'t-pain':v=>t.pain=v});
-  el.querySelector('#t-need').addEventListener('change',e=>{ t.need=e.target.value; save(); }); el.querySelector('#t-for').addEventListener('change',e=>{ t.for=e.target.value; save(); });
-  live(el,'team');
-}
-function stepInts(el){
-  const draw=()=>{ const n=S.ints.filter(i=>i.who&&i.quotes).length;
-    el.innerHTML=`<div class="gauge">${[1,2,3,4,5].map(i=>`<i class="${i<=n?'on':''}"></i>`).join('')}</div><p class="mono" style="margin:0 0 8px;color:var(--muted)">${n} interview${n===1?'':'s'} logged · rubric: 0 = poor, 1 = acceptable, many = excellent</p>
-    <div class="log">${S.ints.map((x,i)=>`<div class="e" data-i="${i}"><div class="row2"><input type="text" data-f="who" placeholder="Who (role, age group; no full names)" value="${esc(x.who)}" aria-label="Interviewee ${i+1}"><input type="text" data-f="where" placeholder="Where / when" value="${esc(x.where)}" aria-label="Where ${i+1}"><select data-f="m" aria-label="Method ${i+1}">${['Interview','Observation','Both'].map(m=>`<option ${x.m===m?'selected':''}>${m}</option>`).join('')}</select></div><textarea data-f="quotes" rows="3" placeholder="Direct quotes and answers to “why?”" aria-label="Notes ${i+1}">${esc(x.quotes)}</textarea><textarea data-f="surp" rows="2" placeholder="What surprised us" aria-label="Surprise ${i+1}">${esc(x.surp)}</textarea><button type="button" class="btn ghost del" style="justify-self:start">Remove</button></div>`).join('')}</div>
-    <div class="row" style="margin:10px 0"><button type="button" class="btn add">+ Add interview</button></div>
-    <div class="ins">${inp('li','What did we learn from the interviews? (patterns across people, not one story)',S.learnInt,'',4)}</div>`;
-    el.querySelector('.add').addEventListener('click',()=>{ S.ints.push({who:'',where:'',m:'Interview',quotes:'',surp:''}); save(); draw(); });
-    el.querySelectorAll('.e').forEach(e=>{ const i=+e.dataset.i; e.querySelectorAll('[data-f]').forEach(f=>f.addEventListener('input',()=>{ S.ints[i][f.dataset.f]=f.value; save(); })); e.querySelector('[data-f=m]').addEventListener('change',ev=>{ S.ints[i].m=ev.target.value; save(); }); e.querySelector('.del').addEventListener('click',()=>{ S.ints.splice(i,1); save(); draw(); }); });
-    bind(el,{li:v=>S.learnInt=v}); live(el,'ints'); };
-  if(!S.ints.length) S.ints.push({who:'',where:'',m:'Interview',quotes:'',surp:''}); draw();
-}
-function stepEmp(el){ const b=document.createElement('div'); el.appendChild(b); ENT141.empathyMap(b,{key:'ent141-lab-emp'}); live(el,'emp'); }
-function stepJm(el){ const b=document.createElement('div'); el.appendChild(b); ENT141.journeyMap(b,{key:'ent141-lab-jm'}); const d=document.createElement('div'); d.className='ins'; d.style.marginTop='12px'; d.innerHTML=inp('lj','What did we learn from the journey map? (10 marks: analyse, do not describe)',S.learnJm,'Where does it hurt most, why, and what does that mean for our problem?',4); el.appendChild(d); bind(d,{lj:v=>S.learnJm=v}); live(el,'jm'); }
-function stepDef(el){
-  let w6=null; try{w6=JSON.parse(store.get('ent141-w6-hmw')||'null')}catch(e){}
-  const p=S.pov;
-  el.innerHTML=`${w6&&(w6.user||w6.list)?`<div class="row" style="margin-bottom:8px"><button type="button" class="btn ghost imp">Use our Week 6 draft</button></div>`:''}<div class="ins">${inp('p-u','User',p.user)}${inp('p-n','Need (a verb)',p.need)}${inp('p-i','Insight (from interviews or the journey map)',p.insight,'',2)}<div class="box exam" id="p-out"></div>${inp('p-h','“How might we…” questions, one per line',S.hmw,'How might we…',4)}</div>`;
-  const upd=()=>{ el.querySelector('#p-out').innerHTML=`<b class="lbl">Point of view</b>${p.user&&p.need&&p.insight?`${esc(p.user)} need${/s$/i.test(p.user.trim())?'':'s'} ${esc(p.need)} because ${esc(p.insight)}.`:'—'}`; };
-  bind(el,{'p-u':v=>{p.user=v;upd()},'p-n':v=>{p.need=v;upd()},'p-i':v=>{p.insight=v;upd()},'p-h':v=>S.hmw=v}); upd();
-  const imp=el.querySelector('.imp'); if(imp) imp.addEventListener('click',()=>{ Object.assign(p,{user:w6.user,need:w6.need,insight:w6.insight}); S.hmw=w6.list||S.hmw; save(); el.innerHTML=''; stepDef(el); });
-  live(el,'def');
-}
-function stepSol(el){
-  const draw=()=>{ el.innerHTML=`<p class="mono" style="color:var(--muted);margin:0 0 8px">Tag each solution: risky (bold, uncertain), easy (quick to do), favourite (the team’s choice). The top band needs all three.</p><div class="ins">${S.ideas.map((x,i)=>`<div class="idea" data-i="${i}"><input type="radio" name="ch" ${S.chosen===i?'checked':''} aria-label="Choose solution ${i+1}"><input type="text" data-f="t" value="${esc(x.t)}" placeholder="Solution ${i+1}" aria-label="Solution ${i+1}"><select data-f="tag" aria-label="Tag ${i+1}"><option value="">— tag —</option>${['risky','easy','favourite'].map(t=>`<option ${x.tag===t?'selected':''}>${t}</option>`).join('')}</select></div>`).join('')}
-    <div class="row"><button type="button" class="btn ghost add">+ Solution</button></div>${inp('why','Why did we choose this solution? Link it to the interviews and the journey map.',S.why,'',4)}</div>`;
-    el.querySelectorAll('.idea').forEach(r=>{ const i=+r.dataset.i; r.querySelector('[data-f=t]').addEventListener('input',e=>{ S.ideas[i].t=e.target.value; save(); }); r.querySelector('[data-f=tag]').addEventListener('change',e=>{ S.ideas[i].tag=e.target.value; save(); }); r.querySelector('[type=radio]').addEventListener('change',()=>{ S.chosen=i; save(); }); });
-    el.querySelector('.add').addEventListener('click',()=>{ S.ideas.push({t:'',tag:''}); save(); draw(); }); bind(el,{why:v=>S.why=v}); live(el,'sol'); };
-  draw();
-}
-function stepProto(el){
-  const p=S.proto;
-  el.innerHTML=`<div class="ins"><label for="pr-t">Prototype type (fast, cheap, easy to show)</label><select id="pr-t"><option value="">— choose —</option>${['Sketch or drawing','Storyboard','Paper screens','Canva or Figma mock-up','Cardboard or 3D model','Role-play'].map(o=>`<option ${p.type===o?'selected':''}>${o}</option>`).join('')}</select>
-   ${inp('pr-d','What is it, and what will a user see or do with it?',p.desc,'',3)}
-   <label for="pr-f">Photo or image of the prototype</label><input type="file" id="pr-f" accept="image/*"><div id="pr-img">${p.img?`<img src="${p.img}" alt="Prototype" style="max-width:100%;max-height:260px;border-radius:8px">`:''}</div><small class="mono" id="pr-msg" style="color:var(--muted)"></small></div>`;
-  el.querySelector('#pr-t').addEventListener('change',e=>{ p.type=e.target.value; save(); }); bind(el,{'pr-d':v=>p.desc=v});
-  el.querySelector('#pr-f').addEventListener('change',e=>{ const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=()=>{ const im=new Image(); im.onload=()=>{ const k=Math.min(1,900/Math.max(im.width,im.height)); const c=document.createElement('canvas'); c.width=im.width*k; c.height=im.height*k; c.getContext('2d').drawImage(im,0,0,c.width,c.height); p.img=c.toDataURL('image/jpeg',.8); save(); el.querySelector('#pr-img').innerHTML=`<img src="${p.img}" alt="Prototype" style="max-width:100%;max-height:260px;border-radius:8px">`; el.querySelector('#pr-msg').textContent=store.get(KEY)&&store.get(KEY).includes(p.img.slice(30,80))?'Saved.':'Shown for now, but this browser could not save it: add it again before printing.'; el.dispatchEvent(new Event('change')); }; im.src=r.result; }; r.readAsDataURL(f); });
-  live(el,'proto');
-}
-function stepFb(el){
-  const f=S.fb;
-  el.innerHTML=`<div class="ins">${inp('f-u','Feedback from the people we interviewed (on our prototype)',f.user,'',2)}${inp('f-p','Feedback from the Professor',f.prof,'',2)}${inp('f-g','What the guidelines asked that we checked',f.guide,'',2)}${inp('f-c','What we changed, the risks we took, the directions we dropped',f.changed,'We first thought… but after… we changed to…',4)}</div>`;
-  bind(el,{'f-u':v=>f.user=v,'f-p':v=>f.prof=v,'f-g':v=>f.guide=v,'f-c':v=>f.changed=v}); live(el,'fb');
-}
-function posterHTML(){
-  const e=empSt(), j=jmSt(), t=S.team, ch=S.ideas[S.chosen]||{};
-  const hm=S.hmw.split('\n').filter(l=>l.trim()).slice(0,3);
-  const n=j.stages.length, W0=520, H=110, x=i=>30+i*(W0-60)/Math.max(n-1,1), y=v=>H/2-v*20;
-  const jm=n?`<svg viewBox="0 0 ${W0} ${H+24}" style="width:100%;height:auto"><line x1="10" x2="${W0-10}" y1="${H/2}" y2="${H/2}" stroke="#ccc" stroke-dasharray="3 3"/><path d="${j.stages.map((s,i)=>(i?'L':'M')+x(i)+' '+y(s.f)).join(' ')}" fill="none" stroke="#B4521E" stroke-width="3"/>${j.stages.map((s,i)=>`<circle cx="${x(i)}" cy="${y(s.f)}" r="5" fill="${s.f<0?'#C2410C':'#B4521E'}"/><text x="${x(i)}" y="${H+18}" text-anchor="middle" font-size="10" font-weight="700">${esc((s.s||'').slice(0,16))}</text>`).join('')}</svg>`:'';
-  return `<div id="poster"><div><h2>${esc(hm[0]||t.pain||'How might we…?')}</h2><div class="sub"><b>${esc(t.name||'Team name')}</b> · ${esc(t.members||'Members')} · ${esc(t.need||'Social need')} · ${esc(t.sdg||'SDG target')}</div></div>
-   <div class="cell"><h4>Problem and point of view</h4>${esc(S.pov.user&&S.pov.need?`${S.pov.user} need ${S.pov.need} because ${S.pov.insight||''}.`:(t.pain||''))}</div>
-   <div class="band"><div class="cell"><h4>Interviews · ${S.ints.filter(i=>i.who).length}</h4>${S.ints.filter(i=>i.quotes).slice(0,3).map(i=>`“${esc(i.quotes.split(/[.\n]/)[0].replace(/[“”"]/g,'').trim().slice(0,110))}” <i>— ${esc(i.who)}</i>`).join('<br>')}<br><b>Learned:</b> ${esc(S.learnInt.slice(0,260))}</div>
-     <div class="cell"><h4>Empathy map · ${esc(e.who||'')}</h4><div class="emp" style="display:grid;grid-template-columns:1fr 1fr">${[['Says','says'],['Thinks','thinks'],['Does','does'],['Feels','feels']].map(([l,k])=>`<div class="q"><b>${l}</b>${esc(String(e[k]||'').slice(0,120))}</div>`).join('')}</div></div>
-     <div class="cell"><h4>How might we…</h4>${hm.map(h=>`• ${esc(h)}`).join('<br>')}<br><b>Need:</b> ${esc(t.need||'')}<br><b>Pain point for:</b> ${esc(t.for||'')}</div></div>
-   <div class="band"><div class="cell" style="grid-column:span 2"><h4>Journey map</h4>${jm}<b>Learned:</b> ${esc(S.learnJm.slice(0,240))}</div>
-     <div class="cell"><h4>Solutions</h4>${S.ideas.filter(i=>i.t).map((i,k)=>`${S.ideas.indexOf(i)===S.chosen?'★':'•'} ${esc(i.t)} <i>(${esc(i.tag||'—')})</i>`).join('<br>')}<br><b>Why ${esc(ch.t||'')}:</b> ${esc(S.why.slice(0,220))}</div></div>
-   <div class="band"><div class="cell" style="grid-column:span 2"><h4>Prototype · ${esc(S.proto.type||'')}</h4>${S.proto.img?`<img src="${S.proto.img}" alt="Prototype">`:''}${esc(S.proto.desc||'')}</div><div class="cell"><h4>Feedback → changes</h4>${esc((S.fb.changed||'').slice(0,260))}</div></div>
-   <div class="foot"><span>ENT 141 · Project 1 · Canadian University Dubai</span><span>Instructor: Eng. Nadia Mek</span></div></div>`;
-}
-function stepPoster(el){
-  const all=STEPS.flatMap(([k,t])=>GAPS[k]().map(g=>`<b>${t}:</b> ${esc(g)}`));
-  el.innerHTML=`<div class="miss ${all.length?'':'ok'}" style="margin:0 0 12px">${all.length?`<b>${all.length} item(s) before printing</b><br>${all.join('<br>')}`:'<b>Every part is complete.</b> Print and check it on paper.'}</div><div class="row" style="margin-bottom:10px"><button type="button" class="btn pr">Print or save as PDF (A3)</button><span class="mono" style="color:var(--muted)">The poster is built from Steps 1–8. Edit there, then come back.</span></div>${posterHTML()}`;
-  el.querySelector('.pr').addEventListener('click',()=>{ let r=document.getElementById('print-root'); if(!r){ r=document.createElement('div'); r.id='print-root'; document.body.appendChild(r); } r.innerHTML=posterHTML(); window.print(); });
-}
-const PRES=[['Problem',15,'Who has it; one interview quote.'],['Empathy',15,'What the empathy and journey maps showed.'],['Solutions',15,'Three ideas, and why you chose one.'],['Prototype',10,'Show it. What feedback changed.'],['Hand over',5,'Name the next speaker.']];
+const S=[];
+/* 0 · what is it */
+S.push({nav:'What',html:`<div><div class="kick">Project 1</div><h2>What is the project?</h2>
+  <p class="what">Your team picks one real problem, talks to people who have it, and shows on one poster what you learned and what you would make.</p>
+  <div class="chips"><span>Team work</span><span>Poster <b>30%</b></span><span>Presentation <b>10%</b></span><span>Week <b>9</b></span></div>
+  <div class="acts"><button type="button" class="b" data-go="1">See the 8 parts →</button><a class="b g" href="poster.html">Open the poster template</a></div></div>
+  <div class="vis"><span class="lbl">Example of a finished poster</span><div class="mini-w"><div class="mini" id="mini"></div></div></div>`,
+  after:()=>P.render(document.getElementById('mini'),{mode:'view',data:P.EX})});
+/* 1 · road map */
+S.push({nav:'Map',one:true,html:`<div><div class="kick">Project 1 · the plan</div><h2>8 parts, in this order</h2>
+  <p class="what">Each part uses the one before. Click a part to see how to make it.</p>
+  <div class="road">${PARTS.map(p=>{ const z=P.ZONES[p.n-1]; return `<button type="button" data-go="${p.n+2}" class="${P.DONE[z.key](MINE)?'done':''}"><span class="ok">✓</span><span class="n">${p.n}</span><b>${esc(z.title)}</b><small>${p.week}</small></button>`; }).join('')}</div></div>`});
+/* 2 · get ready */
+S.push({nav:'Ready',one:true,html:`<div><div class="kick">Before you start</div><h2>Team, registration, idea</h2>
+  <div class="ready">
+   <div><span class="ic">${SV('<circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20c.6-3.3 3-5 6-5s5.4 1.7 6 5M15 15.5c2.6-.3 4.8 1.2 5.5 4.5"/>')}</span><h3>1 · Team</h3><p>Form your team in class.</p></div>
+   <div><span class="ic">${SV('<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16l2 2 4-4"/>')}</span><h3>2 · Register</h3><p>One person registers the whole team.</p>${REG?`<a class="b" href="${esc(REG)}" target="_blank" rel="noopener">Register our team ↗</a>`:`<span class="b" aria-disabled="true">Link coming soon</span>`}</div>
+   <div><span class="ic">${SV('<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/>')}</span><h3>3 · Idea</h3><p>No idea yet? The Toolkit helps you find one.</p><a class="b g" href="toolkit.html#s1">Pick a problem →</a><a class="b g" href="toolkit.html#s2">Find my own →</a></div>
+  </div></div>`});
+/* 3–10 · the parts */
+PARTS.forEach(p=>{ const z=P.ZONES[p.n-1];
+  S.push({nav:String(p.n),part:p.n,html:`<div><div class="kick">Part ${p.n} of 8 <span class="mk">${esc(z.marks)}</span></div><h2>${esc(z.title)}</h2>
+    <p class="what">${esc(p.what)}</p><p class="how-t">How to make it</p><ol class="how">${p.how.map(h=>`<li>${esc(h)}</li>`).join('')}</ol>
+    <div class="acts"><a class="b" href="poster.html#z${p.n}">Fill it on our poster →</a>${p.help.map(([t,u])=>helpBtn(t,u)).join('')}${p.ask?askBtn(p.ask):''}</div></div>
+    <div class="vis"><span class="lbl">Example</span><div class="vis-in"><div class="zx" data-z="${p.n}"></div><div class="where">${P.thumb(p.n)}On the poster</div></div></div>`,
+    after:el=>P.zone(el.querySelector('.zx'),p.n,P.EX)}); });
+/* 11 · presentation */
+S.push({nav:'Present',html:`<div><div class="kick">Week 9 <span class="mk">Presentation · 10%</span></div><h2>Present your poster</h2>
+  <p class="what">Your team presents the poster. Each of you is marked on your own.</p><p class="how-t">How to do it</p>
+  <ol class="how"><li>Share the 8 parts between the team.</li><li>Practise with the timer in the Toolkit.</li><li>Answer the panel’s questions calmly and clearly.</li></ol>
+  <div class="acts"><a class="b" href="toolkit.html#s7">Practise with the timer →</a>${askBtn('How long does each student speak?')}</div></div>
+  <div class="vis"><span class="lbl">Example: a team of four</span><div class="spk">${[['A','Parts 1–2'],['B','Parts 3–4'],['C','Parts 5–6'],['D','Parts 7–8']].map(([a,t])=>`<div><span class="av">${a}</span><b>Student ${a}</b><small>${t}</small></div>`).join('')}</div>
+  <details class="rb"><summary>How it is marked (syllabus)</summary>${ENT141.rubHTML(ENT141.RUB_PRES)}</details></div>`});
+/* 12 · submit and marks */
+S.push({nav:'Submit',html:`<div><div class="kick">Week 9 <span class="mk">Poster · 30%</span></div><h2>Submit and marks</h2>
+  <p class="how-t">Before you submit</p>
+  <ol class="how"><li>All 8 parts are ticked on your poster.</li><li>Print it, or save it as a PDF (A3).</li><li>Submit it on Moodle.</li></ol>
+  <div class="acts"><a class="b g" href="poster.html">Open our poster</a>${MOODLE?`<a class="b" href="${esc(MOODLE)}" target="_blank" rel="noopener">Submit on Moodle ↗</a>`:`<span class="b" aria-disabled="true">Moodle link coming soon</span>`}</div></div>
+  <div class="vis"><span class="lbl">Poster marks · 100, adjusted to 30%</span><div class="mbar">${[['Process',20],['Interviews',20],['Journey map',20],['Solutions',20],['Prototype',20]].map(([t,m])=>`<div><span>${t}</span><span><i style="width:${m*5}%"></i></span><span>${m}</span></div>`).join('')}</div>
+  <details class="rb"><summary>Full poster rubric (syllabus)</summary>${ENT141.rubHTML(ENT141.RUB_POSTER)}</details></div>`});
 
-Lecture.mount({
-  id:'ent141-lab', week:'P1', course:'ENT 141', short:'Project 1 · Poster Lab', eyebrow:'Project 1 · Poster 30% · Presentation 10%', endLabel:'End',
-  title:'Project 1 · Poster Lab', meta:'Team poster · Week 9 · built from Weeks 3–8',
-  scenes:[
-  { nav:'Start here', title:'Project 1 · your poster', kind:'activity', full:true,
-    narration:[`Your team picks one real social problem linked to an SDG. You interview people who live it, then show what you learned on one poster. In Week 9 you present it, and each of you is graded individually.`],
-    fig:{label:'Let’s start together', build:overview} },
-  { nav:'1 · Team and topic', title:'Step 1 · Team and topic', kind:'activity', full:true,
-    narration:[`<b>Task:</b> choose one social need and an SDG target (Week 3). <b>Output:</b> the poster title line.`], fig:{label:'Team and topic', build:withHelp(HELP.team,stepTeam)} },
-  { nav:'2 · Interviews', title:'Step 2 · Interviews', kind:'activity', full:true,
-    narration:[`<b>Task:</b> interview and observe people who have the problem (Week 5). <b>Output:</b> quotes and what you learned. Part 2 · 20 marks.`], fig:{label:'Interview log', build:withHelp(HELP.ints,stepInts)} },
-  { nav:'3 · Empathy map', title:'Step 3 · Empathy map', kind:'activity', full:true,
-    narration:[`<b>Task:</b> sort your interview notes into says, thinks, does and feels (Week 5). <b>Output:</b> the empathy map on the poster.`], fig:{label:'Your empathy map', build:withHelp(HELP.emp,stepEmp)} },
-  { nav:'4 · Journey map', title:'Step 4 · Journey map', kind:'activity', full:true,
-    narration:[`<b>Task:</b> map the user's steps and feelings, then analyse them (Week 5). <b>Output:</b> the journey map and what you learned. Part 3 · 20 marks.`], fig:{label:'Your journey map', build:withHelp(HELP.jm,stepJm)} },
-  { nav:'5 · Define', title:'Step 5 · Define: point of view and HMW', kind:'activity', full:true,
-    narration:[`<b>Task:</b> write the point of view and your “How might we…” questions (Week 6). <b>Output:</b> the problem box on the poster.`], fig:{label:'Point of view and HMW', build:withHelp(HELP.def,stepDef)} },
-  { nav:'6 · Solutions', title:'Step 6 · Solutions', kind:'activity', full:true,
-    narration:[`<b>Task:</b> list at least three solutions tagged risky, easy and favourite, then choose and justify one (Weeks 7–8). Part 4 · 20 marks.`], fig:{label:'Solutions', build:withHelp(HELP.sol,stepSol)} },
-  { nav:'7 · Prototype', title:'Step 7 · Prototype', kind:'activity', full:true,
-    narration:[`<b>Task:</b> make the fastest, cheapest version a user can see: a drawing or design is enough. <b>Output:</b> a photo on the poster. Part 5 · 20 marks.`], fig:{label:'Prototype', build:withHelp(HELP.proto,stepProto)} },
-  { nav:'8 · Feedback', title:'Step 8 · Feedback and changes', kind:'activity', full:true,
-    narration:[`<b>Task:</b> show what you learned from the interviewee, the Professor and the guidelines, and what you changed. Part 1 · 20 marks.`], fig:{label:'Feedback and changes', build:withHelp(HELP.fb,stepFb)} },
-  { nav:'9 · Poster', title:'Step 9 · Your poster', kind:'activity', full:true,
-    narration:[`Your poster is built from Steps 1–8. Print it, or save it as a PDF, and submit as your instructor announces on Moodle.`], fig:{label:'Poster preview', build:withHelp(HELP.poster,stepPoster)} },
-  { nav:'Presentation', title:'Presenting the poster', kind:'activity', full:true,
-    narration:[`Your team presents the poster to the instructor; each student is graded <b>individually</b> on communication, confidence and knowledge. Practise your minute.`],
-    fig:{label:'60-second practice timer', build:withHelp(HELP.pres,el=>{ ENT141.timer(el,PRES); const r=document.createElement('div'); r.style.marginTop='16px'; r.innerHTML=`<span class="eyebrow">How it is marked · syllabus</span>`+ENT141.rubHTML(ENT141.RUB_PRES); el.appendChild(r); })} },
-  { nav:'Marking', title:'How the poster is marked', kind:'review', full:true,
-    narration:[`The poster rubric from the syllabus, word for word.`], fig:{label:'Poster rubric · 100 marks → 30%', build:el=>{ el.innerHTML=ENT141.rubHTML(ENT141.RUB_POSTER); }} },
-  ]
-});
+/* build and navigate */
+const deck=document.getElementById('deck'), dots=document.getElementById('dots');
+deck.innerHTML=S.map((s,i)=>`<section class="sl-f${s.one?' one':''}" id="s${i}" aria-label="Slide ${i+1} of ${S.length}">${s.html}</section>`).join('');
+dots.innerHTML=S.map((s,i)=>`<button type="button" class="${s.part?'part':''}" data-i="${i}" title="${esc(s.part?P.ZONES[s.part-1].title:s.nav)}" aria-label="Slide ${i+1}">${s.part||'•'}</button>`).join('');
+const secs=[...deck.children], built=new Set(); let cur=0;
+function go(i,push){ if(i<0||i>=S.length) return; cur=i; secs.forEach((s,k)=>s.classList.toggle('on',k===i));
+  if(!built.has(i)&&S[i].after){ S[i].after(secs[i]); built.add(i); }
+  dots.querySelectorAll('button').forEach((b,k)=>b.classList.toggle('on',k===i));
+  document.getElementById('pos').textContent=(i+1)+' / '+S.length;
+  document.querySelector('.prev').disabled=i===0; const nx=document.querySelector('.next'); nx.disabled=i===S.length-1;
+  if(push!==false) try{ history.replaceState(null,'','#s'+i); }catch(e){} window.scrollTo({top:0}); }
+document.querySelector('.prev').addEventListener('click',()=>go(cur-1));
+document.querySelector('.next').addEventListener('click',()=>go(cur+1));
+dots.addEventListener('click',e=>{ const b=e.target.closest('button'); if(b) go(+b.dataset.i); });
+deck.addEventListener('click',e=>{ const g=e.target.closest('[data-go]'); if(g){ e.preventDefault(); go(+g.dataset.go); }
+  const a=e.target.closest('[data-ask]'); if(a&&window.ENT141Assistant) ENT141Assistant.open(a.dataset.ask); });
+document.addEventListener('keydown',e=>{ if(/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) return; if(e.key==='ArrowRight') go(cur+1); if(e.key==='ArrowLeft') go(cur-1); });
+let tx=null; deck.addEventListener('touchstart',e=>{ tx=e.touches[0].clientX; },{passive:true});
+deck.addEventListener('touchend',e=>{ if(tx==null) return; const d=e.changedTouches[0].clientX-tx; if(Math.abs(d)>70) go(cur+(d<0?1:-1)); tx=null; });
+const fromHash=()=>{ const m=location.hash.match(/^#s(\d+)$/); go(m?Math.min(+m[1],S.length-1):0,false); };
+window.addEventListener('hashchange',fromHash); fromHash();
 </script>
 </body>
 </html>

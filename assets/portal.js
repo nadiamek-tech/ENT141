@@ -35,6 +35,7 @@
     lec:SV('<path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/><path d="M10 12h5M10 16h5"/>'),
     lab:SV('<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M3 14h18M9 4v16"/>'),
     project:SV('<rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M7 7h10M7 11h4M13 11h4v6h-4zM7 14h4M7 17h4"/>'),
+    present:SV('<rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M12 16v4M8 20h8M7 12l3-3 2 2 4-4"/>'),
     toolkit:SV('<path d="M14.5 6.5a4 4 0 0 0-5.3 5.3L3.5 17.5l3 3 5.7-5.7a4 4 0 0 0 5.3-5.3l-2.6 2.6-2.4-.6-.6-2.4z"/>')
   };
   /* main sections: C.nav = [{key,label,href,icon,blurb}] overrides Lectures/Labs/Exams */

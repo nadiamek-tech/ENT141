@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Activity 2 · Case Analysis · ENT 141</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Schibsted+Grotesk:wght@400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<link rel="stylesheet" href="assets/course.css">
+<link rel="stylesheet" href="assets/portal.css">
+<link rel="stylesheet" href="assets/docbuilder.css">
+<style>:root{--wk:#0E7490;--wk-soft:rgba(14,116,144,.09);--wk-d:#67E8F9;--wk-soft-d:rgba(103,232,249,.14)}</style>
+</head>
+<body>
+<div id="hub" data-cur="act2"></div>
+<main class="pw" id="pw">
+  <h1>Activity 2 · Article or case analysis</h1>
+  <p class="lead">Read the article or case your instructor assigns. Answer five questions directly on the page, then save as Word or PDF and submit.</p>
+  <div class="chips" id="chips"></div>
+  <div class="bar" id="bar">
+    <div class="seg" role="group" aria-label="Show"><button type="button" data-m="edit" aria-pressed="true">My analysis</button><button type="button" data-m="ex" aria-pressed="false">Example</button></div>
+    <button type="button" class="bbtn pri" data-act="docx">Save as Word</button>
+    <button type="button" class="bbtn" data-act="pdf">Print or PDF</button>
+    <button type="button" class="bbtn" data-act="save">Save file</button>
+    <label class="bbtn">Open file<input type="file" data-act="open" accept=".json,application/json" hidden></label>
+    <span id="case"></span>
+    <span class="prog" id="prog"></span>
+  </div>
+  <p class="msg" id="msg" aria-live="polite"></p>
+  <p class="exnote"><b>Example:</b> a made-up mini-case, to show the depth expected. Your case is the one your instructor assigns.</p>
+  <div id="doc"></div>
+  <section class="sub" id="submit">
+    <h2>Submit</h2>
+    <p style="margin:0">1. Save as Word (or PDF). 2. Open Moodle. 3. Upload before <b id="due"></b>.</p>
+    <div class="acts"><button type="button" class="bbtn pri" data-act="docx">Save as Word</button><span id="mdl"></span></div>
+    <details class="rub"><summary>How it is marked · 10 marks</summary><div id="rub" style="margin-top:8px"></div></details>
+  </section>
+</main>
+<div id="print-root"></div>
+<footer class="pt-foot">This website is interactive course support. It does not replace classes, attendance or class activities.<br> <b>Nadia</b></footer>
+<script src="assets/site.js"></script>
+<script src="assets/supports.js"></script>
+<script src="assets/course.js"></script>
+<script src="assets/kb.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/assistant.js"></script>
+<script src="assets/professor.js"></script>
+<script src="assets/course-info.js"></script>
+<script src="assets/portal.js"></script>
+<script src="assets/docbuilder.js"></script>
+<script>
+Portal.header('act2');
+const {esc,V}=DocB;
+const A2=COURSE.assess.find(a=>a.id==='a2')||{}, MOODLE=(A2.submit||{}).link||'', DUE=(A2.submit||{}).dueText||'', CASE=A2.caseLink||'';
+const STRAT=['Cost leadership','Differentiation','Focus (niche)','Blue ocean','Lean startup / iterate','Imitation with improvement','Platform / marketplace','Social enterprise model'];
+const SECTIONS=[
+ {id:'cover',cover:true,titleKey:'title',titlePh:'Title of the article or case',items:[{t:'in',k:'name',label:'Name'},{t:'in',k:'sid',label:'Student ID'},{t:'in',k:'ref',label:'Reference',ph:'Author (year). Title. Source.'}]},
+ {id:'a',n:'Q',title:'Five questions',tag:'about one page',fmt:true,wc:350,howto:'Use evidence from the text in every answer. <a href="week-11.html">Week 11 · how to read a case</a>',
+  items:[{t:'q',k:'q1',n:'1',label:'The venture · who are they, and what problem do they solve?',rows:3},
+   {t:'pick',k:'q2s',label:'2 · Main strategy',opts:STRAT},{t:'q',k:'q2',n:'2',label:'The strategy · explain how they use it.',rows:3},
+   {t:'q',k:'q3',n:'3',label:'Evidence · two facts or quotes from the text that show this strategy.',rows:3},
+   {t:'q',k:'q4',n:'4',label:'Value · does it create social or environmental value? Which SDG?',rows:3},
+   {t:'q',k:'q5',n:'5',label:'Lesson · one thing your team can use in your Project 2 idea.',rows:3}]}];
+const EX={title:'Fictional mini-case: "FreshCrate", a fruit box for busy families',name:'Student A',sid:'2026XXXX',ref:'Fictional case written for practice (2026).',
+ q1:'FreshCrate is a small startup that delivers weekly fruit boxes. It solves the problem of busy families buying unhealthy snacks because fresh fruit spoils before they eat it.',
+ q2s:'Focus (niche)',q2:'FreshCrate does not sell to everyone. It targets families with children under 12 and sizes each box to one week, so less fruit is wasted.',
+ q3:'The case says the box "fits one family for one week" and that the founders "turned down office orders to stay with families".',
+ q4:'Yes. Less spoiled fruit means less food waste (SDG 12), and children eat more fruit (SDG 3).',
+ q5:'Our team should choose one clear user group first, as FreshCrate did, instead of trying to serve all students.','fmt-a':'qa'};
+DocB.mount({key:'ent141-a2',docTitle:'Activity 2 · Article or Case Analysis',titleKey:'title',root:document.getElementById('pw'),sections:SECTIONS,ex:EX,
+  coverOut:()=>[['Name',V('name')],['Student ID',V('sid')],['Reference',V('ref')],['Instructor','Nadia']],
+  fileName:()=>`${(V('name')||'Student').replace(/[^\w\- ]+/g,'').replace(/\s+/g,'_')}_${V('sid')||'ID'}_ENT141_Activity2`});
+document.getElementById('chips').innerHTML=`<span>Individual</span><span><b>10%</b></span><span>Due <b>${esc(DUE)}</b></span><span>CLO <b>1</b></span>`;
+document.getElementById('case').innerHTML=CASE?`<a class="bbtn" href="${esc(CASE)}" target="_blank" rel="noopener">Open the case ↗</a>`:`<span class="bbtn" aria-disabled="true">Case: given in class</span>`;
+document.getElementById('due').textContent=DUE+', 23:59';
+document.getElementById('mdl').innerHTML=MOODLE?`<a class="bbtn pri" href="${esc(MOODLE)}" target="_blank" rel="noopener">Submit on Moodle ↗</a>`:`<span class="bbtn" aria-disabled="true">Moodle link coming soon</span>`;
+document.getElementById('rub').innerHTML=`<div class="rub"><dl>${[['Venture and problem',2],['Strategy named and explained',2],['Evidence from the text',2],['Social or environmental value',2],['Lesson for your team',2]].map(([t,m])=>`<dt>${m} marks</dt><dd>${t}</dd>`).join('')}</dl></div>`;
+</script>
+</body>
+</html>

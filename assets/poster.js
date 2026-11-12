@@ -137,7 +137,7 @@ function render(el,{mode='view',data,onchange}={}){
   MODE=mode; DATA=data; onChange=onchange;
   const Z=k=>ZH[k](ZONES.find(z=>z.key===k));
   el.innerHTML=`<article class="pstr ${mode}">${Z('top')}<div class="prow">${Z('ints')}${Z('emp')}</div>${Z('jm')}<div class="prow">${Z('hmw')}${Z('sol')}</div><div class="prow">${Z('proto')}${Z('fb')}</div>
-    <footer class="pfoot"><span>ENT 141 · Project 1 · Canadian University Dubai</span><span>Instructor: Eng. Nadia Mek</span></footer></article>`;
+    <footer class="pfoot"><span>ENT 141 · Project 1 · Canadian University Dubai</span><span>Instructor: Nadia</span></footer></article>`;
   if(mode==='edit') wire(el);
 }
 function zone(el,n,data){ MODE='view'; DATA=data||EX; SOLO=true; const z=byN(n); el.innerHTML=`<div class="pstr solo view">${ZH[z.key](z)}</div>`; SOLO=false; }

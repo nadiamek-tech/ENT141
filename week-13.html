@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Week 13 · Value Proposition Canvas (Part 1)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Schibsted+Grotesk:wght@400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<link rel="stylesheet" href="assets/course.css">
+<style>
+:root{--wk:#0E7490;--wk-soft:rgba(14,116,144,.09);--wk-d:#67E8F9;--wk-soft-d:rgba(103,232,249,.14)}
+.rank{display:grid;gap:6px;font-family:var(--f-display)}
+.rank .r{display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:8px;align-items:center;border:1px solid var(--line);border-radius:8px;padding:6px 8px;background:var(--bg)}
+.rank .n{font-weight:800;color:var(--wk)}
+.rank .bar{height:6px;border-radius:3px;background:var(--wk);margin-top:4px}
+.rank button{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:2px 8px;cursor:pointer}
+</style>
+</head>
+<body>
+<script src="assets/site.js"></script>
+<script src="assets/supports.js"></script>
+<script src="assets/course.js"></script>
+<script src="assets/onepage.js"></script>
+<script src="assets/ent141.js"></script>
+<script src="assets/kb.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/assistant.js"></script>
+<script>
+const {W} = Lecture; const {store,esc} = ENT141;
+const T=(x,y,s,o='')=>`<text x="${x}" y="${y}" text-anchor="middle" font-family="Schibsted Grotesk,Arial" ${o} fill="var(--ink)">${s}</text>`;
+
+const CANVAS=`<svg viewBox="0 0 520 250" role="img" aria-label="Value proposition canvas: value map square on the left, customer profile circle on the right" style="width:100%;height:auto">
+  <rect x="20" y="30" width="190" height="190" rx="6" fill="none" stroke="var(--line)" stroke-width="2" stroke-dasharray="6 5"/>
+  ${T(115,128,'Value map','font-weight="700" font-size="15"')}${T(115,148,'next week','font-size="12"')}
+  <path d="M225 125 H285" stroke="var(--muted)" stroke-width="2" stroke-dasharray="4 4"/>${T(255,115,'fit','font-size="13"')}
+  <circle cx="400" cy="125" r="100" fill="var(--wk-soft)" stroke="var(--wk)" stroke-width="2.5"/>
+  <path d="M400 125 L400 25 M400 125 L313 175 M400 125 L487 175" stroke="var(--wk)" stroke-width="1.5"/>
+  ${T(448,100,'Gains','font-weight="700" font-size="14"')}${T(352,100,'Pains','font-weight="700" font-size="14"')}${T(400,190,'Customer jobs','font-weight="700" font-size="14"')}
+  ${T(400,245,'Customer profile · today','font-size="12.5" font-weight="700"')}
+</svg>`;
+
+const JOBS={center:'Customer jobs · rider',branches:[
+  {t:'Functional jobs',items:['Deliver each order on time','Find the customer’s entrance','Keep the phone charged']},
+  {t:'Social jobs',items:['Look professional to customers','Be seen as reliable by the platform']},
+  {t:'Emotional jobs',items:['Feel safe in the heat','Feel in control of the day’s income']}]};
+
+const PAINS={'Undesired outcomes':[['Heat exhaustion','“By 2 pm I feel dizzy.” A result the rider wants to avoid.']],
+ 'Obstacles':[['No place to wait','Security asks riders to wait outside: something that stops the job.'],['Unclear entrances','Calls to the customer cost minutes per order.']],
+ 'Risks':[['Lost orders','“If I take a break, I lose orders.” Something that might go wrong.']]};
+
+const GAINS=`<svg viewBox="0 0 520 220" role="img" aria-label="Four kinds of gains from required to unexpected" style="width:100%;height:auto">
+  ${[['Required','Cold water when needed',0],['Expected','Shade near busy restaurants',1],['Desired','Charge the phone while waiting',2],['Unexpected','Earn more by waiting nearer to orders',3]].map(([k,d,i])=>`<rect x="${10+i*126}" y="${150-i*40}" width="118" height="${60+i*40}" rx="8" fill="var(--wk)" fill-opacity="${.15+i*.2}" stroke="var(--wk)"/>
+  <text x="${69+i*126}" y="${172-i*40}" text-anchor="middle" font-family="Schibsted Grotesk,Arial" font-weight="800" font-size="14" fill="var(--ink)">${k}</text>
+  <foreignObject x="${14+i*126}" y="${180-i*40}" width="110" height="50"><div xmlns="http://www.w3.org/1999/xhtml" style="font:12.5px/1.3 'Schibsted Grotesk',Arial;color:var(--ink);text-align:center">${d}</div></foreignObject>`).join('')}
+</svg>`;
+
+function ranker(el){
+  const key='ent141-w13-rank'; let st; try{st=JSON.parse(store.get(key)||'null')}catch(e){}
+  if(!st) st=[['Lost orders when resting',6],['Heat exhaustion',9],['No place to wait',7],['Unclear entrances',3]];
+  const draw=()=>{ el.innerHTML=`<p class="mono" style="color:var(--muted);margin:0 0 8px">Number = interviews (out of 10) that mentioned it. Move each pain up or down.</p><div class="rank">${st.map(([t,n],i)=>`<div class="r"><span class="n">${i+1}</span><div>${esc(t)} <span class="mono">${n}/10</span><div class="bar" style="width:${n*10}%"></div></div><span><button type="button" data-u="${i}" aria-label="Move up">↑</button> <button type="button" data-d="${i}" aria-label="Move down">↓</button></span></div>`).join('')}</div><div class="feedback" style="margin-top:8px">${st.every((x,i)=>i===0||st[i-1][1]>=x[1])?'Ranked by evidence: most-mentioned pain first.':'Check: is your top pain the one most people mentioned?'}</div>`;
+    el.querySelectorAll('[data-u],[data-d]').forEach(b=>b.addEventListener('click',()=>{ const i=+(b.dataset.u??b.dataset.d), j=b.dataset.u!=null?i-1:i+1; if(j<0||j>=st.length) return; [st[i],st[j]]=[st[j],st[i]]; store.set(key,JSON.stringify(st)); draw(); })); };
+  draw();
+}
+
+const FIX=[
+  {q:'Pain: “There is no app for riders.”',type:'solution in disguise',hint:'Name the problem the app would solve: “Riders cannot find a shaded place to wait.”'},
+  {q:'Job: “Use our rest point.”',type:'your product, not their job',hint:'A job is what the customer tries to get done without you: “Deliver orders safely in the heat.”'},
+  {q:'Gain: “Better experience.”',type:'too vague',hint:'Make it concrete and checkable: “Wait under 5 minutes in shade near restaurants.”'},
+  {q:'Pains ranked by what the team thinks matters.',type:'no evidence',hint:'Rank by your interviews: how many people mentioned it, and how strongly.'}];
+
+function reflect(qs,exit){ return `<div class="stack ui">${qs.map((q,i)=>`<div class="feedback"><b>Q${i+1}</b> ${q}</div>`).join('')}<div class="box exam"><b class="lbl">Exit question</b>${exit}</div></div>`; }
+
+Lecture.mount({
+  id:'ent141-w13', week:13, clo:'3', course:'ENT 141', short:'Week 13 · Value Proposition Canvas (Part 1)',
+  title:'Value Proposition Canvas (Part 1)', meta:'Osterwalder et al. (2014), Byers et al. (2019) · 2-hour lecture',
+  scenes:[
+  { nav:'Start here', title:'What is your customer trying to get done?', minutes:5,
+    narration:[`The value proposition canvas starts with the customer, not your idea. Today: the <b>customer profile</b>, built from your Project 1 interviews. <span class="mono">Topics: Jobs · Pains · Gains · Ranking. CLO 3.</span>`],
+    think:`Think of the last time you ordered food while studying late. What were you trying to get done? What annoyed you? What would have surprised you in a good way?`,
+    src:`Reading: Osterwalder, A., Pigneur, Y., Bernarda, G., &amp; Smith, A. (2014). <em>Value proposition design</em>. Wiley.`,
+    fig:{label:`Today's lecture · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`The canvas`,10,'l'],[`Customer jobs`,10,'l'],[`Pains`,10,'l'],[`Gains`,10,'l'],[`Rank them`,10,'l'],[`Use your evidence`,10,'l'],[`Mistake → fix`,5,'l'],[`Customer profile`,40,'a'],[`Think about it`,10,'a']])} },
+
+  { nav:'The canvas', title:'The value proposition canvas', minutes:10,
+    narration:[`The canvas has two sides. The <b>customer profile</b> (circle) describes the customer. The <b>value map</b> (square) describes your offer. <b>Fit</b> is when the square matches the circle.`],
+    src:`Osterwalder et al. (2014).`,
+    fig:{label:`Two sides · today the circle`, html:CANVAS} },
+
+  { nav:'Customer jobs', title:'Customer jobs', minutes:10,
+    narration:[`<b>Jobs</b> are what customers try to get done in work or life. They can be <b>functional</b> (a task), <b>social</b> (how they look to others) or <b>emotional</b> (how they want to feel).`],
+    src:`Osterwalder et al. (2014): customer jobs. Running example: the illustrative rider from Weeks 5–6.`,
+    fig:{label:`Illustrative example · click a branch`, mindmap:JOBS} },
+
+  { nav:'Pains', title:'Pains', minutes:10,
+    narration:[`<b>Pains</b> are what annoys customers before, during or after a job: <b>undesired outcomes</b>, <b>obstacles</b> and <b>risks</b>. Each pain should come from something a user said or did.`],
+    src:`Osterwalder et al. (2014): customer pains.`,
+    fig:{label:`Illustrative rider pains · click to read`, build:el=>W.picker(el,PAINS,'Select a pain.')} },
+
+  { nav:'Gains', title:'Gains', minutes:10,
+    narration:[`<b>Gains</b> are outcomes customers want. Some are <b>required</b> (no solution works without them), others <b>expected</b>, <b>desired</b> or <b>unexpected</b> (beyond what they imagine).`],
+    src:`Osterwalder et al. (2014): customer gains.`,
+    fig:{label:`From required to unexpected · illustrative`, html:GAINS} },
+
+  { nav:'Rank them', title:'Rank jobs, pains and gains', minutes:10,
+    narration:[`Not every pain matters equally. Rank jobs by <b>importance</b>, pains by <b>severity</b> and gains by <b>relevance</b>, using how many interviewees mentioned each and how strongly.`],
+    src:`Osterwalder et al. (2014): ranking jobs, pains and gains.`,
+    fig:{label:`Rank the pains · illustrative interview counts`, build:ranker} },
+
+  { nav:'Use your evidence', title:'Use your Project 1 evidence', minutes:10,
+    narration:[`You already have the evidence. Your empathy map and interview quotes from Project 1 turn into the customer profile.`],
+    src:`Gray, D. (2017). Updated empathy map canvas. XPLANE. · Osterwalder et al. (2014).`,
+    fig:{label:`From empathy map to profile · click or play`, flow:[
+      {t:'Does',s:'empathy map',d:'Tasks you saw users do become <b>functional jobs</b>.'},
+      {t:'Says and thinks',s:'empathy map',d:'Complaints and worries become <b>pains</b>; hopes become <b>gains</b>.'},
+      {t:'Feels',s:'empathy map',d:'Feelings point to <b>emotional jobs</b> and to how severe a pain is.'},
+      {t:'Count',s:'interview notes',d:'Count how many interviewees mentioned each item, then <b>rank</b>.'}]} },
+
+  { nav:'Mistake → fix', title:'Mistake → fix', kind:'review', minutes:5,
+    narration:[`These mistakes make a customer profile look full but say little. Say the fix before you reveal it.`],
+    fig:{label:`Common mistakes · reveal the fix`, build:el=>W.practice(el,FIX,{label:'Fix',prefix:''})} },
+
+  { nav:'Customer profile', title:'Activity · Your team’s customer profile', kind:'activity', minutes:40, wide:true,
+    narration:[`Use your Project 1 interviews and empathy map. Write three of each, ranked, with evidence. This is the first half of section 4 in the <a href="project-2.html">Project 2 builder</a>.`],
+    fig:{label:`Customer profile · saves in your browser`, build:el=>W.worksheet(el,{id:'ent141-w13-profile',title:'ENT 141 · Project 2 · Section 4a · Customer profile',fields:[
+      {l:'Customer segment (one group of people)',rows:2},
+      {l:'Top 3 jobs, ranked by importance',rows:3},
+      {l:'Top 3 pains, ranked by severity',rows:3},
+      {l:'Top 3 gains, ranked by relevance',rows:3},
+      {l:'Evidence: two quotes and how many interviewees mentioned the top pain',rows:3}]})} },
+
+  { nav:'Think about it', title:'Think about it', kind:'review', minutes:10,
+    narration:[`Discuss with your team. There is no single right answer.`,`<b>Next week:</b> Value Proposition Canvas, part 2: the value map and fit. Bring your customer profile.<br><a class="btn" href="week-14.html">Next lecture · Week 14 · Value Proposition Canvas (Part 2) →</a>`],
+    fig:{label:`Reflection`, html:reflect([`Which pain on your profile surprised your team most? Why?`,`Is your customer the same person as your user? Who pays?`,`Which gain is still a guess because no interviewee mentioned it?`],`Write your top-ranked pain in one sentence, with the number of interviewees who mentioned it.`)} },
+  ]
+});
+</script>
+</body>
+</html>

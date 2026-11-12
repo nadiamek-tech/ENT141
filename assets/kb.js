@@ -29,7 +29,7 @@ window.ENT141_KB=[
 {q:'What is Activity 1?',k:'activity 1 video pitch 30 45 seconds forum',a:'An individual 30–45 second video pitch on a topic your instructor assigns, posted on the Moodle forum before the deadline. 10%.',l:'week-04.html#s5'},
 {q:'What is Activity 2?',k:'activity 2 journal article case study week 11',a:'An individual in-class activity on journal articles or case studies, in Week 11. Requirements are published later.',l:'index.html#calendar'},
 {q:'What is Project 2?',k:'project 2 idea validation report evaluation 40',a:'A team Idea Validation Report (40%) on three social innovation ideas, due Week 16. Requirements are published later.',l:'index.html#calendar'},
-{q:'Who is the instructor?',k:'instructor lecturer teacher professor contact',a:'Eng. Nadia Mek. Contact details and office hours are on Moodle.',l:'index.html'},
+{q:'Who is the instructor?',k:'instructor lecturer teacher professor contact',a:'Nadia. Contact details and office hours are on Moodle.',l:'index.html'},
 {q:'What is the textbook?',k:'book textbook reading byers',a:'Byers, Dorf & Nelson (2019). Technology ventures: From idea to enterprise (5th ed.). Each lecture names its chapter.',l:'week-01.html#s1'},
 {q:'Can I use ChatGPT or AI?',k:'chatgpt ai generative tool allowed plagiarism',a:'Your interviews, maps and ideas must come from your own fieldwork; the rubric marks what you learned from real people. Follow your instructor’s rules on AI tools announced on Moodle.',l:'project-1.html#s0'},
 {q:'How do I print the poster?',k:'print pdf a3 save poster download',a:'Open your poster and click “Print or save PDF”. Choose A3 and “Save as PDF” in the print window.',l:'poster.html'},

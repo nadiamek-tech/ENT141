@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Project 2 · Idea Validation Report · ENT 141</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Schibsted+Grotesk:wght@400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<link rel="stylesheet" href="assets/course.css">
+<link rel="stylesheet" href="assets/portal.css">
+<link rel="stylesheet" href="assets/docbuilder.css">
+<style>:root{--wk:#B4521E;--wk-soft:rgba(180,82,30,.09);--wk-d:#F2A06B;--wk-soft-d:rgba(242,160,107,.14)}</style>
+</head>
+<body>
+<div id="hub" data-cur="project2"></div>
+<main class="pw" id="pw">
+  <h1>Your Idea Validation Report</h1>
+  <p class="lead">Your team writes directly on the report below. Each part is built in one lecture. Save a file to share with your team, then save as Word or PDF and submit.</p>
+  <div class="chips" id="chips"></div>
+  <div class="bar" id="bar">
+    <div class="seg" role="group" aria-label="Show"><button type="button" data-m="edit" aria-pressed="true">Our report</button><button type="button" data-m="ex" aria-pressed="false">Example</button></div>
+    <button type="button" class="bbtn pri" data-act="docx">Save as Word</button>
+    <button type="button" class="bbtn" data-act="pdf">Print or PDF</button>
+    <button type="button" class="bbtn" data-act="save" title="Save everything to a file to send to your team or continue on another device">Save file</button>
+    <label class="bbtn" title="Open a file from your team">Open file<input type="file" data-act="open" accept=".json,application/json" hidden></label>
+    <span class="prog" id="prog"></span>
+  </div>
+  <p class="msg" id="msg" aria-live="polite"></p>
+  <p class="exnote"><b>Example:</b> a made-up team (Team Morning, from the poster example) to show what a finished report looks like. Use your own Project 1 problem.</p>
+  <div id="doc"></div>
+  <section class="sub" id="submit">
+    <h2>Submit</h2>
+    <p style="margin:0">One member submits for the team. 1. Save as Word (or PDF). 2. Open Moodle. 3. Upload before <b id="due"></b>.</p>
+    <div class="acts"><button type="button" class="bbtn pri" data-act="docx">Save as Word</button><a class="bbtn" href="https://www.office.com/launch/word" target="_blank" rel="noopener">Open Word online ↗</a><span id="mdl"></span></div>
+    <details class="rub"><summary>How it is marked · 100 marks → 40%</summary><div id="rub" style="margin-top:8px"></div></details>
+  </section>
+</main>
+<div id="print-root"></div>
+<footer class="pt-foot">This website is interactive course support. It does not replace classes, attendance or class activities.<br> <b>Nadia</b></footer>
+<script src="assets/site.js"></script>
+<script src="assets/supports.js"></script>
+<script src="assets/course.js"></script>
+<script src="assets/kb.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/assistant.js"></script>
+<script src="assets/professor.js"></script>
+<script src="assets/course-info.js"></script>
+<script src="assets/portal.js"></script>
+<script src="assets/docbuilder.js"></script>
+<script>
+Portal.header('project2');
+const {esc,V}=DocB;
+const P2=COURSE.assess.find(a=>a.id==='p2')||{}, MOODLE=(P2.submit||{}).link||'', DUE=(P2.submit||{}).dueText||'';
+const STRAT=['Cost leadership','Differentiation','Focus (niche)','Blue ocean','Platform / marketplace','Social enterprise model'];
+const SECTIONS=[
+ {id:'cover',cover:true,titleKey:'title',titlePh:'Report title, e.g. the idea you chose',items:[
+   {t:'in',k:'team',label:'Team name'},{t:'in',k:'problem',label:'Project 1 problem',ph:'One sentence from your poster'},
+   {t:'q',k:'members',label:'Members · name and student ID, one per line',ph:'Name · ID',rows:4}]},
+ {id:'s1',n:'1',title:'Three social innovation ideas',tag:'Weeks 10–11',fmt:true,wc:300,howto:'Three different ideas that solve your Project 1 problem. Give each a different strategy. <a href="week-10.html">Week 10</a> · <a href="week-11.html">Week 11</a>',
+  items:[1,2,3].flatMap(i=>[{t:'in',k:`i${i}`,label:`Idea ${i} · name`},{t:'q',k:`i${i}d`,label:`Idea ${i} · what is it, and for whom?`,rows:2},{t:'pick',k:`i${i}s`,label:`Idea ${i} · strategy`,opts:STRAT}])},
+ {id:'s2',n:'2',title:'Idea evaluation and selection',tag:'Week 8',fmt:true,wc:200,howto:'Score each idea from 1 (weak) to 5 (strong). Weights must add up to 100. The ★ shows the highest score. <a href="week-08.html">Week 8</a>',
+  items:[{t:'matrix',k:'mx',crit:[['Desirability · people want it',30],['Feasibility · we can build it',25],['Viability · it can pay for itself',25],['Sustainability · SDG and planet',20]],opts:['i1','i2','i3']},
+   {t:'q',k:'sel',label:'Which idea did you choose, and why? Use the scores.',rows:3}]},
+ {id:'s3',n:'3',title:'Market and industry analysis',tag:'Week 12',fmt:true,wc:400,howto:'Size the market with real open data, then look at the industry around your idea. <a href="week-12.html">Week 12</a>',
+  items:[{t:'table',k:'mk',cols:['Level','Who','Number','Source'],rows:3,ph:['TAM / SAM / SOM','Which people','Estimate','Website, year']},
+   {t:'q',k:'riv',label:'Rivalry · who already solves this problem?',rows:2},{t:'q',k:'ent',label:'New entrants · how easy is it for others to copy you?',rows:2},
+   {t:'q',k:'sub',label:'Substitutes · what do people use instead today?',rows:2},{t:'q',k:'buy',label:'Buyers · how much power do your customers have?',rows:2},{t:'q',k:'sup',label:'Suppliers · who do you depend on?',rows:2}]},
+ {id:'s4',n:'4',title:'Value proposition canvas',tag:'Weeks 13–14',fmt:true,wc:300,howto:'Left: what your customer needs (from your Project 1 interviews). Right: what your idea offers. <a href="week-13.html">Week 13</a> · <a href="week-14.html">Week 14</a>',
+  items:[{t:'boxes',cls:'vpc',boxes:[
+    {h:'Customer jobs',sub:'customer profile',cls:'b3',items:[['vj1','Job 1'],['vj2','Job 2'],['vj3','Job 3']]},{h:'Products and services',sub:'value map',cls:'b1',items:[['vp1','Product or service 1'],['vp2','Product or service 2'],['vp3','Product or service 3']]},
+    {h:'Pains',sub:'customer profile',cls:'b2',items:[['va1','Pain 1 (most serious)'],['va2','Pain 2'],['va3','Pain 3']]},{h:'Pain relievers',sub:'value map',cls:'b2',items:[['vr1','Relieves pain 1 by…'],['vr2','Relieves pain 2 by…'],['vr3','Relieves pain 3 by…']]},
+    {h:'Gains',sub:'customer profile',cls:'b4',items:[['vg1','Gain 1'],['vg2','Gain 2'],['vg3','Gain 3']]},{h:'Gain creators',sub:'value map',cls:'b4',items:[['vc1','Creates gain 1 by…'],['vc2','Creates gain 2 by…'],['vc3','Creates gain 3 by…']]}]},
+   {t:'q',k:'fit',label:'Fit · which pains and gains does your idea really address? What is still missing?',rows:3}]},
+ {id:'s5',n:'5',title:'Product differentiation',tag:'Weeks 15–16',fmt:true,wc:300,howto:'Compare with real competitors, then say what makes you different. <a href="week-15.html">Week 15</a> · <a href="week-16.html">Week 16</a>',
+  items:[{t:'table',k:'cp',cols:['Competitor','What they offer','Price','Their weakness'],rows:3},
+   {t:'q',k:'pod',label:'Points of difference · what do you do that they do not?',rows:3},
+   {t:'q',k:'pos',label:'Positioning statement · For (who) who (need), our (idea) is (category) that (benefit). Unlike (competitor), we (difference).',rows:3},
+   {t:'img',slot:'map',label:'Positioning map (photo of your drawing)'}]},
+ {id:'s6',n:'6',title:'Sustainability check',tag:'SDG · triple bottom line',fmt:true,wc:200,howto:'How does the chosen idea create value for people, planet and profit (Elkington, 1997)?',
+  items:[{t:'in',k:'sdg',label:'Main SDG',ph:'e.g. SDG 3 Good health and well-being'},{t:'q',k:'people',label:'People · who benefits, and how?',rows:2},{t:'q',k:'planet',label:'Planet · what is the effect on the environment?',rows:2},{t:'q',k:'profit',label:'Profit · how does it pay for itself?',rows:2}]},
+ {id:'s7',n:'7',title:'Evidence',tag:'appendix',howto:'Photos of interviews, your prototype or data screenshots. Refer to them in the text: "see Evidence 1".',items:[{t:'img',slot:'ev',label:'Evidence images',multi:true}]},
+ {id:'s8',n:'R',title:'References',tag:'APA 7',items:[{t:'q',k:'refs',label:'One reference per line, A to Z',ph:'e.g. Byers, T. H., Dorf, R. C., & Nelson, A. J. (2019). Technology ventures: From idea to enterprise (5th ed.). McGraw-Hill.',rows:4}]}];
+const EX={title:'Pre-order breakfast kiosk for 8 am classes',team:'Team Morning',problem:'Many first-year students skip breakfast before 9 am classes.',members:'Student A · 2026XXXX\nStudent B · 2026XXXX\nStudent C · 2026XXXX\nStudent D · 2026XXXX',
+ i1:'Grab-and-go kiosk',i1d:'A kiosk near the lecture halls with pre-ordered healthy breakfasts ready at 7:45.',i1s:'Focus (niche)',
+ i2:'Overnight oats subscription',i2d:'Weekly delivery of ready jars to student housing, prepared by a student team.',i2s:'Cost leadership',
+ i3:'Breakfast-swap app',i3d:'An app where students who cook in the morning sell extra portions to classmates.',i3s:'Platform / marketplace',
+ mx_w0:'30',mx_w1:'25',mx_w2:'25',mx_w3:'20',mx_0_0:'5',mx_0_1:'3',mx_0_2:'4',mx_1_0:'4',mx_1_1:'4',mx_1_2:'2',mx_2_0:'3',mx_2_1:'4',mx_2_2:'3',mx_3_0:'4',mx_3_1:'4',mx_3_2:'3',
+ sel:'We chose the kiosk. It scored highest on desirability: in our Project 1 interviews, students said time, not money, was the reason they skip breakfast.',
+ mk_0_0:'TAM',mk_0_1:'University students in Dubai',mk_0_2:'Illustrative only',mk_0_3:'Use your open data source',mk_1_0:'SAM',mk_1_1:'Students on our campus with morning classes',mk_1_2:'Illustrative only',mk_1_3:'Campus figures you are allowed to use',mk_2_0:'SOM',mk_2_1:'Students we can serve in year 1',mk_2_2:'Illustrative only',mk_2_3:'Your own estimate',
+ riv:'The campus café sells breakfast, but queues are long before 9 am.',ent:'Easy to copy; our advantage is the pre-order timing and location.',sub:'Energy drinks, snacks from home, skipping the meal.',buy:'Students compare prices easily, so price must stay close to the café.',sup:'A local bakery and fruit supplier.',
+ vj1:'Get to an 8 am class on time',vj2:'Stay focused until noon',vj3:'Spend little',va1:'No time in the morning',va2:'Long queue at the café',va3:'Unhealthy options',vg1:'Feel awake in class',vg2:'Healthy habit',vg3:'Save money',
+ vp1:'Pre-ordered breakfast box',vp2:'Order app with pick-up time',vp3:'Weekly meal plan',vr1:'Ready at 7:45, pick up in 30 seconds',vr2:'No queue: separate pick-up shelf',vr3:'Menu made with a nutrition student club',vg1c:'',vc1:'Protein and fruit in every box',vc2:'Streak reminder in the app',vc3:'Weekly plan discount',
+ fit:'The kiosk removes the time pain best. Price is still a risk: we have not tested how much students will pay.',
+ cp_0_0:'Campus café',cp_0_1:'Hot breakfast',cp_0_2:'Similar',cp_0_3:'Queues before 9 am',cp_1_0:'Delivery apps',cp_1_1:'Any food',cp_1_2:'Higher, with fees',cp_1_3:'Slow in the early morning',cp_2_0:'Vending machines',cp_2_1:'Snacks',cp_2_2:'Lower',cp_2_3:'Not a meal',
+ pod:'Ready before class, no queue, and a healthy menu designed with students.',pos:'For first-year students with early classes who skip breakfast, our kiosk is a pre-order breakfast service that is ready in 30 seconds. Unlike the campus café, we have no queue at 8 am.',
+ sdg:'SDG 3 Good health and well-being',people:'Students eat before class and focus better.',planet:'Pre-orders cut food waste: we prepare only what is ordered.',profit:'Small margin per box, weekly plans give steady sales.',
+ refs:'Byers, T. H., Dorf, R. C., & Nelson, A. J. (2019). Technology ventures: From idea to enterprise (5th ed.). McGraw-Hill.\nElkington, J. (1997). Cannibals with forks: The triple bottom line of 21st century business. Capstone.\nOsterwalder, A., Pigneur, Y., Bernarda, G., & Smith, A. (2014). Value proposition design. Wiley.',
+ 'fmt-s1':'qa','fmt-s2':'qa','fmt-s3':'qa','fmt-s4':'qa','fmt-s5':'qa','fmt-s6':'qa'};
+DocB.mount({key:'ent141-p2',docTitle:'Project 2 · Idea Validation Report',titleKey:'title',root:document.getElementById('pw'),sections:SECTIONS,ex:EX,
+  coverOut:()=>[['Team',V('team')],['Problem',V('problem')],['Members',V('members')],['Instructor','Nadia']],
+  fileName:()=>`${(V('team')||'Team').replace(/[^\w\- ]+/g,'').replace(/\s+/g,'_')}_ENT141_Project2`});
+document.getElementById('chips').innerHTML=`<span>Team</span><span><b>40%</b></span><span>Due <b>${esc(DUE)}</b></span><span>CLO <b>1, 3, 4</b></span>`;
+document.getElementById('due').textContent=DUE+', 23:59';
+document.getElementById('mdl').innerHTML=MOODLE?`<a class="bbtn pri" href="${esc(MOODLE)}" target="_blank" rel="noopener">Submit on Moodle ↗</a>`:`<span class="bbtn" aria-disabled="true">Moodle link coming soon</span>`;
+const B=['Exemplary','Proficient','Developing','Poor'];
+const RUB=[['1 · Three ideas',10,['Three distinct ideas, each with a named strategy and clear user.','Three ideas, strategies partly clear.','Ideas similar or vague.','Fewer than three ideas.']],
+ ['2 · Evaluation and selection',15,['Weighted matrix complete; choice explained with scores and interview evidence.','Matrix complete; choice explained briefly.','Matrix incomplete or choice not linked to scores.','No evaluation.']],
+ ['3 · Market and industry',20,['TAM/SAM/SOM with real sources; all five forces discussed.','Market sized with some sources; most forces discussed.','Numbers without sources; forces thin.','Missing.']],
+ ['4 · Value proposition canvas',20,['All six boxes from real interview evidence; honest fit statement.','Canvas complete; fit partly explained.','Canvas incomplete or generic.','Missing.']],
+ ['5 · Differentiation',15,['Real competitors compared; clear points of difference; positioning statement and map.','Competitors compared; positioning partly clear.','Weak comparison.','Missing.']],
+ ['6 · Sustainability and writing',20,['SDG and triple bottom line explained; evidence labelled; APA references; clear writing.','Mostly complete; minor errors.','Thin sustainability; little evidence.','Missing or hard to follow.']]];
+const band=m=>[`${Math.round(m*.9)}–${m}`,`${Math.round(m*.7)}–${Math.round(m*.9)-1}`,`${Math.round(m*.5)}–${Math.round(m*.7)-1}`,`0–${Math.round(m*.5)-1}`];
+document.getElementById('rub').innerHTML=RUB.map(([t,m,c],i)=>`<details${i?'':' open'}><summary>${t} · ${m}</summary><dl>${c.map((x,j)=>`<dt>${B[j]} (${band(m)[j]})</dt><dd>${x}</dd>`).join('')}</dl></details>`).join('');
+</script>
+</body>
+</html>

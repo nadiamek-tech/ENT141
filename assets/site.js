@@ -3,7 +3,7 @@
 window.SITE={
   code:'ENT 141', title:'Innovation & Entrepreneurship 1', subtitle:'from a real problem to an idea you can defend',
   meta:'2-0-2 · Lecture 30 hrs · Year 1', logo:true,
-  instructor:'Eng. Nadia Mek',
+  instructor:'Nadia',
   contact:{email:'', hours:'', room:'', booking:''},
   portal:'',            /* student portal link (grades) */
   reg:'',               /* team registration form link */

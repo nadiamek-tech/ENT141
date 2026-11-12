@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Week 8 · Idea Evaluation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Schibsted+Grotesk:wght@400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<link rel="stylesheet" href="assets/course.css">
+<style>
+:root{--wk:#6D28D9;--wk-soft:rgba(109,40,217,.09);--wk-d:#C4B5FD;--wk-soft-d:rgba(196,181,253,.14)}
+.svgfig{width:100%;height:auto;display:block}
+.mx-wrap{overflow-x:auto;max-width:100%}
+.mx{width:100%;border-collapse:collapse;font-family:var(--f-display);font-size:.88rem;min-width:420px}
+.mx th,.mx td{border-bottom:1px solid var(--line);padding:6px 6px;text-align:center;vertical-align:middle}
+.mx th:first-child,.mx td:first-child{text-align:left}
+.mx thead th{font-weight:700;color:var(--ink)}
+.mx td small{display:block;font-family:var(--f-mono);font-size:.72rem;color:var(--muted)}
+.mx tr.tot td{font-weight:800;border-top:2px solid var(--ink);border-bottom:0}
+.mx td.win{background:var(--wk-soft);color:var(--wk)}
+.mx input[type=text]{width:100%;min-width:70px;font:inherit;font-weight:700;border:1px solid var(--line);border-radius:6px;padding:4px 6px;background:var(--bg);color:var(--ink);text-align:center}
+.mx input[type=number]{width:58px;font:inherit;border:1px solid var(--line);border-radius:6px;padding:4px;background:var(--bg);color:var(--ink)}
+.mx select{font:inherit;border:1px solid var(--line);border-radius:6px;padding:3px;background:var(--bg);color:var(--ink)}
+.mx .hide{visibility:hidden}
+.mx-ctl{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:0 0 10px}
+.mx-gap{height:14px}
+</style>
+</head>
+<body>
+<script src="assets/site.js"></script>
+<script src="assets/supports.js"></script>
+<script src="assets/course.js"></script>
+<script src="assets/onepage.js"></script>
+<script src="assets/ent141.js"></script>
+<script src="assets/kb.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/assistant.js"></script>
+<script>
+const {W} = Lecture; const {store,esc} = ENT141;
+
+/* fictional worked example, from the Week 7 HMW: reach 8 am classes on time without a car */
+const EXAMPLE={ideas:['Metro shuttle','Carpool board','Scooter path'],
+  crit:[['Desirability',30],['Feasibility',25],['Viability',20],['Sustainability',25]],
+  s:[[5,4,3],[3,5,3],[3,4,3],[4,4,5]]};
+const STEPTXT=[
+  'Press <b>Next step</b> to build the matrix.',
+  '<b>Step 1 · Criteria and weights.</b> Four criteria. The team agrees on weights that add up to 100%. Desirability matters most here: 30%.',
+  '<b>Step 2 · Score.</b> Each idea gets 1 (weak) to 5 (strong) on each criterion. Scores come from interviews and facts, not feelings.',
+  '<b>Step 3 · Multiply.</b> Weight × score. Carpool board, desirability: 30% × 4 = <b>1.20</b>.',
+  '<b>Step 4 · Add.</b> Add each column. Carpool board: 1.20 + 1.25 + 0.80 + 1.00 = <b>4.25</b>, the highest total.',
+  '<b>Step 5 · Discuss.</b> Is the winner clear? Here 4.25 vs 3.85: yes. If two totals are close, talk before you decide.'];
+
+const f2=x=>(Math.round(x*100)/100).toFixed(2);
+function totals(st){ return st.ideas.map((_,j)=>st.crit.reduce((a,[,w],i)=>a+w/100*(+st.s[i][j]||0),0)); }
+
+/* matrix: readonly walk-through (step) or editable team matrix */
+function matrix(el,{key,init,edit}){
+  let st=null; if(key){ try{st=JSON.parse(store.get(key)||'null')}catch(e){} }
+  if(!st) st=JSON.parse(JSON.stringify(init));
+  let step=edit?5:0;
+  const draw=()=>{
+    const tot=totals(st), best=Math.max(...tot), wsum=st.crit.reduce((a,c)=>a+(+c[1]||0),0);
+    const sorted=[...tot].sort((a,b)=>b-a), close=sorted.length>1&&sorted[0]-sorted[1]<0.2;
+    const hd=st.ideas.map((t,j)=>edit?`<th><input type="text" data-idea="${j}" value="${esc(t)}" aria-label="Idea ${j+1} name"></th>`:`<th>${esc(t)}</th>`).join('');
+    const rows=st.crit.map(([c,w],i)=>`<tr><td>${esc(c)}</td><td class="${step<1?'hide':''}">${edit?`<input type="number" min="0" max="100" step="5" data-w="${i}" value="${w}" aria-label="${esc(c)} weight"> %`:w+'%'}</td>${st.ideas.map((_,j)=>{ const sc=st.s[i][j];
+        const cell=edit?`<select data-s="${i},${j}" aria-label="${esc(c)} score for ${esc(st.ideas[j])}">${[1,2,3,4,5].map(n=>`<option ${n==sc?'selected':''}>${n}</option>`).join('')}</select>`:sc;
+        return `<td class="${step<2?'hide':''}">${cell}<small class="${step<3?'hide':''}">${f2(w/100*sc)}</small></td>`; }).join('')}</tr>`).join('');
+    const totRow=`<tr class="tot"><td>Total</td><td class="${step<1?'hide':''}">${wsum}%</td>${tot.map(t=>`<td class="${step<4?'hide':''} ${step>=4&&t===best&&wsum===100?'win':''}">${f2(t)}</td>`).join('')}</tr>`;
+    el.innerHTML=`${edit?'':`<div class="mx-ctl"><button type="button" class="btn mx-next">${step<5?'Next step':'Start again'}</button><span class="mono" style="color:var(--muted)">Step ${step} of 5</span></div>`}
+      <div class="mx-wrap"><table class="mx"><thead><tr><th>Criterion</th><th>Weight</th>${hd}</tr></thead><tbody>${rows}${totRow}</tbody></table></div>
+      <div class="mx-gap"></div><div class="feedback">${edit
+        ? (wsum!==100?`Weights add up to <b>${wsum}%</b>. Make them add up to 100%.`
+          :`Highest: <b>${esc(st.ideas[tot.indexOf(best)]||'')}</b> (${f2(best)}).${close?' <b>Close call:</b> two totals are less than 0.2 apart. Discuss before you decide.':' Check it with your evidence before you decide.'}`)
+        : STEPTXT[step]}</div>`;
+    if(key) store.set(key,JSON.stringify(st));
+    const nx=el.querySelector('.mx-next'); if(nx) nx.addEventListener('click',()=>{ step=step<5?step+1:0; draw(); });
+    el.querySelectorAll('[data-idea]').forEach(i=>i.addEventListener('change',()=>{ st.ideas[+i.dataset.idea]=i.value; draw(); }));
+    el.querySelectorAll('[data-w]').forEach(i=>i.addEventListener('change',()=>{ st.crit[+i.dataset.w][1]=Math.max(0,Math.min(100,+i.value||0)); draw(); }));
+    el.querySelectorAll('[data-s]').forEach(i=>i.addEventListener('change',()=>{ const [a,b]=i.dataset.s.split(',').map(Number); st.s[a][b]=+i.value; draw(); }));
+  };
+  draw();
+}
+
+const LENSES_SVG=`<svg class="svgfig" viewBox="0 0 520 380" role="img" aria-label="Three overlapping circles: desirability, feasibility, viability; the overlap is the sweet spot">
+  <circle cx="260" cy="135" r="105" fill="var(--wk)" fill-opacity=".12" stroke="var(--wk)" stroke-width="2"/>
+  <circle cx="190" cy="250" r="105" fill="var(--wk)" fill-opacity=".12" stroke="var(--wk)" stroke-width="2"/>
+  <circle cx="330" cy="250" r="105" fill="var(--wk)" fill-opacity=".12" stroke="var(--wk)" stroke-width="2"/>
+  <text x="260" y="80" text-anchor="middle" font-family="Schibsted Grotesk,Arial" font-weight="800" font-size="16" fill="var(--ink)">Desirability</text>
+  <text x="260" y="100" text-anchor="middle" font-family="Schibsted Grotesk,Arial" font-size="13" fill="var(--muted)">Do people want it?</text>
+  <text x="140" y="290" text-anchor="middle" font-family="Schibsted Grotesk,Arial" font-weight="800" font-size="16" fill="var(--ink)">Feasibility</text>
+  <text x="140" y="310" text-anchor="middle" font-family="Schibsted Grotesk,Arial" font-size="13" fill="var(--muted)">Can we make it?</text>
+  <text x="380" y="290" text-anchor="middle" font-family="Schibsted Grotesk,Arial" font-weight="800" font-size="16" fill="var(--ink)">Viability</text>
+  <text x="380" y="310" text-anchor="middle" font-family="Schibsted Grotesk,Arial" font-size="13" fill="var(--muted)">Can it pay for itself?</text>
+  <circle cx="260" cy="212" r="26" fill="var(--wk)"/>
+  <text x="260" y="217" text-anchor="middle" font-family="Schibsted Grotesk,Arial" font-weight="800" font-size="12" fill="var(--on-wk)">Best</text>
+</svg>`;
+
+function dotsSVG(){
+  const notes=[['Metro shuttle',4],['Carpool board',5],['Scooter path',3],['8:30 start',1],['Bus breakfast',2],['Walking buddies',0]];
+  return `<svg class="svgfig" viewBox="0 0 600 270" role="img" aria-label="Six idea notes with voting dots; three get the most dots">
+  ${notes.map(([t,n],i)=>{ const x=20+(i%3)*195, y=15+Math.floor(i/3)*130, top=n>=3;
+    return `<rect x="${x}" y="${y}" width="175" height="110" rx="8" fill="${top?'var(--wk-soft)':'var(--bg)'}" stroke="${top?'var(--wk)':'var(--line)'}" stroke-width="${top?2:1}"/>
+    <text x="${x+14}" y="${y+32}" font-family="Schibsted Grotesk,Arial" font-weight="700" font-size="15" fill="var(--ink)">${t}</text>
+    ${Array.from({length:n},(_,k)=>`<circle cx="${x+24+k*26}" cy="${y+72}" r="9" fill="var(--wk)"/>`).join('')}
+    <text x="${x+160}" y="${y+98}" text-anchor="end" font-family="JetBrains Mono,monospace" font-size="12" fill="var(--muted)">${n} dot${n===1?'':'s'}</text>`; }).join('')}
+  </svg>`;
+}
+
+const STEPS=[
+  {t:'List ideas',s:'3 to 5',d:'Bring your top ideas from Week 7. Shortlist with dot voting if you have many.'},
+  {t:'Choose criteria',s:'4',d:'Desirability, feasibility, viability, sustainability.'},
+  {t:'Weight',s:'= 100%',d:'Decide what matters most for your problem. Weights must add up to 100%.'},
+  {t:'Score',s:'1 to 5',d:'Score each idea on each criterion. Use evidence: interview quotes, costs, open data.'},
+  {t:'Multiply and add',s:'Σ weight × score',d:'Multiply each score by its weight, then add the column. The total is out of 5.'},
+  {t:'Discuss',s:'decide',d:'Check the top idea against your evidence. A close call needs a conversation, not just a number.'}];
+
+const FIX=[
+  {q:'All four criteria get 25% without discussion.',type:'lazy weights',hint:'Ask what matters most for your user and problem. Write one reason for each weight.'},
+  {q:'The team scores its favourite idea 5 on everything.',type:'bias',hint:'Score criterion by criterion, across all ideas. Back each score with a quote or a fact.'},
+  {q:'One member fills in the whole matrix.',type:'no teamwork',hint:'Each member scores alone, then the team compares and agrees.'},
+  {q:'Weights add up to 120%.',type:'math error',hint:'Weights must total 100%, or the totals cannot be compared.'}];
+
+function scoreActivity(el){
+  const m=document.createElement('div'); el.appendChild(m);
+  matrix(m,{key:'ent141-w08-matrix',init:{ideas:['Idea A','Idea B','Idea C'],crit:[['Desirability',25],['Feasibility',25],['Viability',25],['Sustainability',25]],s:[[3,3,3],[3,3,3],[3,3,3],[3,3,3]]},edit:true});
+  const gap=document.createElement('div'); gap.style.height='22px'; el.appendChild(gap);
+  const w=document.createElement('div'); el.appendChild(w);
+  W.worksheet(w,{id:'ent141-w08-select',title:'ENT 141 · Week 8 · Idea selection',fields:[
+    {l:'Our three ideas, one line each',rows:3},
+    {l:'Why these weights? One reason per criterion',rows:3},
+    {l:'Evidence behind our scores (quotes, costs, open data)',rows:3},
+    {l:'Chosen idea and why (one sentence)',rows:2},
+    {l:'What could change our decision?',rows:2}]});
+}
+
+Lecture.mount({
+  id:'ent141-w08', week:8, clo:'3, 4', course:'ENT 141', short:'Week 8 · Idea Evaluation', instructor:'Nadia',
+  title:'Idea Evaluation', meta:'Byers et al (2019) Ch. 2, Stanford DPG · 2-hour lecture',
+  scenes:[
+  { nav:'Start here', title:'Many ideas. Which one do we build?', minutes:5,
+    narration:[`Idea evaluation chooses the best idea with clear criteria, not with the loudest voice. Revise it now: this method is section 2 of <a href="project-2.html">Project 2</a>. <span class="mono">Topics: Desirability · Feasibility · Viability · Sustainability · Weighted scoring · Dot voting. CLO 3 · CLO 4.</span>`],
+    think:`You are choosing a phone. One is cheapest, one has the best camera, one lasts longest. How do you decide when no phone wins on everything?`,
+    src:`Reading: Byers et al. (2019), Ch. 2. · d.school <em>Process guide</em>.`,
+    fig:{label:`Lecture plan · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`Three lenses`,10,'l'],[`Sustainability lens`,10,'l'],[`Scoring matrix`,15,'l'],[`Worked example`,15,'l'],[`Dot voting`,10,'l'],[`Mistake → fix`,5,'l'],[`Score your ideas`,40,'a'],[`Think about it`,10,'a']])} },
+
+  { nav:'Three lenses', title:'Desirability, feasibility, viability', minutes:10,
+    narration:[`A strong idea passes three lenses. <b>Desirable</b>: users want it. <b>Feasible</b>: we can make it. <b>Viable</b>: it can pay for itself. The best ideas sit where all three overlap.`],
+    src:`Brown, T. (2009). <em>Change by design</em>. HarperBusiness.`,
+    fig:{label:`Three lenses`, html:LENSES_SVG} },
+
+  { nav:'Sustainability lens', title:'The fourth lens: sustainability', minutes:10,
+    narration:[`In ENT 141 we add <b>sustainability</b>: does the idea help people and the planet while it makes money? Check it with the triple bottom line and one SDG. Drag the sliders for the carpool-board example.`],
+    src:`Elkington, J. (1997). <em>Cannibals with forks</em>. Capstone. · United Nations (2015). <em>Transforming our world: The 2030 agenda for sustainable development</em>.`,
+    fig:{label:`Illustrative · carpool board · drag the sliders`, build:el=>ENT141.tbl(el,'ent141-w08-tbl',{people:{v:4,t:'People: students arrive on time, less stress'},planet:{v:4,t:'Planet: fewer cars, less fuel (SDG 11)'},profit:{v:3,t:'Profit: small fee per ride or a sponsor'}})} },
+
+  { nav:'Scoring matrix', title:'The weighted scoring matrix, step by step', minutes:15,
+    narration:[`A <b>weighted scoring matrix</b> compares ideas against the same criteria. Each criterion gets a weight; each idea gets a score; weight × score, added up, gives a total. Follow the six steps.`],
+    src:`Based on concept selection in Pugh, S. (1991). <em>Total design</em>. Addison-Wesley.`,
+    fig:{label:`Six steps · click or play`, flow:STEPS} },
+
+  { nav:'Worked example', title:'Worked example: three ideas, one matrix', minutes:15,
+    narration:[`Fictional example from our Week 7 HMW: three ideas to help students reach 8 am classes. Press <b>Next step</b> and predict each number before it appears.`],
+    fig:{label:`Fictional example · step by step`, build:el=>matrix(el,{init:EXAMPLE,edit:false})} },
+
+  { nav:'Dot voting', title:'Dot voting: shortlist fast', minutes:10,
+    narration:[`With 15 ideas, a matrix is too slow. In <b>dot voting</b> each member gets three dots and places them on the ideas they prefer. The ideas with the most dots go into the matrix.`],
+    src:`Gray, D., Brown, S., &amp; Macanufo, J. (2010). <em>Gamestorming</em>. O’Reilly: Dot voting.`,
+    fig:{label:`Fictional example · top 3 highlighted`, html:dotsSVG()} },
+
+  { nav:'Mistake → fix', title:'Mistake → fix', kind:'review', minutes:5,
+    narration:[`Four mistakes teams make with a scoring matrix. Decide the fix before you reveal it.`],
+    fig:{label:`Common mistakes · reveal the fix`, build:el=>W.practice(el,FIX,{label:'Fix',prefix:'<b>Fix:</b> '})} },
+
+  { nav:'Score your ideas', title:'Activity · Score your top ideas', kind:'activity', minutes:40, wide:true,
+    narration:[`Enter your top three ideas from Week 7. Agree the weights, score with evidence, then write your reasons. This is section 2 of <a href="project-2.html">Project 2</a>.`],
+    fig:{label:`Team matrix and notes · saves in your browser`, build:scoreActivity} },
+
+  { nav:'Think about it', title:'Think about it', kind:'review', minutes:10,
+    narration:[`Discuss with your team. There is no single right answer.`,
+      `<b>Exit question:</b> which criterion did your team weight highest, and what evidence made you choose it?`,
+      `<b>Next week:</b> Project 1 poster presentations. Bring your poster and be ready to defend your idea.`,
+      `<a class="btn" href="week-09.html">Next lecture · Week 9 · Defending the Idea →</a>`],
+    fig:{label:`Reflection · Idea evaluation`, build:el=>W.practice(el,[
+      {q:'The matrix picks an idea nobody in the team likes. Do you follow it?',hint:'The matrix supports a decision; it does not make it. Check whether a weight or a score was wrong.'},
+      {q:'Why might a very desirable idea still fail?',hint:'If it cannot be made or cannot pay for itself, users never get it.'},
+      {q:'Should sustainability always get the highest weight?',hint:'Not always, but a zero there is a warning sign for a social innovation idea.'}],{label:'One view',prefix:''})} },
+  ]
+});
+</script>
+</body>
+</html>

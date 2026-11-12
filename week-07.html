@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Week 7 · DTP Step 3: Ideation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Schibsted+Grotesk:wght@400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<link rel="stylesheet" href="assets/course.css">
+<style>
+:root{--wk:#0F766E;--wk-soft:rgba(15,118,110,.10);--wk-d:#5EEAD4;--wk-soft-d:rgba(94,234,212,.14)}
+.svgfig{width:100%;height:auto;display:block}
+.cnt{margin-top:6px}
+</style>
+</head>
+<body>
+<script src="assets/site.js"></script>
+<script src="assets/supports.js"></script>
+<script src="assets/course.js"></script>
+<script src="assets/onepage.js"></script>
+<script src="assets/ent141.js"></script>
+<script src="assets/kb.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/assistant.js"></script>
+<script>
+const {W} = Lecture; const {store,esc} = ENT141;
+
+/* running example (illustrative): the Week 6 HMW question */
+const HMW='How might we help first-year students reach 8 am classes on time without a car?';
+
+const MODES=[
+  {t:'Empathize',s:'Week 5',d:'Interviews, empathy map and journey map.'},
+  {t:'Define',s:'Week 6',d:'Point of view and “How might we…” questions.'},
+  {t:'Ideate',s:'Week 7 · today',d:'Go wide: many different ideas for one HMW question. Judge later.'},
+  {t:'Prototype',s:'Poster',d:'Make the chosen idea visible: a drawing, model or storyboard.'},
+  {t:'Test',s:'Feedback',d:'Show it to users and learn what to change.'}];
+
+const RULES={center:'Brainstorm rules',branches:[
+  {t:'Defer judgment',items:['No “that will never work”','Judging comes in Week 8']},
+  {t:'Encourage wild ideas',items:['A free campus helicopter? Write it.','Wild ideas lead to useful ones']},
+  {t:'Build on others',items:['Say “yes, and…”, not “but…”','“Shuttle” → “shuttle with a study corner”']},
+  {t:'Stay on topic',items:['Keep the HMW question on the wall']},
+  {t:'One conversation',items:['One voice at a time','Everyone writes, everyone speaks']},
+  {t:'Be visual',items:['Sticky notes and quick sketches']},
+  {t:'Go for quantity',items:['Count your ideas','Aim for 15 or more']}]};
+
+const HMW2IDEAS=[
+  {t:'Write the HMW',s:'on top',d:`<i>${HMW}</i>`},
+  {t:'Think alone',s:'3 minutes',d:'Each member writes ideas silently, one per sticky note.'},
+  {t:'Share and build',s:'yes, and…',d:'Read ideas aloud. Others add to them: “metro shuttle” → “metro shuttle timed with the first class”.'},
+  {t:'Group',s:'clusters',d:'Put similar notes together: transport, timetable, campus services, peer help.'},
+  {t:'Count',s:'15+',d:'Number every note. Fewer than 15? Ask the HMW again from a new angle.'}];
+
+const SCAMPER={'SCAMPER · real example, then our HMW':[
+  ['S · Substitute','<b>Real:</b> Patagonia replaced conventional cotton with organic cotton in all its cotton clothing from 1996.<br><b>Ours:</b> substitute the car with a shared ride.'],
+  ['C · Combine','<b>Real:</b> Careem combined rides, food delivery and payments in one app.<br><b>Ours:</b> combine the bus ride with breakfast on campus.'],
+  ['A · Adapt','<b>Real:</b> George de Mestral adapted the way burrs stick to fabric and invented Velcro.<br><b>Ours:</b> adapt school-bus routes for university students.'],
+  ['M · Modify','<b>Real:</b> Grameen Bank made loans very small, so people without collateral could borrow.<br><b>Ours:</b> modify the first class to start at 8:30.'],
+  ['P · Put to other use','<b>Real:</b> Play-Doh was first sold as a wallpaper cleaner before it became a toy.<br><b>Ours:</b> use empty university buses that return to the depot.'],
+  ['E · Eliminate','<b>Real:</b> Netflix’s DVD-by-mail subscription removed late fees.<br><b>Ours:</b> eliminate the walk from the metro with a drop-off point.'],
+  ['R · Reverse','<b>Real:</b> IKEA reversed the work: customers pick up flat packs and assemble the furniture themselves.<br><b>Ours:</b> instead of students going to class early, bring the first activity to the bus.']]};
+
+const FIX=[
+  {q:'“That will never work.” said during the brainstorm',type:'judging too early',hint:'Write it down and move on. Judging is Week 8, with clear criteria.'},
+  {q:'The team stops after three ideas.',type:'too few',hint:'Count to 15. The first ideas are usually the obvious ones; the useful surprises come later.'},
+  {q:'Every idea is an app.',type:'one type only',hint:'Try a service, a rule change, a space, an event or a partnership. Use SCAMPER for new angles.'},
+  {q:'Ideas drift to “make campus food cheaper”.',type:'off topic',hint:'Read the HMW question again. Park off-topic ideas on a separate sheet.'}];
+
+function divergeSVG(){
+  const dots=[[120,60],[150,95],[105,125],[165,150],[130,180],[95,160],[175,70],[200,120],[185,195],[210,165],[140,215],[220,90],[90,95]];
+  return `<svg class="svgfig" viewBox="0 0 640 280" role="img" aria-label="Diverge then converge: many ideas first, then a few">
+  <path d="M40 140 L320 30 L600 140 L320 250 Z" fill="var(--wk-soft)" stroke="var(--wk)" stroke-width="2"/>
+  <line x1="320" y1="30" x2="320" y2="250" stroke="var(--line)" stroke-dasharray="5 5"/>
+  ${dots.map(([x,y])=>`<circle cx="${x+70}" cy="${y}" r="7" fill="var(--wk)" opacity=".8"/>`).join('')}
+  <circle cx="420" cy="115" r="9" fill="var(--wk)"/><circle cx="440" cy="160" r="9" fill="var(--wk)"/><circle cx="500" cy="140" r="9" fill="var(--wk)"/>
+  <circle cx="575" cy="140" r="12" fill="var(--wk)"/>
+  <text x="180" y="272" text-anchor="middle" font-family="Schibsted Grotesk,Arial" font-weight="700" font-size="15" fill="var(--ink)">Go wide · quantity</text>
+  <text x="460" y="272" text-anchor="middle" font-family="Schibsted Grotesk,Arial" font-weight="700" font-size="15" fill="var(--ink)">Narrow down · quality</text>
+  <text x="180" y="20" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="12" fill="var(--muted)">Week 7 · Ideation</text>
+  <text x="460" y="20" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="12" fill="var(--muted)">Week 8 · Evaluation</text>
+  </svg>`;
+}
+
+function ideasActivity(el){
+  W.worksheet(el,{id:'ent141-w07-ideas',title:'ENT 141 · Week 7 · Our 15 ideas',fields:[
+    {l:'Our HMW question (from Project 1)',rows:2,ph:HMW},
+    {l:'Our ideas, one per line (aim for 15)',rows:9,hint:'No judging yet. Wild ideas count.'},
+    {l:'Two ideas we found with SCAMPER (name the letter)',rows:2},
+    {l:'Our wildest idea',rows:2},
+    {l:'Top 3 to score next week (Project 2, section 1)',rows:3}]});
+  const ta=el.querySelector('#ent141-w07-ideas-1'); if(!ta) return;
+  const out=document.createElement('div'); out.className='feedback cnt'; ta.after(out);
+  const upd=()=>{ const n=ta.value.split('\n').map(x=>x.trim()).filter(Boolean).length; out.innerHTML=n>=15?`<b>${n} ideas.</b> Well done. Now group them and pick your top 3.`:`<b>${n} of 15 ideas.</b> ${n<5?'Start with the obvious ones.':'Stuck? Try a SCAMPER letter.'}`; };
+  ta.addEventListener('input',upd); upd();
+}
+
+Lecture.mount({
+  id:'ent141-w07', week:7, clo:'3', course:'ENT 141', short:'Week 7 · Ideation', instructor:'Nadia',
+  title:'DTP Step 3: Ideation', meta:'Byers et al (2019) Ch. 2, Stanford DPG · 2-hour lecture',
+  scenes:[
+  { nav:'Start here', title:'One question, many answers', minutes:5,
+    narration:[`Ideation turns your “How might we…” question into many possible solutions. Revise it now: these ideas feed section 1 of <a href="project-2.html">Project 2</a>. <span class="mono">Topics: Ideate mode · Brainstorm rules · Quantity before quality · SCAMPER. CLO 3.</span>`],
+    think:`Your group wants to eat after class. Someone suggests a place and another says “no” straight away. Five minutes later, you have one option and nobody is happy. What went wrong?`,
+    src:`Reading: Byers et al. (2019), Ch. 2. · Hasso Plattner Institute of Design at Stanford. <em>An introduction to design thinking: Process guide</em>, Ideate mode.`,
+    fig:{label:`Lecture plan · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`Ideate mode`,10,'l'],[`Brainstorm rules`,15,'l'],[`From HMW to ideas`,10,'l'],[`Quantity first`,10,'l'],[`SCAMPER`,15,'l'],[`Mistake → fix`,5,'l'],[`15 ideas`,40,'a'],[`Think about it`,10,'a']])} },
+
+  { nav:'Ideate mode', title:'Ideate: the third mode of design thinking', minutes:10,
+    narration:[`In the d.school process, <b>ideate</b> means generating many different solutions to your “How might we…” question. You go wide first; choosing comes later. Click each mode.`],
+    src:`Hasso Plattner Institute of Design at Stanford. <em>Process guide</em>, Ideate mode.`,
+    fig:{label:`Five modes · click or play`, flow:MODES} },
+
+  { nav:'Brainstorm rules', title:'The rules of brainstorming', minutes:15,
+    narration:[`Brainstorming works only with rules. The most important: <b>defer judgment</b>. Criticism stops people sharing ideas. Open each rule to see it applied to our running example.`],
+    src:`Osborn, A. F. (1953). <em>Applied imagination</em>. Scribner. · Kelley, T., &amp; Littman, J. (2001). <em>The art of innovation</em>. Currency Doubleday. · d.school brainstorm rules.`,
+    fig:{label:`Seven rules · click a branch`, mindmap:RULES} },
+
+  { nav:'From HMW to ideas', title:'From “How might we” to ideas', minutes:10,
+    narration:[`Your HMW question is the brainstorm prompt. Write it where everyone sees it, think alone first, then share and build. Running example: <i>${HMW}</i>`],
+    src:`d.school <em>Process guide</em>: “How might we” questions; Brainstorm.`,
+    fig:{label:`Illustrative example · click or play`, flow:HMW2IDEAS} },
+
+  { nav:'Quantity first', title:'Quantity before quality', minutes:10,
+    narration:[`First <b>diverge</b>: many ideas, no filter. Then <b>converge</b>: choose with criteria. IDEO’s shopping-cart redesign for ABC’s <i>Nightline</i> (1999) followed this: wide ideas first, then the team built from the best.`],
+    src:`Kelley, T., &amp; Littman, J. (2001). <em>The art of innovation</em>. Currency Doubleday. · ABC News <em>Nightline</em> (1999). “The deep dive”.`,
+    fig:{label:`Diverge, then converge`, html:divergeSVG()} },
+
+  { nav:'SCAMPER', title:'SCAMPER: seven questions for new ideas', minutes:15,
+    narration:[`Stuck? <b>SCAMPER</b> asks seven questions about an existing product or service. Each letter is a new angle. Click a letter: a real case first, then our example.`],
+    src:`Eberle, B. (1971). <em>SCAMPER: Games for imagination development</em>. D.O.K. · Osborn (1953). · Patagonia; Careem; Velcro Companies; Grameen Bank; The Strong National Toy Hall of Fame (Play-Doh); Netflix; IKEA: company histories.`,
+    fig:{label:`Seven letters · click to compare`, build:el=>W.picker(el,SCAMPER,'Select a letter.')} },
+
+  { nav:'Mistake → fix', title:'Mistake → fix', kind:'review', minutes:5,
+    narration:[`Four mistakes teams make in a brainstorm. Read each one and decide the fix before you reveal it.`],
+    fig:{label:`Common mistakes · reveal the fix`, build:el=>W.practice(el,FIX,{label:'Fix',prefix:'<b>Fix:</b> '})} },
+
+  { nav:'15 ideas', title:'Activity · 15 ideas for our HMW question', kind:'activity', minutes:40, wide:true,
+    narration:[`Use your team’s HMW question from Project 1. Brainstorm with the rules, reach 15 ideas, then pick a top 3. They become section 1 of <a href="project-2.html">Project 2</a>.`],
+    fig:{label:`Idea sheet · saves in your browser`, build:ideasActivity} },
+
+  { nav:'Think about it', title:'Think about it', kind:'review', minutes:10,
+    narration:[`Discuss with your team. There is no single right answer.`,
+      `<b>Exit question:</b> which of your 15 ideas surprised you most, and which brainstorm rule produced it?`,
+      `<b>Next week:</b> Idea Evaluation. Bring your 15 ideas and your top 3.`,
+      `<a class="btn" href="week-08.html">Next lecture · Week 8 · Idea Evaluation →</a>`],
+    fig:{label:`Reflection · Ideation`, build:el=>W.practice(el,[
+      {q:'Your best idea came from a “silly” one. What does that tell you about deferring judgment?',hint:'Wild ideas are steps, not answers. Killing them early also kills what grows from them.'},
+      {q:'Is a team of friends better or worse at brainstorming than a mixed team?',hint:'Friends feel safe, but think alike. Different backgrounds bring different ideas.'},
+      {q:'Which SCAMPER letter could turn your idea into something that also helps the planet?',hint:'Substitute and Eliminate often cut waste or energy. Link it to an SDG.'}],{label:'One view',prefix:''})} },
+  ]
+});
+</script>
+</body>
+</html>

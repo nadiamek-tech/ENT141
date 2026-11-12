@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Week 14 · Value Proposition Canvas (Part 2)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Schibsted+Grotesk:wght@400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<link rel="stylesheet" href="assets/course.css">
+<style>
+:root{--wk:#A16207;--wk-soft:rgba(161,98,7,.09);--wk-d:#FCD34D;--wk-soft-d:rgba(252,211,77,.14)}
+.fit{display:grid;gap:6px;font-family:var(--f-display);font-size:.9rem}
+.fit label{display:grid;grid-template-columns:22px minmax(0,1fr);gap:8px;align-items:start;border:1px solid var(--line);border-radius:8px;padding:7px 9px;background:var(--bg);cursor:pointer}
+.fit input{margin-top:4px;accent-color:var(--wk)}
+.fit .meter{height:12px;border-radius:6px;background:var(--sunk);overflow:hidden}
+.fit .meter i{display:block;height:100%;background:var(--wk);transition:width .3s}
+</style>
+</head>
+<body>
+<script src="assets/site.js"></script>
+<script src="assets/supports.js"></script>
+<script src="assets/course.js"></script>
+<script src="assets/onepage.js"></script>
+<script src="assets/ent141.js"></script>
+<script src="assets/kb.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/assistant.js"></script>
+<script>
+const {W} = Lecture; const {store,esc} = ENT141;
+const T=(x,y,s,o='')=>`<text x="${x}" y="${y}" text-anchor="middle" font-family="Schibsted Grotesk,Arial" ${o} fill="var(--ink)">${s}</text>`;
+
+const MAP=`<svg viewBox="0 0 520 250" role="img" aria-label="Value map square with three parts, facing the customer profile circle" style="width:100%;height:auto">
+  <rect x="20" y="30" width="200" height="190" rx="6" fill="var(--wk-soft)" stroke="var(--wk)" stroke-width="2.5"/>
+  <path d="M20 125 H120 M120 30 V220" stroke="var(--wk)" stroke-width="1.5"/>
+  ${T(70,80,'Products','font-weight="700" font-size="13"')}${T(70,97,'&amp; services','font-weight="700" font-size="13"')}
+  ${T(170,80,'Gain','font-weight="700" font-size="13"')}${T(170,97,'creators','font-weight="700" font-size="13"')}
+  ${T(170,170,'Pain','font-weight="700" font-size="13"')}${T(170,187,'relievers','font-weight="700" font-size="13"')}
+  <path d="M232 125 H292" stroke="var(--ink)" stroke-width="2"/>${T(262,115,'fit','font-size="13"')}
+  <circle cx="400" cy="125" r="95" fill="none" stroke="var(--line)" stroke-width="2" stroke-dasharray="6 5"/>
+  ${T(400,122,'Customer profile','font-weight="700" font-size="14"')}${T(400,140,'last week','font-size="12"')}
+  ${T(120,245,'Value map · today','font-size="12.5" font-weight="700"')}
+</svg>`;
+
+const PRODUCTS={'Running example · illustrative':[
+  ['Shaded rest point','A covered spot near busy restaurants where riders can wait.'],
+  ['Cold water refill','Included in the monthly fee.'],
+  ['Phone charging','Charging points at each rest point.']],
+ 'Real case':[
+  ['IKEA flat-pack','Furniture sold in flat boxes that customers carry home and assemble themselves, with a showroom to see products first.']]};
+
+const RELIEVE=`<svg viewBox="0 0 520 220" role="img" aria-label="Each pain reliever connects to one ranked pain" style="width:100%;height:auto">
+  ${T(110,20,'Pain relievers','font-weight="800" font-size="14"')}${T(410,20,'Ranked pains','font-weight="800" font-size="14"')}
+  ${[['Shade + cold water','1 · Heat exhaustion'],['App shows the queue at the restaurant','2 · Lost orders when resting'],['Rest point inside the building zone','3 · No place to wait']].map(([a,b],i)=>`<rect x="10" y="${40+i*60}" width="200" height="44" rx="8" fill="var(--wk-soft)" stroke="var(--wk)"/>
+   <foreignObject x="16" y="${43+i*60}" width="188" height="40"><div xmlns="http://www.w3.org/1999/xhtml" style="font:12.5px/1.25 'Schibsted Grotesk',Arial;color:var(--ink);text-align:center;display:flex;align-items:center;justify-content:center;height:38px">${a}</div></foreignObject>
+   <path d="M212 ${62+i*60} H306" stroke="var(--wk)" stroke-width="2.5"/>
+   <rect x="310" y="${40+i*60}" width="200" height="44" rx="22" fill="none" stroke="var(--ink)"/>${T(410,67+i*60,b,'font-size="13"')}`).join('')}
+</svg>`;
+
+const GAINS={center:'Gain creators',branches:[
+  {t:'Required gain',items:['Cold water when needed','→ free refills at every point']},
+  {t:'Expected gain',items:['Shade near busy restaurants','→ points placed in food hubs']},
+  {t:'Desired gain',items:['A charged phone','→ charging while waiting']},
+  {t:'Unexpected gain',items:['Earn more per shift','→ wait closer to new orders']}]};
+
+const FITITEMS=['Pain 1 · Heat exhaustion','Pain 2 · Lost orders when resting','Pain 3 · No place to wait','Gain 1 · Cold water when needed','Gain 2 · A charged phone','Gain 3 · Earn more per shift'];
+function fitCheck(el){
+  const key='ent141-w14-fit'; let st; try{st=JSON.parse(store.get(key)||'null')}catch(e){} if(!st) st=[1,0,1,1,1,0];
+  el.innerHTML=`<p class="mono" style="color:var(--muted);margin:0 0 8px">Tick each top pain or gain that a part of the value map clearly answers.</p><div class="fit">${FITITEMS.map((t,i)=>`<label><input type="checkbox" data-i="${i}" ${st[i]?'checked':''}><span>${t}</span></label>`).join('')}<div class="meter" aria-hidden="true"><i></i></div><div class="feedback" id="f-o"></div></div>`;
+  const upd=()=>{ const n=st.filter(Boolean).length, p=Math.round(n/st.length*100); el.querySelector('.meter i').style.width=p+'%';
+    const miss=FITITEMS.filter((t,i)=>!st[i]); el.querySelector('#f-o').innerHTML=`<b>${n} of ${st.length} answered (${p}%).</b> ${miss.length?`Not yet answered: ${miss.join('; ')}. Add a reliever or creator, or explain why you leave it out.`:'Strong fit on paper. Now test it with real customers.'}`; store.set(key,JSON.stringify(st)); };
+  el.querySelectorAll('input').forEach(c=>c.addEventListener('change',()=>{ st[+c.dataset.i]=c.checked?1:0; upd(); }));
+  upd();
+}
+
+const FIX=[
+  {q:'Pain reliever: “Our app is easy to use.”',type:'not linked',hint:'Link every reliever to a ranked pain: “The app shows queue time, so riders do not lose orders while resting.”'},
+  {q:'The value map lists ten features.',type:'too much',hint:'Keep the few that answer the top-ranked pains and gains. Extra features do not create fit.'},
+  {q:'“We have fit because our team likes the idea.”',type:'no customer',hint:'Fit on paper is a start. Show the map to customers and record what they say and do.'},
+  {q:'Gain creator: “It saves time.”',type:'too vague',hint:'Say how much and for whom: “Saves riders about the wait at the restaurant door,” then check it in a test.'}];
+
+function reflect(qs,exit){ return `<div class="stack ui">${qs.map((q,i)=>`<div class="feedback"><b>Q${i+1}</b> ${q}</div>`).join('')}<div class="box exam"><b class="lbl">Exit question</b>${exit}</div></div>`; }
+
+Lecture.mount({
+  id:'ent141-w14', week:14, clo:'3', course:'ENT 141', short:'Week 14 · Value Proposition Canvas (Part 2)',
+  title:'Value Proposition Canvas (Part 2)', meta:'Osterwalder et al. (2014), Byers et al. (2019) · 2-hour lecture',
+  scenes:[
+  { nav:'Start here', title:'Does your offer answer what the customer needs?', minutes:5,
+    narration:[`Last week: the circle (customer profile). Today: the square (value map), and whether the two <b>fit</b>. This is section 4 of Project 2. <span class="mono">Topics: Products &amp; Services · Pain Relievers · Gain Creators · Fit. CLO 3.</span>`],
+    think:`Your phone is at 5% on the Dubai Metro and a friend hands you a power bank. Which pain does it relieve? Is there any gain beyond the battery?`,
+    src:`Reading: Osterwalder, A., Pigneur, Y., Bernarda, G., &amp; Smith, A. (2014). <em>Value proposition design</em>. Wiley.`,
+    fig:{label:`Today's lecture · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`The value map`,10,'l'],[`Products and services`,10,'l'],[`Pain relievers`,10,'l'],[`Gain creators`,10,'l'],[`Fit`,10,'l'],[`Mistake → fix`,5,'l'],[`Value map and fit`,50,'a'],[`Think about it`,10,'a']])} },
+
+  { nav:'The value map', title:'The value map', minutes:10,
+    narration:[`The <b>value map</b> describes your offer in three parts: what you offer, how it eases pains, and how it creates gains. Each part faces one part of the customer profile.`],
+    src:`Osterwalder et al. (2014).`,
+    fig:{label:`The square · today`, html:MAP} },
+
+  { nav:'Products and services', title:'Products and services', minutes:10,
+    narration:[`<b>Products and services</b> are the list of what you offer. They create value only in relation to a customer’s jobs, pains and gains. IKEA’s flat-pack is a product and a way of selling at once.`],
+    src:`Osterwalder et al. (2014): products and services. · Inter IKEA Systems B.V. (n.d.). <em>The IKEA concept</em>.`,
+    fig:{label:`Examples · click to read`, build:el=>W.picker(el,PRODUCTS,'Select an item.')} },
+
+  { nav:'Pain relievers', title:'Pain relievers', minutes:10,
+    narration:[`A <b>pain reliever</b> describes exactly how your offer eases one pain from the profile. Start with the top-ranked pains; you do not need to relieve every pain.`],
+    src:`Osterwalder et al. (2014): pain relievers.`,
+    fig:{label:`Illustrative · one reliever per ranked pain`, html:RELIEVE} },
+
+  { nav:'Gain creators', title:'Gain creators', minutes:10,
+    narration:[`A <b>gain creator</b> describes how your offer produces a gain the customer wants. Start with required gains, then add one that could surprise them.`],
+    src:`Osterwalder et al. (2014): gain creators.`,
+    fig:{label:`Illustrative · click a branch`, mindmap:GAINS} },
+
+  { nav:'Fit', title:'Fit', minutes:10,
+    narration:[`<b>Fit</b> is when your value map answers the top jobs, pains and gains. It starts on paper (problem-solution fit), then must be proven with customers who buy (product-market fit).`],
+    src:`Osterwalder et al. (2014): fit. · Ries, E. (2011). <em>The lean startup</em>. Crown.`,
+    fig:{label:`Fit check · illustrative · tick to test`, build:fitCheck} },
+
+  { nav:'Mistake → fix', title:'Mistake → fix', kind:'review', minutes:5,
+    narration:[`These mistakes make a value map look busy without fit. Say the fix before you reveal it.`],
+    fig:{label:`Common mistakes · reveal the fix`, build:el=>W.practice(el,FIX,{label:'Fix',prefix:''})} },
+
+  { nav:'Value map and fit', title:'Activity · Value map and fit check (Project 2, section 4)', kind:'activity', minutes:50, wide:true,
+    narration:[`Open last week’s customer profile. Build the value map against it, then check fit item by item. Paste both into section 4 of the <a href="project-2.html">Project 2 builder</a>.`],
+    fig:{label:`Value map and fit · saves in your browser`, build:el=>W.worksheet(el,{id:'ent141-w14-valuemap',title:'ENT 141 · Project 2 · Section 4b · Value map and fit',fields:[
+      {l:'Products and services (3 at most)',rows:2},
+      {l:'Pain relievers: one for each top-ranked pain (pain → reliever)',rows:3},
+      {l:'Gain creators: one for each top-ranked gain (gain → creator)',rows:3},
+      {l:'Fit check: which top pains or gains are not answered, and why',rows:2},
+      {l:'One quick test to show fit with real customers',rows:2}]})} },
+
+  { nav:'Think about it', title:'Think about it', kind:'review', minutes:10,
+    narration:[`Discuss with your team. There is no single right answer.`,`<b>Next week:</b> Product Differentiation, part 1. List the competitors and substitutes your customers use today.<br><a class="btn" href="week-15.html">Next lecture · Week 15 · Product Differentiation (Part 1) →</a>`],
+    fig:{label:`Reflection`, html:reflect([`Which pain did your team choose not to relieve? Was that a good decision?`,`Could a competitor copy your pain relievers easily?`,`What would a customer have to do in your test to convince you there is fit?`],`Write one pain → pain reliever pair from your team’s map.`)} },
+  ]
+});
+</script>
+</body>
+</html>

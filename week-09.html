@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Week 9 · Defending the Idea · Presenting the Idea</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Schibsted+Grotesk:wght@400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<link rel="stylesheet" href="assets/course.css">
+<style>
+:root{--wk:#9A4A08;--wk-soft:rgba(154,74,8,.09);--wk-d:#FBBF77;--wk-soft-d:rgba(251,191,119,.14)}
+.svgfig{width:100%;height:auto;display:block}
+</style>
+</head>
+<body>
+<script src="assets/site.js"></script>
+<script src="assets/supports.js"></script>
+<script src="assets/course.js"></script>
+<script src="assets/onepage.js"></script>
+<script src="assets/ent141.js"></script>
+<script src="assets/kb.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/assistant.js"></script>
+<script>
+const {W} = Lecture; const {store,esc} = ENT141;
+
+/* running example (illustrative): HMW help first-year students reach 8 am classes on time without a car */
+const TALK=[
+  {t:'Hook',s:'user + problem',d:'Start with one real user and one quote: “I leave home at 6:30 and still miss the first ten minutes.”'},
+  {t:'Evidence',s:'interviews',d:'How many people you interviewed, the empathy map and the lowest point of the journey map.'},
+  {t:'HMW',s:'the challenge',d:'Read your “How might we…” question aloud. Everything after answers it.'},
+  {t:'Solutions',s:'and the choice',d:'Show your ideas, then say which one you chose and why.'},
+  {t:'Prototype',s:'show it',d:'Point to the drawing or model. Walk the user through it in a few sentences.'},
+  {t:'Close',s:'what we learned',d:'One thing users taught you and your next step. Then invite questions.'}];
+
+const FRAME=[
+  {t:'Listen',s:'to the end',d:'Let the panel finish. Note the key word in the question.'},
+  {t:'Restate',s:'one line',d:'“You are asking how we know students want this.”'},
+  {t:'Answer',s:'one sentence',d:'“We know because most of the students we interviewed raised it first.”'},
+  {t:'Evidence',s:'quote or fact',d:'“One student told us: ‘I sleep in the car park because I come so early.’”'},
+  {t:'Link',s:'back to the user',d:'“That is why our prototype starts at the metro station.”'}];
+
+const QUESTIONS={'Common panel questions · illustrative answers':[
+  ['Why this problem?','<b>Answer:</b> it affects many first-year students every morning. <b>Evidence:</b> our journey map’s lowest point was the walk from the metro. <b>Link:</b> so our idea starts there.'],
+  ['How do you know users want it?','<b>Answer:</b> they told us before we suggested anything. <b>Evidence:</b> interview quotes on the poster. <b>Link:</b> we tested the prototype with three of them.'],
+  ['What did you change after feedback?','<b>Answer:</b> we dropped the app idea. <b>Evidence:</b> users said they already have too many apps. <b>Link:</b> a simple sign-up board fits them better.'],
+  ['Who pays for it?','<b>Answer:</b> we are not sure yet. <b>Evidence:</b> a sponsor or a small fee are options. <b>Link:</b> we will test this in Project 2. Honest beats guessing.'],
+  ['Is it sustainable?','<b>Answer:</b> yes, it removes car trips. <b>Evidence:</b> fewer cars at 8 am. <b>Link:</b> SDG 11, sustainable cities and communities.']]};
+
+const GRID_SVG=`<svg class="svgfig" viewBox="0 0 560 330" role="img" aria-label="Feedback capture grid: likes, criticisms, questions, ideas">
+  <rect x="10" y="10" width="540" height="310" rx="12" fill="var(--bg)" stroke="var(--line)"/>
+  <line x1="280" y1="10" x2="280" y2="320" stroke="var(--wk)" stroke-width="2"/><line x1="10" y1="165" x2="550" y2="165" stroke="var(--wk)" stroke-width="2"/>
+  ${[['+','Likes','What worked?',30,40],['Δ','Criticisms','What should change?',300,40],['?','Questions','What was unclear?',30,195],['!','Ideas','What could we add?',300,195]].map(([s,t,q,x,y])=>`
+  <circle cx="${x+22}" cy="${y+20}" r="20" fill="var(--wk)"/><text x="${x+22}" y="${y+27}" text-anchor="middle" font-family="Schibsted Grotesk,Arial" font-weight="800" font-size="20" fill="var(--on-wk)">${s}</text>
+  <text x="${x+54}" y="${y+26}" font-family="Schibsted Grotesk,Arial" font-weight="800" font-size="18" fill="var(--ink)">${t}</text>
+  <text x="${x+2}" y="${y+76}" font-family="Schibsted Grotesk,Arial" font-size="14" fill="var(--muted)">${q}</text>`).join('')}
+</svg>`;
+
+const FIX=[
+  {q:'One member speaks; the others stand behind the poster.',type:'unequal',hint:'Split the talk by part: hook, evidence, HMW, solutions, prototype, close. Everyone speaks.'},
+  {q:'The team reads the poster aloud, word for word.',type:'reading',hint:'The poster shows; you tell the story. Use the user’s quote and point to the visuals.'},
+  {q:'“No, you are wrong. Our idea works.”',type:'defensive',hint:'Thank the panel, restate the question, answer with evidence. Criticism is free feedback.'},
+  {q:'“About 90% of students have this problem.” (no source)',type:'guessing',hint:'Only give numbers you collected or found. Say “most of the students we interviewed” instead.'}];
+
+Lecture.mount({
+  id:'ent141-w09', week:9, clo:'2, 3', course:'ENT 141', short:'Week 9 · Presenting the Idea', instructor:'Nadia',
+  title:'Defending the Idea · Presenting the Idea', meta:'Project 1 poster presentation day · Byers et al (2019), Stanford DPG · 2-hour lecture',
+  scenes:[
+  { nav:'Start here', title:'Show it, then defend it', minutes:5,
+    narration:[`Week 9 was Project 1 day: each team presented its poster and answered the panel. Revise it now: the panel’s feedback is where <a href="project-2.html">Project 2</a> starts. <span class="mono">Topics: Poster talk · Panel questions · Peer feedback. CLO 2 · CLO 3.</span>`],
+    think:`You show your family a plan for a weekend trip to Hatta. Your uncle asks: “How much will it cost?” What do you say first: a long story, or one clear answer?`,
+    src:`Reading: Byers et al. (2019). · d.school <em>Process guide</em>. · ENT 141 Project 1 presentation rubric.`,
+    fig:{label:`Lecture plan · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`Poster talk`,10,'l'],[`What the panel marked`,5,'l'],[`Answer frame`,5,'l'],[`Panel questions`,5,'l'],[`Team presentations`,55,'a'],[`Peer feedback`,10,'l'],[`Mistake → fix`,5,'l'],[`Reflection notes`,15,'a'],[`Think about it`,5,'a']])} },
+
+  { nav:'Poster talk', title:'The structure of a team poster talk', minutes:10,
+    narration:[`A poster talk tells the design-thinking story in order: one user, the evidence, the challenge, the ideas, the prototype. Every member presents one part. Click each part for the running example.`],
+    src:`d.school <em>Process guide</em>. · ENT 141 Project 1 brief.`,
+    fig:{label:`Illustrative example · click or play`, flow:TALK} },
+
+  { nav:'What the panel marked', title:'What the panel marked', minutes:5,
+    narration:[`The presentation was worth 10%: half for the quality of the presentation, half for how each student answered the panel. Open each criterion to see the levels.`],
+    src:`ENT 141 syllabus, section 12: Project 1 presentation rubric.`,
+    fig:{label:`Presentation rubric · 10 marks`, build:el=>{ el.innerHTML=ENT141.rubHTML(ENT141.RUB_PRES); }} },
+
+  { nav:'Answer frame', title:'Defending the idea: a short answer frame', minutes:5,
+    narration:[`Panel questions are not attacks; they test your evidence. Use a short frame: <b>listen, restate, answer, evidence, link</b>. Short, honest answers score better than long ones.`],
+    fig:{label:`Five moves · click or play`, flow:FRAME} },
+
+  { nav:'Panel questions', title:'Common panel questions', minutes:5,
+    narration:[`Most panels ask the same few questions. Click each one to see an illustrative answer that follows the frame. “We do not know yet” is fine if you say how you will find out.`],
+    fig:{label:`Five questions · click to compare`, build:el=>W.picker(el,QUESTIONS,'Select a question.')} },
+
+  { nav:'Peer feedback', title:'Peer feedback: the feedback capture grid', minutes:10,
+    narration:[`While other teams present, capture feedback in four boxes: what you <b>like</b>, what to <b>change</b>, what was <b>unclear</b>, and new <b>ideas</b>. Be specific and kind.`],
+    src:`Hasso Plattner Institute of Design at Stanford. <em>Bootcamp bootleg</em>: Feedback capture grid.`,
+    fig:{label:`Four boxes`, html:GRID_SVG} },
+
+  { nav:'Mistake → fix', title:'Mistake → fix', kind:'review', minutes:5,
+    narration:[`Four mistakes seen on presentation days. Decide the fix before you reveal it.`],
+    fig:{label:`Common mistakes · reveal the fix`, build:el=>W.practice(el,FIX,{label:'Fix',prefix:'<b>Fix:</b> '})} },
+
+  { nav:'Reflection notes', title:'Activity · After-presentation reflection notes', kind:'activity', minutes:15, wide:true,
+    narration:[`Write these notes as a team while the day is fresh. Keep them: they guide section 1 of <a href="project-2.html">Project 2</a>, where you build three new ideas from the same problem.`],
+    fig:{label:`Team reflection · saves in your browser`, build:el=>W.worksheet(el,{id:'ent141-w09-reflect',title:'ENT 141 · Week 9 · After-presentation reflection',fields:[
+      {l:'Questions the panel asked us',rows:3},
+      {l:'Our best answer, and the one we found hard',rows:3},
+      {l:'Feedback we received (likes, criticisms, ideas)',rows:3},
+      {l:'What we will change or keep for Project 2',rows:3},
+      {l:'Who does what next, and by when',rows:2}]})} },
+
+  { nav:'Think about it', title:'Think about it', kind:'review', minutes:5,
+    narration:[`Discuss with your team. There is no single right answer.`,
+      `<b>Exit question:</b> which panel question would you answer differently today, and how?`,
+      `<b>Next week:</b> Entrepreneurial Strategy. Bring your reflection notes and your scoring matrix.`,
+      `<a class="btn" href="week-10.html">Next lecture · Week 10 · Entrepreneurial Strategy →</a>`],
+    fig:{label:`Reflection · Presenting`, build:el=>W.practice(el,[
+      {q:'The panel criticised your favourite part. Was it right?',hint:'Check it against your users, not your feelings. If users agree with the panel, change it.'},
+      {q:'Which feedback did you receive more than once?',hint:'Repeated feedback is a pattern. Act on it first.'},
+      {q:'Did every team member speak and answer? What would make it more equal next time?',hint:'Split the talk by part and agree who takes which type of question.'}],{label:'One view',prefix:''})} },
+  ]
+});
+</script>
+</body>
+</html>

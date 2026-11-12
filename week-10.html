@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Week 10 · Entrepreneurial Strategy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Schibsted+Grotesk:wght@400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<link rel="stylesheet" href="assets/course.css">
+<style>
+:root{--wk:#9D174D;--wk-soft:rgba(157,23,77,.09);--wk-d:#F9A8D4;--wk-soft-d:rgba(249,168,212,.14)}
+</style>
+</head>
+<body>
+<script src="assets/site.js"></script>
+<script src="assets/supports.js"></script>
+<script src="assets/course.js"></script>
+<script src="assets/onepage.js"></script>
+<script src="assets/ent141.js"></script>
+<script src="assets/kb.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/assistant.js"></script>
+<script>
+const {W} = Lecture; const {store,esc} = ENT141;
+const F='font-family="Schibsted Grotesk,Arial"';
+
+/* concept graphic: strategy = where to compete + how to win */
+const SVG_STRAT=`<svg viewBox="0 0 560 230" role="img" aria-label="A strategy answers two questions: where to compete and how to win">
+  <rect x="10" y="20" width="220" height="80" rx="12" fill="var(--wk-soft)" stroke="var(--wk)" stroke-width="2"/>
+  <text x="120" y="55" text-anchor="middle" ${F} font-weight="800" font-size="18">Where to compete?</text>
+  <text x="120" y="80" text-anchor="middle" ${F} font-size="13" class="t-muted">which users, which need, which place</text>
+  <rect x="10" y="130" width="220" height="80" rx="12" fill="var(--wk-soft)" stroke="var(--wk)" stroke-width="2"/>
+  <text x="120" y="165" text-anchor="middle" ${F} font-weight="800" font-size="18">How to win?</text>
+  <text x="120" y="190" text-anchor="middle" ${F} font-size="13" class="t-muted">cheaper, or different and better</text>
+  <path d="M232 60 C300 60 300 115 360 115" fill="none" stroke="var(--wk)" stroke-width="3"/>
+  <path d="M232 170 C300 170 300 115 360 115" fill="none" stroke="var(--wk)" stroke-width="3"/>
+  <circle cx="440" cy="115" r="78" fill="var(--wk)"/>
+  <text x="440" y="122" text-anchor="middle" ${F} font-weight="800" font-size="22" style="fill:var(--on-wk)">Strategy</text>
+</svg>`;
+
+/* concept graphic: Porter's generic strategies grid */
+const SVG_PORTER=`<svg viewBox="0 0 560 330" role="img" aria-label="Porter's generic strategies: cost leadership, differentiation, and focus">
+  <text x="330" y="20" text-anchor="middle" ${F} font-weight="700" font-size="14" class="t-muted">How do we win? (competitive advantage)</text>
+  <text x="235" y="46" text-anchor="middle" ${F} font-weight="700" font-size="14">Lower cost</text>
+  <text x="430" y="46" text-anchor="middle" ${F} font-weight="700" font-size="14">Different, better</text>
+  <text x="20" y="190" text-anchor="middle" ${F} font-weight="700" font-size="14" class="t-muted" transform="rotate(-90 20 190)">Where? (scope)</text>
+  <text x="80" y="120" text-anchor="middle" ${F} font-weight="700" font-size="14">Broad</text>
+  <text x="80" y="138" text-anchor="middle" ${F} font-size="12" class="t-muted">many users</text>
+  <text x="80" y="250" text-anchor="middle" ${F} font-weight="700" font-size="14">Narrow</text>
+  <text x="80" y="268" text-anchor="middle" ${F} font-size="12" class="t-muted">one group</text>
+  <rect x="140" y="60" width="190" height="120" rx="10" fill="var(--wk)"/>
+  <text x="235" y="126" text-anchor="middle" ${F} font-weight="800" font-size="17" style="fill:var(--on-wk)">Cost leadership</text>
+  <rect x="340" y="60" width="190" height="120" rx="10" fill="var(--wk-soft)" stroke="var(--wk)" stroke-width="2"/>
+  <text x="435" y="126" text-anchor="middle" ${F} font-weight="800" font-size="17">Differentiation</text>
+  <rect x="140" y="190" width="390" height="120" rx="10" fill="none" stroke="var(--wk)" stroke-width="2" stroke-dasharray="6 5"/>
+  <text x="335" y="238" text-anchor="middle" ${F} font-weight="800" font-size="17">Focus</text>
+  <text x="235" y="270" text-anchor="middle" ${F} font-size="13" class="t-muted">cost focus</text>
+  <text x="435" y="270" text-anchor="middle" ${F} font-size="13" class="t-muted">differentiation focus</text>
+</svg>`;
+
+/* concept graphic: first movers and a fast follower */
+const SVG_FIRST=`<svg viewBox="0 0 560 190" role="img" aria-label="Timeline: Friendster 2002, MySpace 2003, Facebook 2004">
+  <line x1="40" y1="100" x2="530" y2="100" stroke="var(--line)" stroke-width="3"/>
+  <circle cx="110" cy="100" r="11" fill="var(--muted)"/>
+  <text x="110" y="70" text-anchor="middle" ${F} font-weight="800" font-size="16">Friendster</text>
+  <text x="110" y="135" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="13" class="t-muted">2002</text>
+  <circle cx="270" cy="100" r="11" fill="var(--muted)"/>
+  <text x="270" y="70" text-anchor="middle" ${F} font-weight="800" font-size="16">MySpace</text>
+  <text x="270" y="135" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="13" class="t-muted">2003</text>
+  <circle cx="430" cy="100" r="15" fill="var(--wk)"/>
+  <text x="430" y="70" text-anchor="middle" ${F} font-weight="800" font-size="16">Facebook</text>
+  <text x="430" y="135" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="13" class="t-muted">2004</text>
+  <text x="190" y="170" text-anchor="middle" ${F} font-size="13" class="t-muted">first movers</text>
+  <text x="430" y="170" text-anchor="middle" ${F} font-size="13" style="fill:var(--wk)" font-weight="700">fast follower</text>
+</svg>`;
+
+const CASES={'One real case per strategy':[
+  ['Cost leadership · Southwest Airlines','One aircraft type (the Boeing 737), short point-to-point routes and quick turnarounds keep costs low, so fares can stay low for many travellers.'],
+  ['Differentiation · Patagonia','Durable outdoor clothing, free repairs through its Worn Wear programme and 1% of sales to environmental groups. Customers pay more for a brand they trust.'],
+  ['Focus · Careem (2012)','Careem began in Dubai as a web service for <b>corporate</b> car bookings: one narrow group of customers. Only later did it grow into ride-hailing for everyone.']]};
+
+const RUN=[
+  {t:'The problem',s:'Weeks 5–6',d:'Illustrative: delivery riders in Dubai have no safe, shaded place to wait between orders.'},
+  {t:'Cost leadership',s:'cheapest',d:'Simple shade frames at building entrances, shared by many buildings, so each pays very little.'},
+  {t:'Differentiation',s:'different',d:'Cooled rest pods with water and phone charging, paid by a brand that wants its name on them.'},
+  {t:'Focus',s:'one group',d:'Shade and water points only for riders in one busy area, only in the summer months.'}];
+
+const FIX=[
+  {q:'“Our idea is the cheapest <i>and</i> the best quality, for everyone.”',hint:'Porter calls this “stuck in the middle”. Choose one way to win: lower cost or different and better.'},
+  {q:'“We have no competitors.”',hint:'Whatever users do today is your competitor, even waiting under a bridge. Name it.'},
+  {q:'“We will win because we are first.”',hint:'First is not enough: Facebook came after Friendster and MySpace. Say what keeps you ahead.'}];
+
+Lecture.mount({
+  id:'ent141-w10', week:10, clo:'1, 3', course:'ENT 141', short:'Week 10 · Entrepreneurial Strategy', instructor:'Nadia',
+  title:'Entrepreneurial Strategy', meta:'Byers et al (2019), competitive strategy chapter · 2-hour lecture',
+  scenes:[
+  { nav:'Start here', title:'Why can two very different shops both win?', minutes:5,
+    narration:[`Today your team turns its Project 1 problem into three idea directions, one per strategy. <span class="mono">Topics: What a strategy is · Porter's generic strategies · First mover or fast follower. CLO 1 · CLO 3.</span>`],
+    think:`Near campus, one cafeteria sells karak in a paper cup for very little. A café down the road charges much more, with seats, Wi-Fi and quiet corners. Both are always full. How?`,
+    src:`Reading: Byers, T. H., Dorf, R. C., &amp; Nelson, A. J. (2019). <em>Technology ventures</em> (5th ed.), competitive strategy.`,
+    fig:{label:`Today's lecture · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`What is a strategy?`,10,'l'],[`Porter's three strategies`,15,'l'],[`Three real cases`,15,'l'],[`Apply it step by step`,10,'l'],[`First or follower?`,15,'l'],[`Mistake and fix`,10,'l'],[`Three idea directions`,30,'a'],[`Think about it`,10,'a']])} },
+
+  { nav:'What is a strategy?', title:'What is a strategy?', minutes:10,
+    narration:[`A <b>strategy</b> is a venture's plan to win. It answers two questions: <b>where to compete</b> (which users, which need, which place) and <b>how to win</b> there (cheaper, or different and better).`],
+    src:`Byers et al. (2019), competitive strategy. · Porter, M. E. (1996). What is strategy? <em>Harvard Business Review</em>, 74(6), 61–78.`,
+    fig:{label:`Concept · two questions, one strategy`, html:SVG_STRAT} },
+
+  { nav:'Porter\'s three strategies', title:'Porter\'s generic strategies', minutes:15,
+    narration:[`Porter shows three ways to win. <b>Cost leadership</b>: lowest cost for many users. <b>Differentiation</b>: something users value and pay more for. <b>Focus</b>: serve one narrow group, by cost or by difference.`],
+    src:`Porter, M. E. (1985). <em>Competitive advantage</em>. Free Press.`,
+    fig:{label:`Concept · Porter's grid`, html:SVG_PORTER} },
+
+  { nav:'Three real cases', title:'Three strategies, three real cases', minutes:15,
+    narration:[`Each venture below chose <b>one</b> way to win and built everything around it. Click each case, then say: where does it compete, and how does it win?`],
+    src:`Porter (1996), What is strategy? (Southwest Airlines). · Chouinard, Y. (2005). <em>Let my people go surfing</em>. Penguin; Patagonia, Worn Wear programme. · Careem. (2026). In <em>Wikipedia</em>: history (corporate car bookings, 2012).`,
+    fig:{label:`Real examples · click to compare`, build:el=>W.picker(el,CASES,'Select a case.')} },
+
+  { nav:'Apply it step by step', title:'One problem, three directions', minutes:10,
+    narration:[`Apply the grid to one problem. Keep the problem the same; change only how you win. This is exactly what your team does in the activity.`],
+    fig:{label:`Illustrative example · click or play`, flow:RUN, caption:`Illustrative only, built on the rider example from Weeks 5–6.`} },
+
+  { nav:'First or follower?', title:'First mover or fast follower?', minutes:15,
+    narration:[`A <b>first mover</b> enters a market first and can learn early, but pays to teach users. A <b>fast follower</b> enters soon after and learns from the first movers' mistakes.`],
+    think:`Facebook was not the first social network. What did it learn from the ones before it?`,
+    src:`Lieberman, M. B., &amp; Montgomery, D. B. (1988). First-mover advantages. <em>Strategic Management Journal</em>, 9, 41–58. · boyd, d. m., &amp; Ellison, N. B. (2007). Social network sites: Definition, history, and scholarship. <em>Journal of Computer-Mediated Communication</em>, 13(1), 210–230.`,
+    fig:{label:`Concept · launch years`, html:SVG_FIRST} },
+
+  { nav:'Mistake and fix', title:'Common mistake → fix', kind:'review', minutes:10,
+    narration:[`Teams often make these three mistakes when they first talk about strategy. Read each one, say the fix, then reveal it.`],
+    src:`Porter (1985), Competitive advantage: “stuck in the middle”.`,
+    fig:{label:`Mistake → fix`, build:el=>W.practice(el,FIX,{label:'Fix',prefix:'<b>Fix:</b> '})} },
+
+  { nav:'Three idea directions', title:'Activity · Three idea directions', kind:'activity', minutes:30, wide:true,
+    narration:[`Team task. Start from your Project 1 problem. Write one idea direction per strategy. This is the start of section 1 of <a href="project-2.html">Project 2</a>; finish it next week.`],
+    fig:{label:`Team worksheet · saves in your browser`, build:el=>W.worksheet(el,{id:'ent141-w10-directions',title:'ENT 141 · Week 10 · Three idea directions',fields:[
+      {l:'Our Project 1 problem (one sentence, from the poster)',rows:2},
+      {l:'Where we compete: which users, which place?',rows:2},
+      {l:'Direction A · Cost leadership: the cheapest way to solve it',rows:2},
+      {l:'Direction B · Differentiation: a different, better way users would pay more for',rows:2},
+      {l:'Direction C · Focus: one narrow group we serve best',rows:2},
+      {l:'Who already does something similar? Are we first or a follower?',rows:2}]})} },
+
+  { nav:'Think about it', title:'Think about it', kind:'review', minutes:10,
+    narration:[`Discuss with your team, then reveal one view. <b>Exit question:</b> in one sentence, where does your team compete and how will it win?`,
+      `<b>Next week:</b> a map of strategy types new ventures use, and how to read a case for Activity 2. Bring your three directions.`,
+      `<a class="btn" href="week-11.html">Next lecture · Week 11 · Overview of Entrepreneurial Strategies →</a>`],
+    fig:{label:`Reflection · strategy`, build:el=>W.practice(el,[
+      {q:'Is the cheapest idea always the best for people with low income?',hint:'Not always: if quality drops, they pay again. Ask users what they value.'},
+      {q:'Which of your three directions would your interviewees choose? Why?',hint:'Go back to your Project 1 quotes and journey map, not your own taste.'},
+      {q:'Can a social venture use cost leadership?',hint:'Yes: low cost can be what makes a solution reach many people.'}],{label:'One view',prefix:''})} },
+  ]
+});
+</script>
+</body>
+</html>

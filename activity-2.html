@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="assets/portal.css">
 <link rel="stylesheet" href="assets/docbuilder.css">
 <style>:root{--wk:#0E7490;--wk-soft:rgba(14,116,144,.09);--wk-d:#67E8F9;--wk-soft-d:rgba(103,232,249,.14)}</style>
-<style>.topics{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin:8px 0 18px}.tp{text-align:left;font:inherit;background:var(--surface);color:var(--ink);border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;cursor:pointer;display:grid;gap:4px}.tp:hover{border-color:var(--wk)}.tp[aria-pressed=true]{border-color:var(--wk);box-shadow:inset 0 0 0 2px var(--wk);background:var(--wk-soft)}.tp .c{font:700 .68rem var(--f-mono);text-transform:uppercase;letter-spacing:.06em;color:var(--wk)}.tp b{font-size:1rem}.tp small{color:var(--muted);font-size:.85rem;line-height:1.35}.tfil{display:flex;gap:6px;flex-wrap:wrap}.tfil button{font:700 .85rem var(--f-display);border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:6px 12px;cursor:pointer}.tfil button[aria-pressed=true]{background:var(--wk);border-color:var(--wk);color:var(--on-wk,#fff)}.guide3{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:12px 0 16px}.guide3>div{border:1px solid var(--line);border-radius:14px;padding:12px;background:var(--surface)}.guide3 .n{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--wk);color:var(--on-wk,#fff);font-weight:800;font-size:.85rem}.guide3 b{display:block;margin:6px 0 2px}.guide3 small{color:var(--muted)}.picked{background:var(--wk-soft);border-left:4px solid var(--wk);border-radius:8px;padding:10px 14px;margin:0 0 14px}@media(max-width:720px){.guide3{grid-template-columns:1fr 1fr}.topics,.guide3,.tfil,.picked,.pw>h2{margin-left:16px;margin-right:16px}}</style>
+<style>.topics{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin:8px 0 18px}.tp{text-align:left;font:inherit;background:var(--surface);color:var(--ink);border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;cursor:pointer;display:grid;gap:4px}.tp:hover{border-color:var(--wk)}.tp[aria-pressed=true]{border-color:var(--wk);box-shadow:inset 0 0 0 2px var(--wk);background:var(--wk-soft)}.tp .c{font:700 .68rem var(--f-mono);text-transform:uppercase;letter-spacing:.06em;color:var(--wk)}.tp b{font-size:1rem}.tp small{color:var(--muted);font-size:.85rem;line-height:1.35}.tfil{display:flex;gap:6px;flex-wrap:wrap}.tfil button{font:700 .85rem var(--f-display);border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:6px 12px;cursor:pointer}.tfil button[aria-pressed=true]{background:var(--wk);border-color:var(--wk);color:var(--on-wk,#fff)}.guide3{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:12px 0 16px}.guide3>div{border:1px solid var(--line);border-radius:14px;padding:12px;background:var(--surface)}.guide3 .n{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--wk);color:var(--on-wk,#fff);font-weight:800;font-size:.85rem}.guide3 b{display:block;margin:6px 0 2px}.guide3 small{color:var(--muted)}.picked .lbl2{font:700 .72rem var(--f-mono);text-transform:uppercase;letter-spacing:.07em;color:var(--wk)}.picked{scroll-margin-top:140px;background:var(--wk-soft);border-left:4px solid var(--wk);border-radius:8px;padding:10px 14px;margin:0 0 14px}@media(max-width:720px){.guide3{grid-template-columns:1fr 1fr}.topics,.guide3,.tfil,.picked,.pw>h2{margin-left:16px;margin-right:16px}}</style>
 </head>
 <body>
 <div id="hub" data-cur="act2"></div>
@@ -30,11 +30,11 @@
   </div>
   <p class="msg" id="msg" aria-live="polite"></p>
   <p class="exnote"><b>Example:</b> one student’s answer on Dubai Can, to show the depth expected. Choose your own case.</p>
-  <div class="guide3"><div><span class="n">1</span><b>Choose</b><small>One of 20 real cases below.</small></div><div><span class="n">2</span><b>Find facts</b><small>Three facts, with sources.</small></div><div><span class="n">3</span><b>Analyse</b><small>Five questions.</small></div><div><span class="n">4</span><b>Reflect</b><small>Three short questions.</small></div></div>
+  <div class="guide3"><div><span class="n">1</span><b>Choose</b><small>One of 20 real cases below.</small></div><div><span class="n">2</span><b>Find facts</b><small>Read the case, note three facts.</small></div><div><span class="n">3</span><b>Analyse</b><small>Five questions.</small></div><div><span class="n">4</span><b>Reflect</b><small>Three short questions.</small></div></div>
   <h2 style="margin:6px 0 8px">Step 1 · Choose your case</h2>
   <div class="tfil" id="tfil"></div>
   <div class="topics" id="topics"></div>
-  <p class="picked" id="picked" hidden></p>
+  <div class="picked" id="picked" hidden></div>
   <div id="doc"></div>
   <section class="sub" id="submit">
     <h2>Submit</h2>
@@ -61,37 +61,39 @@ const {esc,V}=DocB;
 const A2=COURSE.assess.find(a=>a.id==='a2')||{}, MOODLE=(A2.submit||{}).link||'', DUE=(A2.submit||{}).dueText||'', CASE=A2.caseLink||'';
 const STRAT=['Cost leadership','Differentiation','Focus (niche)','Blue ocean','Lean startup / iterate','Imitation with improvement','Platform / marketplace','Social enterprise model','Government or public initiative'];
 const TOPICS=[
- ['v','Careem','Ride-hailing app founded in Dubai in 2012. Uber agreed to buy it in 2019.','Careem Uber acquisition 2019'],
- ['v','Talabat','Food delivery app that started in Kuwait. Now part of Delivery Hero.','Talabat history Delivery Hero'],
- ['v','Noon','Online shopping platform in the UAE and Saudi Arabia, launched in 2017.','noon e-commerce launch 2017'],
- ['v','Kitopi','Dubai cloud kitchen company, founded in 2018: restaurants cook in shared kitchens.','Kitopi cloud kitchen Dubai'],
- ['v','Tabby','UAE "buy now, pay later" app: pay in four parts.','Tabby buy now pay later UAE'],
- ['v','Anghami','Music streaming app from Beirut, made for Arabic music.','Anghami music streaming history'],
- ['v','Souq.com','Middle East online store bought by Amazon in 2017. It became Amazon.ae.','Amazon acquires Souq 2017'],
- ['v','Swvl','Bus-booking app from Cairo for daily commuters.','Swvl bus booking startup'],
- ['v','Grameen Bank','Small loans for poor families in Bangladesh. Nobel Peace Prize 2006.','Grameen Bank microcredit Nobel 2006'],
- ['v','TOMS','Shoe brand known for "buy one, give one". It changed this model in 2019.','TOMS one for one model change 2019'],
- ['p','Dubai Can','Free water refill stations to cut single-use plastic bottles. Launched in 2022.','Dubai Can initiative','https://mediaoffice.ae/en/news/2022/Feb/15-02/Hamdan-bin-Mohammed-launches-Dubai-Can-initiative'],
- ['p','Plastic bag ban','Dubai banned single-use plastic bags from 1 January 2024.','Dubai single-use plastic bag ban 2024','https://mediaoffice.ae/en/news/2023/December/31-12/Hamdan-bin-Mohammed-issues-Resolution'],
- ['p','Ne’ma · food waste','UAE national initiative to reduce food loss and waste.','Nema UAE food loss and waste initiative','https://www.wam.ae/en/details/1395303025558'],
- ['p','UAE Food Bank','Collects extra food and gives it to people in need.','UAE Food Bank'],
- ['p','Summer midday break','Outdoor workers stop work at midday in summer to stay safe from heat.','UAE midday break outdoor workers summer'],
- ['p','Dubai Metro','Driverless metro opened in 2009 to reduce traffic.','Dubai Metro opening 2009 traffic'],
- ['p','Solar Park','Mohammed bin Rashid Al Maktoum Solar Park: clean energy for Dubai.','Mohammed bin Rashid Al Maktoum Solar Park'],
- ['p','Masdar City','A planned low-carbon city in Abu Dhabi.','Masdar City sustainable city'],
- ['p','Dubai Cares','Charity that helps children get an education.','Dubai Cares education'],
- ['p','Embrace warmer','A low-cost baby warmer, born in a Stanford design class.','Embrace infant warmer Stanford']];
+ ['v','careem','Careem','Ride-hailing app founded in Dubai in 2012. Uber agreed to buy it in 2019.','Careem Uber acquisition 2019'],
+ ['v','talabat','Talabat','Food delivery app that started in Kuwait. Now part of Delivery Hero.','Talabat history Delivery Hero'],
+ ['v','noon','Noon','Online shopping platform in the UAE and Saudi Arabia, launched in 2017.','noon e-commerce launch 2017'],
+ ['v','kitopi','Kitopi','Dubai cloud kitchen company, founded in 2018: restaurants cook in shared kitchens.','Kitopi cloud kitchen Dubai'],
+ ['v','tabby','Tabby','UAE "buy now, pay later" app: pay in four parts.','Tabby buy now pay later UAE'],
+ ['v','anghami','Anghami','Music streaming app from Beirut, made for Arabic music.','Anghami music streaming history'],
+ ['v','souq','Souq.com','Middle East online store bought by Amazon in 2017. It became Amazon.ae.','Amazon acquires Souq 2017'],
+ ['v','swvl','Swvl','Bus-booking app from Cairo for daily commuters.','Swvl bus booking startup'],
+ ['v','grameen','Grameen Bank','Small loans for poor families in Bangladesh. Nobel Peace Prize 2006.','Grameen Bank microcredit Nobel 2006'],
+ ['v','toms','TOMS','Shoe brand known for "buy one, give one". It changed this model in 2019.','TOMS one for one model change 2019'],
+ ['p','dubaican','Dubai Can','Free water refill stations to cut single-use plastic bottles. Launched in 2022.','Dubai Can initiative','https://mediaoffice.ae/en/news/2022/Feb/15-02/Hamdan-bin-Mohammed-launches-Dubai-Can-initiative'],
+ ['p','bagban','Plastic bag ban','Dubai banned single-use plastic bags from 1 January 2024.','Dubai single-use plastic bag ban 2024','https://mediaoffice.ae/en/news/2023/December/31-12/Hamdan-bin-Mohammed-issues-Resolution'],
+ ['p','nema','Ne’ma · food waste','UAE national initiative to reduce food loss and waste.','Nema UAE food loss and waste initiative','https://www.wam.ae/en/details/1395303025558'],
+ ['p','foodbank','UAE Food Bank','Collects extra food and gives it to people in need.','UAE Food Bank'],
+ ['p','midday','Summer midday break','Outdoor workers stop work at midday in summer to stay safe from heat.','UAE midday break outdoor workers summer'],
+ ['p','metro','Dubai Metro','Driverless metro opened in 2009 to reduce traffic.','Dubai Metro opening 2009 traffic'],
+ ['p','solarpark','Solar Park','Mohammed bin Rashid Al Maktoum Solar Park: clean energy for Dubai.','Mohammed bin Rashid Al Maktoum Solar Park'],
+ ['p','masdar','Masdar City','A planned low-carbon city in Abu Dhabi.','Masdar City sustainable city'],
+ ['p','dubaicares','Dubai Cares','Charity that helps children get an education.','Dubai Cares education'],
+ ['p','embrace','Embrace warmer','A low-cost baby warmer, born in a Stanford design class.','Embrace infant warmer Stanford']];
 let TF='all';
 function drawTopics(){ const cur=DocB.get('topic')||'';
   document.getElementById('tfil').innerHTML=[['all','All 20'],['v','Ventures around us'],['p','Real problems around us']].map(([k,l])=>`<button type="button" data-f="${k}" aria-pressed="${TF===k}">${l}</button>`).join('');
-  document.getElementById('topics').innerHTML=TOPICS.map((t,i)=>[t,i]).filter(([t])=>TF==='all'||t[0]===TF).map(([t,i])=>`<button type="button" class="tp" data-t="${i}" aria-pressed="${cur===t[1]}"><span class="c">${t[0]==='v'?'Venture':'Problem'} · ${i+1}</span><b>${esc(t[1])}</b><small>${esc(t[2])}</small></button>`).join('');
-  const t=TOPICS.find(x=>x[1]===cur), p=document.getElementById('picked');
-  p.hidden=!t; if(t) p.innerHTML=`<b>Your case: ${esc(t[1])}.</b> Start here: ${t[4]?`<a href="${t[4]}" target="_blank" rel="noopener">official source ↗</a> · `:''}search <a href="https://www.google.com/search?q=${encodeURIComponent(t[3])}" target="_blank" rel="noopener">“${esc(t[3])}” ↗</a>. Use news sites, official pages or the company site, not social media.`; }
+  document.getElementById('topics').innerHTML=TOPICS.map((t,i)=>[t,i]).filter(([t])=>TF==='all'||t[0]===TF).map(([t,i])=>`<button type="button" class="tp" data-t="${i}" aria-pressed="${cur===t[2]}"><span class="c">${t[0]==='v'?'Venture':'Problem'} · ${i+1}</span><b>${esc(t[2])}</b><small>${esc(t[3])}</small></button>`).join('');
+  const t=TOPICS.find(x=>x[2]===cur), p=document.getElementById('picked');
+  p.hidden=!t; if(!t) return; const C=(window.CASES||{})[t[1]];
+  p.innerHTML=C?`<span class="lbl2">Case study · read this first</span><h3 style="margin:4px 0 8px">${esc(t[2])}</h3><p style="margin:0 0 10px;font-size:1.02rem;line-height:1.55">${esc(C.read)}</p><b>Key facts</b><ul style="margin:4px 0 10px">${C.facts.map(f=>`<li>${esc(f)}</li>`).join('')}</ul><small>Sources: ${C.sources.map(x=>`<a href="${esc(x.u)}" target="_blank" rel="noopener">${esc(x.t)} ↗</a>`).join(' · ')}</small>`
+   :`<b>Your case: ${esc(t[2])}.</b> Search <a href="https://www.google.com/search?q=${encodeURIComponent(t[4])}" target="_blank" rel="noopener">“${esc(t[4])}” ↗</a>.`; }
 document.getElementById('tfil').addEventListener('click',e=>{ const b=e.target.closest('[data-f]'); if(b){ TF=b.dataset.f; drawTopics(); } });
-document.getElementById('topics').addEventListener('click',e=>{ const b=e.target.closest('[data-t]'); if(!b) return; const t=TOPICS[+b.dataset.t]; DocB.set('topic',t[1]); if(!DocB.get('title')) DocB.set('title',t[1]); drawTopics(); document.getElementById('p-facts').scrollIntoView({behavior:'smooth',block:'start'}); });
+document.getElementById('topics').addEventListener('click',e=>{ const b=e.target.closest('[data-t]'); if(!b) return; const t=TOPICS[+b.dataset.t]; DocB.set('topic',t[2]); DocB.set('title',t[2]); drawTopics(); document.getElementById('picked').scrollIntoView({behavior:'smooth',block:'start'}); });
 const SECTIONS=[
  {id:'cover',cover:true,titleKey:'title',titlePh:'Your case (choose above)',items:[{t:'in',k:'name',label:'Name'},{t:'in',k:'sid',label:'Student ID'}]},
- {id:'facts',n:'2',title:'Find three facts',tag:'with sources',howto:'Three facts about your case. Each one with where you found it.',
+ {id:'facts',n:'2',title:'Find three facts',tag:'with sources',howto:'Three facts from the case study above, in your own words. Add a source: the case sources or one more you found.',
   items:[1,2,3].flatMap(i=>[{t:'q',k:`f${i}`,label:`Fact ${i}`,rows:2},{t:'in',k:`f${i}s`,label:`Source ${i}`,ph:'Website or newspaper, date'}])},
  {id:'a',n:'3',title:'Analyse · five questions',tag:'about 300 words',fmt:true,wc:300,howto:'Use your facts. <a href="week-11.html">Week 11 · how to read a case</a>',
   items:[{t:'q',k:'q1',n:'1',label:'Who is it, and what problem does it solve?',rows:3},

@@ -10,6 +10,58 @@
 <link rel="stylesheet" href="assets/course.css">
 <style>
 :root{--wk:#9D174D;--wk-soft:rgba(157,23,77,.09);--wk-d:#F9A8D4;--wk-soft-d:rgba(249,168,212,.14)}
+/* grades map */
+.gm{font-family:var(--f-display)}
+.gm-bar{display:flex;gap:3px;height:46px;margin:4px 0 6px}
+.gm-seg{display:flex;align-items:center;justify-content:center;border-radius:6px;font-weight:800;font-size:.82rem;min-width:0;overflow:hidden;white-space:nowrap}
+.gm-seg.done{background:var(--good);color:var(--on-wk)}
+.gm-seg.next{background:var(--wk-soft);border:2px dashed var(--wk);color:var(--ink)}
+.gm-half{display:flex;font-family:var(--f-mono);font-size:.74rem;color:var(--muted);margin-bottom:14px}
+.gm-half span{flex:1}
+.gm-half span:last-child{text-align:right}
+.gm-cols{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}
+.gm-col{border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.gm-col h4{margin:0 0 8px;font-size:.95rem;color:var(--ink)}
+.gm-col.d h4{color:var(--good)}
+.gm-col.n{border-color:var(--wk)}
+.gm-col.n h4{color:var(--wk)}
+.gm-col ul{list-style:none;margin:0;padding:0;display:grid;gap:7px}
+.gm-col li{font-size:.86rem;line-height:1.3;color:var(--ink)}
+.gm-col li b{font-weight:800}
+.gm-col li small{display:block;font-family:var(--f-mono);font-size:.72rem;color:var(--muted)}
+@media (max-width:520px){.gm-cols{grid-template-columns:minmax(0,1fr)}.gm-bar{gap:2px}.gm-seg{font-size:.68rem}}
+/* project 2 road */
+.road{list-style:none;margin:0;padding:0 0 0 4px;font-family:var(--f-display);position:relative}
+.road li{display:grid;grid-template-columns:38px minmax(0,1fr);gap:12px;align-items:center;position:relative;padding:6px 0}
+.road li:not(:last-child)::after{content:"";position:absolute;left:18px;top:42px;bottom:-12px;border-left:3px dotted var(--line)}
+.road .dot{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:.95rem;border:2px solid var(--line);background:var(--surface);color:var(--ink);position:relative;z-index:1}
+.road li.now .dot{background:var(--wk);border-color:var(--wk);color:var(--on-wk)}
+.road li.end .dot{background:var(--good);border-color:var(--good);color:var(--on-wk)}
+.road .t{font-weight:700;font-size:.95rem;color:var(--ink)}
+.road .w{display:inline-block;margin-left:6px;font-family:var(--f-mono);font-size:.72rem;color:var(--muted)}
+.road li.now .w{color:var(--wk);font-weight:600}
+/* case card */
+.cc{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--surface);font-family:var(--f-display);max-width:100%}
+.cc-h{display:flex;gap:14px;align-items:center;padding:12px 14px;background:var(--wk-soft);border-bottom:1px solid var(--line)}
+.cc-h .mini{flex:none;width:64px;height:64px}
+.cc-h .mini svg{width:100%;height:100%;display:block}
+.cc-h .who{min-width:0}
+.cc-h .eb{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--wk);font-weight:600}
+.cc-h b{display:block;font-size:1.2rem;font-weight:800;color:var(--ink);line-height:1.15}
+.cc-h small{display:block;font-family:var(--f-mono);font-size:.74rem;color:var(--muted);margin-top:2px}
+.cc dl{margin:0}
+.cc-r{display:grid;grid-template-columns:132px minmax(0,1fr);gap:10px;padding:10px 14px;border-bottom:1px dashed var(--line);align-items:baseline}
+.cc-r:last-child{border-bottom:0}
+.cc-r dt{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.cc-r dd{margin:0;font-size:.95rem;line-height:1.4;color:var(--ink)}
+.cc-r.ls{background:var(--wk-soft)}
+.cc-r.ls dt{color:var(--wk)}
+.cc-r.ls dd{font-weight:700}
+@media (max-width:520px){.cc-r{grid-template-columns:minmax(0,1fr);gap:2px}.cc-h .mini{width:52px;height:52px}}
+/* in-depth case reading */
+.rc{border:1px solid var(--line);border-left:4px solid var(--wk);border-radius:10px;padding:12px 16px;background:var(--surface);font-size:.98rem;line-height:1.55}
+.rc .lbl{display:block;font-family:var(--f-mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--wk);font-weight:600;margin-bottom:4px}
+.rc p{margin:.4em 0}
 </style>
 </head>
 <body>
@@ -25,130 +77,195 @@
 const {W} = Lecture; const {store,esc} = ENT141;
 const F='font-family="Schibsted Grotesk,Arial"';
 
-/* concept graphic: strategy = where to compete + how to win */
-const SVG_STRAT=`<svg viewBox="0 0 560 230" role="img" aria-label="A strategy answers two questions: where to compete and how to win">
-  <rect x="10" y="20" width="220" height="80" rx="12" fill="var(--wk-soft)" stroke="var(--wk)" stroke-width="2"/>
-  <text x="120" y="55" text-anchor="middle" ${F} font-weight="800" font-size="18">Where to compete?</text>
-  <text x="120" y="80" text-anchor="middle" ${F} font-size="13" class="t-muted">which users, which need, which place</text>
-  <rect x="10" y="130" width="220" height="80" rx="12" fill="var(--wk-soft)" stroke="var(--wk)" stroke-width="2"/>
-  <text x="120" y="165" text-anchor="middle" ${F} font-weight="800" font-size="18">How to win?</text>
-  <text x="120" y="190" text-anchor="middle" ${F} font-size="13" class="t-muted">cheaper, or different and better</text>
-  <path d="M232 60 C300 60 300 115 360 115" fill="none" stroke="var(--wk)" stroke-width="3"/>
-  <path d="M232 170 C300 170 300 115 360 115" fill="none" stroke="var(--wk)" stroke-width="3"/>
-  <circle cx="440" cy="115" r="78" fill="var(--wk)"/>
-  <text x="440" y="122" text-anchor="middle" ${F} font-weight="800" font-size="22" style="fill:var(--on-wk)">Strategy</text>
-</svg>`;
+/* ---------- grades map (from Weeks 8–11 page) ---------- */
+const GRADES_HTML=`<div class="gm" role="img" aria-label="Course marks: 50% done, 50% left">
+  <div class="gm-bar">
+    <div class="gm-seg done" style="flex:10" title="Activity 1 · 10%">10%</div>
+    <div class="gm-seg done" style="flex:30" title="Project 1 poster · 30%">30%</div>
+    <div class="gm-seg done" style="flex:10" title="Project 1 presentation · 10%">10%</div>
+    <div class="gm-seg next" style="flex:10" title="Activity 2 · 10%">10%</div>
+    <div class="gm-seg next" style="flex:40" title="Project 2 · 40%">40%</div>
+  </div>
+  <div class="gm-half"><span>0%</span><span style="text-align:center">50%</span><span>100%</span></div>
+  <div class="gm-cols">
+    <div class="gm-col d"><h4>Done · 50%</h4><ul>
+      <li><b>Activity 1</b> · video pitch · 10%<small>Week 4</small></li>
+      <li><b>Project 1</b> · poster · 30%<small>Week 9</small></li>
+      <li><b>Project 1</b> · presentation · 10%<small>Week 9</small></li></ul></div>
+    <div class="gm-col n"><h4>Next · 50%</h4><ul>
+      <li><a href="activity-2.html"><b>Activity 2</b></a> · case analysis · 10%<small>individual · in class Week 11 · due Thu 19 Nov 23:59</small></li>
+      <li><a href="project-2.html"><b>Project 2</b></a> · Idea Validation Report · 40%<small>team · due Thu 17 Dec 23:59</small></li></ul></div>
+  </div></div>`;
 
-/* concept graphic: Porter's generic strategies grid */
-const SVG_PORTER=`<svg viewBox="0 0 560 330" role="img" aria-label="Porter's generic strategies: cost leadership, differentiation, and focus">
-  <text x="330" y="20" text-anchor="middle" ${F} font-weight="700" font-size="14" class="t-muted">How do we win? (competitive advantage)</text>
+/* ---------- Project 2 road (from Weeks 8–11 page) ---------- */
+const ROAD_HTML=`<ol class="road" aria-label="Project 2 sections and when each is built">
+  <li class="now"><span class="dot">1</span><span class="t">Three ideas<span class="w">starts today · Weeks 10–11</span></span></li>
+  <li><span class="dot">2</span><span class="t">Score and choose<span class="w">Week 8 method</span></span></li>
+  <li><span class="dot">3</span><span class="t">Market<span class="w">Week 12</span></span></li>
+  <li><span class="dot">4</span><span class="t">Value proposition canvas<span class="w">Weeks 13–14</span></span></li>
+  <li><span class="dot">5</span><span class="t">Differentiation<span class="w">Weeks 15–16</span></span></li>
+  <li><span class="dot">6</span><span class="t">Sustainability check<span class="w">+ evidence and references</span></span></li>
+  <li class="end"><span class="dot">✓</span><span class="t">Submit on Moodle<span class="w">Thu 17 Dec 23:59</span></span></li>
+</ol>`;
+
+/* ---------- Porter's grid (concept) ---------- */
+const SVG_PORTER=`<svg viewBox="0 0 560 330" role="img" aria-label="Porter's three ways to win: cost leadership, differentiation, and focus">
+  <text x="335" y="20" text-anchor="middle" ${F} font-weight="700" font-size="14" class="t-muted">How do we win?</text>
   <text x="235" y="46" text-anchor="middle" ${F} font-weight="700" font-size="14">Lower cost</text>
-  <text x="430" y="46" text-anchor="middle" ${F} font-weight="700" font-size="14">Different, better</text>
-  <text x="20" y="190" text-anchor="middle" ${F} font-weight="700" font-size="14" class="t-muted" transform="rotate(-90 20 190)">Where? (scope)</text>
+  <text x="435" y="46" text-anchor="middle" ${F} font-weight="700" font-size="14">Different, better</text>
+  <text x="20" y="190" text-anchor="middle" ${F} font-weight="700" font-size="14" class="t-muted" transform="rotate(-90 20 190)">Where?</text>
   <text x="80" y="120" text-anchor="middle" ${F} font-weight="700" font-size="14">Broad</text>
   <text x="80" y="138" text-anchor="middle" ${F} font-size="12" class="t-muted">many users</text>
   <text x="80" y="250" text-anchor="middle" ${F} font-weight="700" font-size="14">Narrow</text>
   <text x="80" y="268" text-anchor="middle" ${F} font-size="12" class="t-muted">one group</text>
   <rect x="140" y="60" width="190" height="120" rx="10" fill="var(--wk)"/>
-  <text x="235" y="126" text-anchor="middle" ${F} font-weight="800" font-size="17" style="fill:var(--on-wk)">Cost leadership</text>
+  <text x="235" y="118" text-anchor="middle" ${F} font-weight="800" font-size="17" style="fill:var(--on-wk)">1 · Cost leadership</text>
+  <text x="235" y="140" text-anchor="middle" ${F} font-size="13" style="fill:var(--on-wk)">cheapest</text>
   <rect x="340" y="60" width="190" height="120" rx="10" fill="var(--wk-soft)" stroke="var(--wk)" stroke-width="2"/>
-  <text x="435" y="126" text-anchor="middle" ${F} font-weight="800" font-size="17">Differentiation</text>
+  <text x="435" y="118" text-anchor="middle" ${F} font-weight="800" font-size="17">2 · Differentiation</text>
+  <text x="435" y="140" text-anchor="middle" ${F} font-size="13" class="t-muted">different and better</text>
   <rect x="140" y="190" width="390" height="120" rx="10" fill="none" stroke="var(--wk)" stroke-width="2" stroke-dasharray="6 5"/>
-  <text x="335" y="238" text-anchor="middle" ${F} font-weight="800" font-size="17">Focus</text>
-  <text x="235" y="270" text-anchor="middle" ${F} font-size="13" class="t-muted">cost focus</text>
-  <text x="435" y="270" text-anchor="middle" ${F} font-size="13" class="t-muted">differentiation focus</text>
+  <text x="335" y="240" text-anchor="middle" ${F} font-weight="800" font-size="17">3 · Focus</text>
+  <text x="335" y="264" text-anchor="middle" ${F} font-size="13" class="t-muted">serve one small group very well</text>
 </svg>`;
 
-/* concept graphic: first movers and a fast follower */
-const SVG_FIRST=`<svg viewBox="0 0 560 190" role="img" aria-label="Timeline: Friendster 2002, MySpace 2003, Facebook 2004">
-  <line x1="40" y1="100" x2="530" y2="100" stroke="var(--line)" stroke-width="3"/>
-  <circle cx="110" cy="100" r="11" fill="var(--muted)"/>
-  <text x="110" y="70" text-anchor="middle" ${F} font-weight="800" font-size="16">Friendster</text>
-  <text x="110" y="135" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="13" class="t-muted">2002</text>
-  <circle cx="270" cy="100" r="11" fill="var(--muted)"/>
-  <text x="270" y="70" text-anchor="middle" ${F} font-weight="800" font-size="16">MySpace</text>
-  <text x="270" y="135" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="13" class="t-muted">2003</text>
-  <circle cx="430" cy="100" r="15" fill="var(--wk)"/>
-  <text x="430" y="70" text-anchor="middle" ${F} font-weight="800" font-size="16">Facebook</text>
-  <text x="430" y="135" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="13" class="t-muted">2004</text>
-  <text x="190" y="170" text-anchor="middle" ${F} font-size="13" class="t-muted">first movers</text>
-  <text x="430" y="170" text-anchor="middle" ${F} font-size="13" style="fill:var(--wk)" font-weight="700">fast follower</text>
-</svg>`;
+/* mini Porter grid for case cards: which way to win */
+const miniPorter=cell=>{
+  const on='fill="var(--wk)"', off='fill="none" stroke="var(--line)" stroke-width="2"';
+  return `<svg viewBox="0 0 64 64" aria-hidden="true">
+  <rect x="2" y="2" width="28" height="28" rx="5" ${cell==='cost'?on:off}/>
+  <rect x="34" y="2" width="28" height="28" rx="5" ${cell==='diff'?on:off}/>
+  <rect x="2" y="34" width="60" height="28" rx="5" ${cell==='focus'?on:off}/></svg>`;};
 
-const CASES={'One real case per strategy':[
-  ['Cost leadership · Southwest Airlines','One aircraft type (the Boeing 737), short point-to-point routes and quick turnarounds keep costs low, so fares can stay low for many travellers.'],
-  ['Differentiation · Patagonia','Durable outdoor clothing, free repairs through its Worn Wear programme and 1% of sales to environmental groups. Customers pay more for a brand they trust.'],
-  ['Focus · Careem (2012)','Careem began in Dubai as a web service for <b>corporate</b> car bookings: one narrow group of customers. Only later did it grow into ride-hailing for everyone.']]};
+/* where + how mini graphic (strategy concept) */
+const MINI_WH=`<svg viewBox="0 0 64 64" aria-hidden="true">
+  <rect x="2" y="6" width="26" height="22" rx="5" fill="var(--wk-soft)" stroke="var(--wk)" stroke-width="2"/>
+  <rect x="2" y="36" width="26" height="22" rx="5" fill="var(--wk-soft)" stroke="var(--wk)" stroke-width="2"/>
+  <path d="M28 17 C38 17 38 32 44 32 M28 47 C38 47 38 32 44 32" fill="none" stroke="var(--wk)" stroke-width="2.5"/>
+  <circle cx="52" cy="32" r="10" fill="var(--wk)"/></svg>`;
 
-const RUN=[
-  {t:'The problem',s:'Weeks 5–6',d:'Illustrative: delivery riders in Dubai have no safe, shaded place to wait between orders.'},
-  {t:'Cost leadership',s:'cheapest',d:'Simple shade frames at building entrances, shared by many buildings, so each pays very little.'},
-  {t:'Differentiation',s:'different',d:'Cooled rest pods with water and phone charging, paid by a brand that wants its name on them.'},
-  {t:'Focus',s:'one group',d:'Shade and water points only for riders in one busy area, only in the summer months.'}];
+/* ---------- case card ---------- */
+function caseCard(c){
+  const rows=[...(c.rows||[]),['What they did',c.did],[c.whyLbl||'Why it worked',c.why]];
+  return `<article class="cc" aria-label="Case study: ${esc(c.org)}">
+  <div class="cc-h"><div class="mini">${c.mini||''}</div><div class="who"><span class="eb">${c.tag}</span><b>${c.org}</b><small>${c.place} · ${c.year}</small></div></div>
+  <dl>${rows.map(([k,v])=>`<div class="cc-r"><dt>${k}</dt><dd>${v}</dd></div>`).join('')}
+  <div class="cc-r ls"><dt>Lesson</dt><dd>${c.lesson}</dd></div></dl></article>`;
+}
+
+const CASE_IKEA=caseCard({tag:'Case · a clear strategy',org:'IKEA',place:'Sweden',year:'founded 1943 · flat packs from 1956',mini:MINI_WH,
+  rows:[['Where','People who furnish a home on a small budget.'],['How','Low prices, made possible by flat packs.']],
+  did:'It sells furniture flat, in a box. Customers carry it home and build it.',
+  why:'Flat boxes take less space. Shipping and storing cost less, so prices stay low.',
+  lesson:'A strategy says who you serve and how you win.'});
+
+const CASE_SW=caseCard({tag:'Case · cost leadership',org:'Southwest Airlines',place:'USA',year:'first flights 1971',mini:miniPorter('cost'),
+  did:'One plane type, the Boeing 737. Short, direct routes. Fast turnarounds at the gate.',
+  why:'Low costs allow low fares for many travellers.',
+  lesson:'Cut every cost your users do not care about.'});
+
+const CASE_PAT=caseCard({tag:'Case · differentiation',org:'Patagonia',place:'USA',year:'1973',mini:miniPorter('diff'),
+  did:'Strong outdoor clothes. It repairs worn clothes through Worn Wear. It gives 1% of sales to nature groups.',
+  why:'Customers trust the brand. Many pay more for it.',
+  lesson:'Be different in a way your users really value.'});
+
+const CASE_CAREEM=caseCard({tag:'Case · focus',org:'Careem',place:'UAE (Dubai)',year:'2012',mini:miniPorter('focus'),
+  did:'It started with car bookings for companies only. Later it opened rides to everyone.',
+  why:'One small group with a clear need. Careem learned fast, then grew.',
+  lesson:'Start with one group. Serve it very well. Grow later.'});
+
+/* ---------- in-depth case (real, cited) ---------- */
+const DEPTH=`<div class="rc"><span class="lbl">Real case · read it twice</span>
+<p><b>Careem: start small, then grow.</b> Careem started in Dubai in 2012. Its co-founders included Mudassir Sheikha and Magnus Olsson. Both had worked at McKinsey, a consulting firm.</p>
+<p>At first, Careem did not serve everyone. It booked cars for companies and their staff. This was one group with a clear need.</p>
+<p>Careem studied its region closely. Many people did not use bank cards, so riders could pay in cash. Its drivers are called captains.</p>
+<p>Later, Careem opened to all riders. It grew to many cities in the Middle East, North Africa and Pakistan.</p>
+<p>In March 2019, Uber announced it would buy Careem for US$3.1 billion. Careem kept its own brand in the region.</p></div>`;
 
 const FIX=[
-  {q:'“Our idea is the cheapest <i>and</i> the best quality, for everyone.”',hint:'Porter calls this “stuck in the middle”. Choose one way to win: lower cost or different and better.'},
-  {q:'“We have no competitors.”',hint:'Whatever users do today is your competitor, even waiting under a bridge. Name it.'},
-  {q:'“We will win because we are first.”',hint:'First is not enough: Facebook came after Friendster and MySpace. Say what keeps you ahead.'}];
+  {q:'“Our idea is the cheapest <i>and</i> the best, for everyone.”',hint:'Porter calls this “stuck in the middle”: no clear way to win. Choose one way.'},
+  {q:'“We have no competitors.”',hint:'What users do today is your competitor. Even waiting in the sun. Name it.'},
+  {q:'“We will win because we are first.”',hint:'First is not enough. Facebook came after Friendster and MySpace. Say what keeps you ahead.'}];
 
 Lecture.mount({
   id:'ent141-w10', week:10, clo:'1, 3', course:'ENT 141', short:'Week 10 · Entrepreneurial Strategy', instructor:'Nadia',
-  title:'Entrepreneurial Strategy', meta:'Byers et al (2019), competitive strategy chapter · 2-hour lecture',
+  title:'Entrepreneurial Strategy', meta:'Byers et al. (2019), Porter (1985) · 2-hour lecture',
   scenes:[
   { nav:'Start here', title:'Why can two very different shops both win?', minutes:5,
-    narration:[`Today your team turns its Project 1 problem into three idea directions, one per strategy. <span class="mono">Topics: What a strategy is · Porter's generic strategies · First mover or fast follower. CLO 1 · CLO 3.</span>`],
-    think:`Near campus, one cafeteria sells karak in a paper cup for very little. A café down the road charges much more, with seats, Wi-Fi and quiet corners. Both are always full. How?`,
-    src:`Reading: Byers, T. H., Dorf, R. C., &amp; Nelson, A. J. (2019). <em>Technology ventures</em> (5th ed.), competitive strategy.`,
-    fig:{label:`Today's lecture · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`What is a strategy?`,10,'l'],[`Porter's three strategies`,15,'l'],[`Three real cases`,15,'l'],[`Apply it step by step`,10,'l'],[`First or follower?`,15,'l'],[`Mistake and fix`,10,'l'],[`Three idea directions`,30,'a'],[`Think about it`,10,'a']])} },
+    narration:[`Project 1 is done. Today we start Project 2. We learn what a strategy is, and Porter's three ways to win. <span class="mono">CLO 1 · CLO 3.</span>`],
+    think:`Near campus, one cafeteria sells cheap karak in paper cups. A café nearby charges more, with seats and Wi-Fi. Both are always full. How?`,
+    src:`Reading: Byers, T. H., Dorf, R. C., &amp; Nelson, A. J. (2019). <em>Technology ventures: From idea to enterprise</em> (5th ed.). McGraw-Hill. · Porter, M. E. (1985). <em>Competitive advantage</em>. Free Press.`,
+    fig:{label:`Today's lecture · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`Your grades map`,5,'c'],[`Project 2 map`,5,'c'],[`What is a strategy?`,8,'l'],[`Three ways to win`,7,'l'],[`1 · Cost leadership`,8,'l'],[`2 · Differentiation`,8,'l'],[`3 · Focus`,8,'l'],[`Case study in depth`,20,'a'],[`Mistake → fix`,6,'c'],[`Team: three idea directions`,30,'a'],[`Think about it`,10,'c']])} },
 
-  { nav:'What is a strategy?', title:'What is a strategy?', minutes:10,
-    narration:[`A <b>strategy</b> is a venture's plan to win. It answers two questions: <b>where to compete</b> (which users, which need, which place) and <b>how to win</b> there (cheaper, or different and better).`],
-    src:`Byers et al. (2019), competitive strategy. · Porter, M. E. (1996). What is strategy? <em>Harvard Business Review</em>, 74(6), 61–78.`,
-    fig:{label:`Concept · two questions, one strategy`, html:SVG_STRAT} },
+  { nav:'Your grades map', title:'Your grades map', kind:'review', minutes:5,
+    narration:[`Half of your marks are done. The other half come from Activity 2 (alone) and Project 2 (team).`],
+    src:`ENT 141 syllabus, Fall 2026: assessment plan.`,
+    fig:{label:`Course marks · 100%`, html:GRADES_HTML} },
 
-  { nav:'Porter\'s three strategies', title:'Porter\'s generic strategies', minutes:15,
-    narration:[`Porter shows three ways to win. <b>Cost leadership</b>: lowest cost for many users. <b>Differentiation</b>: something users value and pay more for. <b>Focus</b>: serve one narrow group, by cost or by difference.`],
+  { nav:'Project 2 map', title:'Project 2 map', kind:'review', minutes:5,
+    narration:[`Project 2 is one team report. We build one section in each lecture. Today you start section 1: three ideas.`,
+      `<a class="btn" href="project-2.html">Open the Project 2 builder →</a>`],
+    src:`ENT 141 Project 2 · Idea Validation Report (40%, team), due Thu 17 Dec, 23:59, on Moodle.`,
+    fig:{label:`The road to 17 December`, html:ROAD_HTML} },
+
+  { nav:'What is a strategy?', title:'What is a strategy?', minutes:8,
+    narration:[`A <b>strategy</b> is a plan to win. It answers two questions. Where do we compete? How do we win there?`],
+    src:`Byers et al. (2019), competitive strategy. · Porter, M. E. (1996). What is strategy? <em>Harvard Business Review</em>, 74(6), 61–78. · IKEA. (n.d.). <em>The IKEA story</em>: 1950s, flat packs.`,
+    fig:{label:`Case study · where + how`, html:CASE_IKEA} },
+
+  { nav:'Three ways to win', title:'Porter: three ways to win', minutes:7,
+    narration:[`Porter gives three ways to win. Be the <b>cheapest</b>. Be <b>different and better</b>. Or <b>focus</b> on one small group. Pick one, not all three.`],
     src:`Porter, M. E. (1985). <em>Competitive advantage</em>. Free Press.`,
     fig:{label:`Concept · Porter's grid`, html:SVG_PORTER} },
 
-  { nav:'Three real cases', title:'Three strategies, three real cases', minutes:15,
-    narration:[`Each venture below chose <b>one</b> way to win and built everything around it. Click each case, then say: where does it compete, and how does it win?`],
-    src:`Porter (1996), What is strategy? (Southwest Airlines). · Chouinard, Y. (2005). <em>Let my people go surfing</em>. Penguin; Patagonia, Worn Wear programme. · Careem. (2026). In <em>Wikipedia</em>: history (corporate car bookings, 2012).`,
-    fig:{label:`Real examples · click to compare`, build:el=>W.picker(el,CASES,'Select a case.')} },
+  { nav:'1 · Cost leadership', title:'1 · Cost leadership', minutes:8,
+    narration:[`<b>Cost leadership</b> means the lowest cost in the market. The venture keeps costs very low. So it can charge less than rivals.`],
+    src:`Porter, M. E. (1996). What is strategy? <em>Harvard Business Review</em>, 74(6), 61–78 (Southwest Airlines).`,
+    fig:{label:`Case study · cost leadership`, html:CASE_SW} },
 
-  { nav:'Apply it step by step', title:'One problem, three directions', minutes:10,
-    narration:[`Apply the grid to one problem. Keep the problem the same; change only how you win. This is exactly what your team does in the activity.`],
-    fig:{label:`Illustrative example · click or play`, flow:RUN, caption:`Illustrative only, built on the rider example from Weeks 5–6.`} },
+  { nav:'2 · Differentiation', title:'2 · Differentiation', minutes:8,
+    narration:[`<b>Differentiation</b> means being different and better. Users get something they value. So they agree to pay more.`],
+    src:`Chouinard, Y. (2005). <em>Let my people go surfing</em>. Penguin. · Patagonia. (n.d.). <em>Worn Wear</em>. · 1% for the Planet. (n.d.). <em>Our story</em>.`,
+    fig:{label:`Case study · differentiation`, html:CASE_PAT} },
 
-  { nav:'First or follower?', title:'First mover or fast follower?', minutes:15,
-    narration:[`A <b>first mover</b> enters a market first and can learn early, but pays to teach users. A <b>fast follower</b> enters soon after and learns from the first movers' mistakes.`],
-    think:`Facebook was not the first social network. What did it learn from the ones before it?`,
-    src:`Lieberman, M. B., &amp; Montgomery, D. B. (1988). First-mover advantages. <em>Strategic Management Journal</em>, 9, 41–58. · boyd, d. m., &amp; Ellison, N. B. (2007). Social network sites: Definition, history, and scholarship. <em>Journal of Computer-Mediated Communication</em>, 13(1), 210–230.`,
-    fig:{label:`Concept · launch years`, html:SVG_FIRST} },
+  { nav:'3 · Focus', title:'3 · Focus', minutes:8,
+    narration:[`<b>Focus</b> means serving one small group. Serve it better than anyone. Many new ventures start this way.`],
+    src:`Careem. (2026). In <em>Wikipedia</em>: history (corporate car bookings, 2012).`,
+    fig:{label:`Case study · focus`, html:CASE_CAREEM} },
 
-  { nav:'Mistake and fix', title:'Common mistake → fix', kind:'review', minutes:10,
-    narration:[`Teams often make these three mistakes when they first talk about strategy. Read each one, say the fix, then reveal it.`],
-    src:`Porter (1985), Competitive advantage: “stuck in the middle”.`,
-    fig:{label:`Mistake → fix`, build:el=>W.practice(el,FIX,{label:'Fix',prefix:'<b>Fix:</b> '})} },
+  { nav:'Case study in depth', title:'Case study in depth · Careem', kind:'activity', minutes:20, wide:true,
+    narration:[`Read the real case twice. Then answer the three questions alone. Compare with a partner.`, DEPTH],
+    src:`Careem. (2026). In <em>Wikipedia</em>. · Uber Technologies. (2019, March 26). <em>Uber to acquire Careem</em> [Press release]. · VentureBeat. (2019, March). Uber confirms it's acquiring Middle East rival Careem for $3.1 billion.`,
+    fig:{label:`Three questions · saves in your browser`, build:el=>W.worksheet(el,{id:'ent141-w10-careem',title:'ENT 141 · Week 10 · Case study in depth: Careem',fields:[
+      {l:'Q1 · Where did Careem compete first? Which users?',rows:2},
+      {l:'Q2 · Which of Porter\'s three ways fits its start? Give one fact.',rows:2},
+      {l:'Q3 · One lesson from Careem for our team idea',rows:2}]})} },
 
-  { nav:'Three idea directions', title:'Activity · Three idea directions', kind:'activity', minutes:30, wide:true,
-    narration:[`Team task. Start from your Project 1 problem. Write one idea direction per strategy. This is the start of section 1 of <a href="project-2.html">Project 2</a>; finish it next week.`],
+  { nav:'Mistake → fix', title:'Mistake → fix', kind:'review', minutes:6,
+    narration:[`Teams often say these three things. Say the fix first, then reveal it.`],
+    src:`Porter (1985): “stuck in the middle”. · boyd, d. m., &amp; Ellison, N. B. (2007). Social network sites: Definition, history, and scholarship. <em>Journal of Computer-Mediated Communication</em>, 13(1), 210–230.`,
+    fig:{label:`Common mistakes · reveal the fix`, build:el=>W.practice(el,FIX,{label:'Fix',prefix:'<b>Fix:</b> '})} },
+
+  { nav:'Team: three idea directions', title:'Team · Three idea directions', kind:'activity', minutes:30, wide:true,
+    narration:[`Start from your Project 1 problem. Write one idea for each way to win. This starts section 1 of Project 2. Finish it next week.`,
+      `<a class="btn" href="project-2.html#p-s1">Open Project 2, sections 1 and 2 →</a>`],
     fig:{label:`Team worksheet · saves in your browser`, build:el=>W.worksheet(el,{id:'ent141-w10-directions',title:'ENT 141 · Week 10 · Three idea directions',fields:[
       {l:'Our Project 1 problem (one sentence, from the poster)',rows:2},
       {l:'Where we compete: which users, which place?',rows:2},
-      {l:'Direction A · Cost leadership: the cheapest way to solve it',rows:2},
-      {l:'Direction B · Differentiation: a different, better way users would pay more for',rows:2},
-      {l:'Direction C · Focus: one narrow group we serve best',rows:2},
-      {l:'Who already does something similar? Are we first or a follower?',rows:2}]})} },
+      {l:'Idea A · Cost leadership: the cheapest way to solve it',rows:2},
+      {l:'Idea B · Differentiation: a different, better way',rows:2},
+      {l:'Idea C · Focus: one small group we serve best',rows:2},
+      {l:'What do users do today instead? (our real competitor)',rows:2}]})} },
 
   { nav:'Think about it', title:'Think about it', kind:'review', minutes:10,
-    narration:[`Discuss with your team, then reveal one view. <b>Exit question:</b> in one sentence, where does your team compete and how will it win?`,
-      `<b>Next week:</b> a map of strategy types new ventures use, and how to read a case for Activity 2. Bring your three directions.`,
+    narration:[`Discuss with your team. There is no single right answer.`,
+      `<b>Exit question:</b> in one sentence, where does your team compete, and how will it win?`,
+      `<b>Next week:</b> Overview of Entrepreneurial Strategies. Five more strategies, and Activity 2 in class. Bring your three idea directions.`,
       `<a class="btn" href="week-11.html">Next lecture · Week 11 · Overview of Entrepreneurial Strategies →</a>`],
     fig:{label:`Reflection · strategy`, build:el=>W.practice(el,[
-      {q:'Is the cheapest idea always the best for people with low income?',hint:'Not always: if quality drops, they pay again. Ask users what they value.'},
-      {q:'Which of your three directions would your interviewees choose? Why?',hint:'Go back to your Project 1 quotes and journey map, not your own taste.'},
-      {q:'Can a social venture use cost leadership?',hint:'Yes: low cost can be what makes a solution reach many people.'}],{label:'One view',prefix:''})} },
+      {q:'Is the cheapest idea always best for people with low income?',hint:'Not always. If quality drops, they pay again. Ask users what they value.'},
+      {q:'Which of your three ideas would your interviewees choose? Why?',hint:'Go back to your Project 1 quotes. Not your own taste.'},
+      {q:'Can a social venture use cost leadership?',hint:'Yes. A low cost can help a solution reach many people.'}],{label:'One view',prefix:''})} },
   ]
 });
 </script>

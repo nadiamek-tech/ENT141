@@ -47,7 +47,7 @@
 .mx-ctl{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:0 0 10px}
 .mx-gap{height:14px}
 @media (max-width:480px){.mx{min-width:0;font-size:.76rem}.mx th,.mx td{padding:5px 3px}.mx input[type=number]{width:44px}.mx input[type=text]{min-width:0}}
-</style>
+.tm{border-collapse:collapse;width:100%;min-width:480px}.tm th,.tm td{padding:6px 4px;border-bottom:1px solid var(--line);text-align:center;vertical-align:middle}.tm th:first-child,.tm td:first-child{text-align:left;width:34%}.tm tr.tot td{font-weight:800;border-top:2px solid var(--ink);border-bottom:0}.tm td.win{background:var(--wk-soft);color:var(--wk);border-radius:8px}</style>
 </head>
 <body>
 <script src="assets/site.js"></script>
@@ -175,7 +175,31 @@ const FIX=[
   {q:'The chosen idea helps a different user.',type:'no fit',hint:'Go back to the HMW. Same user, same pain.'},
   {q:'“Students will love it.” No quote.',type:'no evidence',hint:'Add one interview quote that shows the pain.'}];
 
+function teamMatrix(el){
+  const K='ent141-w08-team', CR=[['Desirable · people want it',30],['Feasible · we can build it',25],['Viable · it can pay for itself',25],['Sustainable · good for people and planet',20]];
+  let st; try{ st=JSON.parse(localStorage.getItem(K)||'null'); }catch(e){}
+  if(!st) st={ideas:['Idea 1','Idea 2','Idea 3'],w:CR.map(c=>c[1]),s:CR.map(()=>['','',''])};
+  const save=()=>{ try{ localStorage.setItem(K,JSON.stringify(st)); }catch(e){} };
+  const inp='font:inherit;width:100%;box-sizing:border-box;padding:6px 6px;border:1.5px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);text-align:center';
+  el.innerHTML=`<div class="mx-wrap"><table class="tm"><thead><tr><th style="text-align:left">Criterion</th><th>Weight %</th>${st.ideas.map((t,j)=>`<th><input data-i="${j}" value="${esc(t)}" aria-label="Idea ${j+1} name" style="${inp};font-weight:700"></th>`).join('')}</tr></thead>
+   <tbody>${CR.map(([c],i)=>`<tr><td style="text-align:left">${esc(c)}</td><td><input type="number" min="0" max="100" data-w="${i}" value="${st.w[i]}" aria-label="${esc(c)} weight" style="${inp};width:70px"></td>${[0,1,2].map(j=>`<td><input type="number" min="1" max="5" data-s="${i}-${j}" value="${st.s[i][j]}" placeholder="1–5" aria-label="${esc(c)} score" style="${inp};width:70px"></td>`).join('')}</tr>`).join('')}
+   <tr class="tot"><td style="text-align:left">Weighted total</td><td data-ws></td>${[0,1,2].map(j=>`<td data-t="${j}"></td>`).join('')}</tr></tbody></table></div>
+   <p class="feedback" data-msg style="margin-top:8px"></p>`;
+  const calc=()=>{ const ws=st.w.reduce((a,b)=>a+(+b||0),0); el.querySelector('[data-ws]').textContent=ws+'%';
+    const tot=[0,1,2].map(j=>CR.reduce((a,_,i)=>a+(+st.w[i]||0)/100*(+st.s[i][j]||0),0)); const best=Math.max(...tot);
+    tot.forEach((t,j)=>{ const c=el.querySelector(`[data-t="${j}"]`); c.textContent=t?f2(t):'—'; c.className=t&&t===best?'win':''; });
+    const sorted=[...tot].sort((a,b)=>b-a); const m=el.querySelector('[data-msg]');
+    m.innerHTML=ws!==100?`Weights add up to <b>${ws}%</b>. Make them 100%.`:!best?'Score each idea from 1 (weak) to 5 (strong).':(sorted[0]-sorted[1]<0.3?`Close call: talk as a team before you choose.`:`Highest: <b>${esc(st.ideas[tot.indexOf(best)])}</b>. Check it still fits your problem.`); };
+  el.addEventListener('input',e=>{ const t=e.target; if(t.dataset.i!=null) st.ideas[+t.dataset.i]=t.value; if(t.dataset.w!=null) st.w[+t.dataset.w]=t.value;
+    if(t.dataset.s){ const [i,j]=t.dataset.s.split('-').map(Number); let v=t.value; if(v!==''){ v=Math.max(1,Math.min(5,Math.round(+v)||1)); } st.s[i][j]=v; }
+    save(); calc(); });
+  calc();
+}
 function sortActivity(el){
+  const t=document.createElement('div'); t.innerHTML='<p class="mono" style="margin:0 0 6px;color:var(--muted)">1 · Score your top three ideas</p>'; el.appendChild(t);
+  const m=document.createElement('div'); el.appendChild(m); teamMatrix(m);
+  const h=document.createElement('p'); h.className='mono'; h.style.cssText='margin:16px 0 6px;color:var(--muted)'; h.textContent='2 · Sort, choose, check'; el.appendChild(h);
+  const w=document.createElement('div'); el.appendChild(w); el=w;
   W.worksheet(el,{id:'ent141-w08-select',title:'ENT 141 · Week 8 · Idea evaluation and selection',fields:[
     {l:'Risky ideas (bold, uncertain)',rows:2},
     {l:'Easy ideas (quick to try)',rows:2},
@@ -248,9 +272,9 @@ Lecture.mount({
     fig:{label:`Common mistakes · reveal the fix`, build:el=>W.practice(el,FIX,{label:'Fix',prefix:'<b>Fix:</b> '})} },
 
   { nav:'Sort and choose', title:'Team activity · Sort, choose, check', kind:'activity', minutes:25, wide:true,
-    narration:[`Sort your 15 ideas into Risky, Easy and Favourite. Pick one. Check it fits your HMW.`,
+    narration:[`Score your top three ideas in the table. Then sort, choose one, and check it fits your HMW.`,
       `<a class="btn" href="project-2.html#p-s1">Copy into Project 2, sections 1 and 2 →</a>`],
-    fig:{label:`Team notes · saves in your browser`, build:sortActivity} },
+    fig:{label:`Team score table and notes · saves in your browser`, build:sortActivity} },
 
   { nav:'Think about it', title:'Think about it', kind:'review', minutes:5,
     narration:[`Discuss with your team. There is no single right answer.`,

@@ -10,10 +10,25 @@
 <link rel="stylesheet" href="assets/course.css">
 <style>
 :root{--wk:#9A4A08;--wk-soft:rgba(154,74,8,.09);--wk-d:#FBBF77;--wk-soft-d:rgba(251,191,119,.14)}
-.svgfig{width:100%;height:auto;display:block}
-.svgfig .onwk{fill:#fff}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .svgfig .onwk{fill:#0E1318}}
-:root[data-theme="dark"] .svgfig .onwk{fill:#0E1318}
+/* case card */
+.cc{border:1px solid var(--line);border-radius:12px;overflow:hidden;font-family:var(--f-display);background:var(--bg)}
+.cc-hd{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--wk-soft);border-bottom:1px solid var(--line)}
+.cc-ic{flex:none;width:44px;height:44px;border-radius:50%;background:var(--wk);color:var(--on-wk);display:grid;place-items:center;font-weight:800;font-size:1.1rem}
+.cc-hd b{display:block;font-size:1.05rem;color:var(--ink)}
+.cc-hd small{display:block;font-family:var(--f-mono);font-size:.72rem;color:var(--muted);letter-spacing:.04em}
+.cc-lens{margin-left:auto;font-family:var(--f-mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--wk);color:var(--wk);border-radius:999px;padding:2px 9px;white-space:nowrap}
+.cc dl{margin:0;padding:4px 14px 10px}
+.cc dl > div{display:grid;grid-template-columns:120px minmax(0,1fr);gap:10px;padding:9px 0;border-bottom:1px dashed var(--line)}
+.cc dl > div:last-child{border-bottom:0}
+.cc dt{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding-top:2px}
+.cc dd{margin:0;font-size:.93rem;line-height:1.4;color:var(--ink)}
+.cc dl > div.ls dt{color:var(--wk);font-weight:600}
+.cc dl > div.ls dd{font-weight:700}
+@media (max-width:520px){.cc dl > div{grid-template-columns:minmax(0,1fr);gap:2px}.cc-lens{display:none}}
+/* in-depth case text */
+.case-read{border-left:4px solid var(--wk);background:var(--wk-soft);border-radius:0 10px 10px 0;padding:10px 14px;font-size:.97rem;line-height:1.55}
+.case-read b.lbl{display:block;font-family:var(--f-mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--wk);margin-bottom:4px}
+.case-read p{margin:.35em 0}
 </style>
 </head>
 <body>
@@ -28,99 +43,126 @@
 <script>
 const {W} = Lecture; const {store,esc} = ENT141;
 
-/* running example (illustrative): HMW help first-year students reach 8 am classes on time without a car */
+/* ---------- case card ---------- */
+function caseCard(c){
+  return `<article class="cc" aria-label="Case study: ${c.org}">
+    <div class="cc-hd"><span class="cc-ic" aria-hidden="true">${c.ic}</span><div><b>${c.org}</b><small>${c.where} · ${c.year}</small></div><span class="cc-lens">${c.lens}</span></div>
+    <dl><div><dt>What they did</dt><dd>${c.did}</dd></div>
+      <div><dt>${c.bad?'What went wrong':'Why it worked'}</dt><dd>${c.why}</dd></div>
+      <div class="ls"><dt>Lesson</dt><dd>${c.lesson}</dd></div></dl></article>`;
+}
+const CASES={
+  iphone:{ic:'A',org:'Apple · iPhone launch',where:'San Francisco, USA',year:'2007',lens:'Story',
+    did:'Steve Jobs said Apple would show three products: an iPod, a phone and an internet device. Then he revealed they were one device.',
+    why:'He named the problem first: phones were hard to use. Then the surprise, then a live demo.',
+    lesson:'Problem first. Then your answer. Then show it working.'},
+  pixar:{ic:'P',org:'Pixar · the Braintrust',where:'California, USA',year:'described 2014',lens:'Feedback',
+    did:'A small group of film-makers watches each film while it is still being made. They give honest notes.',
+    why:'Notes are about the film, never the person. The director decides what to change.',
+    lesson:'Ask for honest feedback early. You still own the decision.'}};
+
+/* ---------- poster talk, running example (illustrative) ---------- */
 const TALK=[
-  {t:'Hook',s:'user + problem',d:'Start with one real user and one quote: “I leave home at 6:30 and still miss the first ten minutes.”'},
-  {t:'Evidence',s:'interviews',d:'How many people you interviewed, the empathy map and the lowest point of the journey map.'},
+  {t:'Hook',s:'user + problem',d:'Start with one real user and one quote: “I leave home at 6:30 and still come late.”'},
+  {t:'Evidence',s:'interviews',d:'Who you interviewed. Show the empathy map and the lowest point of the journey map.'},
   {t:'HMW',s:'the challenge',d:'Read your “How might we…” question aloud. Everything after answers it.'},
-  {t:'Solutions',s:'and the choice',d:'Show your ideas, then say which one you chose and why.'},
-  {t:'Prototype',s:'show it',d:'Point to the drawing or model. Walk the user through it in a few sentences.'},
-  {t:'Close',s:'what we learned',d:'One thing users taught you and your next step. Then invite questions.'}];
+  {t:'Solutions',s:'and the choice',d:'Show your ideas. Say which one you chose, and why.'},
+  {t:'Prototype',s:'show it',d:'Point to the model. Walk the user through it in a few sentences.'},
+  {t:'Close',s:'what we learned',d:'One thing users taught you. Your next step. Then invite questions.'}];
 
 const FRAME=[
-  {t:'Listen',s:'to the end',d:'Let the panel finish. Note the key word in the question.'},
+  {t:'Listen',s:'to the end',d:'Let the person finish. Catch the key word in the question.'},
   {t:'Restate',s:'one line',d:'“You are asking how we know students want this.”'},
-  {t:'Answer',s:'one sentence',d:'“We know because most of the students we interviewed raised it first.”'},
-  {t:'Evidence',s:'quote or fact',d:'“One student told us: ‘I sleep in the car park because I come so early.’”'},
-  {t:'Link',s:'back to the user',d:'“That is why our prototype starts at the metro station.”'}];
+  {t:'Answer',s:'one sentence',d:'“Most students we interviewed raised this problem first.”'},
+  {t:'Evidence',s:'a quote or a fact',d:'“One student told us: ‘I leave home at 6:30 and still come late.’”'},
+  {t:'Link',s:'back to the user',d:'“That is why our idea starts at the metro station.”'}];
 
 const QUESTIONS={'Common panel questions · illustrative answers':[
-  ['Why this problem?','<b>Answer:</b> it affects many first-year students every morning. <b>Evidence:</b> our journey map’s lowest point was the walk from the metro. <b>Link:</b> so our idea starts there.'],
-  ['How do you know users want it?','<b>Answer:</b> they told us before we suggested anything. <b>Evidence:</b> interview quotes on the poster. <b>Link:</b> we tested the prototype with three of them.'],
-  ['What did you change after feedback?','<b>Answer:</b> we dropped the app idea. <b>Evidence:</b> users said they already have too many apps. <b>Link:</b> a simple sign-up board fits them better.'],
-  ['Who pays for it?','<b>Answer:</b> we are not sure yet. <b>Evidence:</b> a sponsor or a small fee are options. <b>Link:</b> we will test this in Project 2. Honest beats guessing.'],
-  ['Is it sustainable?','<b>Answer:</b> yes, it removes car trips. <b>Evidence:</b> fewer cars at 8 am. <b>Link:</b> SDG 11, sustainable cities and communities.']]};
+  ['Why this problem?','<b>Answer:</b> it hurts many first-year students every morning. <b>Evidence:</b> the lowest point of our journey map. <b>Link:</b> our idea starts there.'],
+  ['How do you know users want it?','<b>Answer:</b> they raised it before we suggested anything. <b>Evidence:</b> quotes on the poster. <b>Link:</b> three of them tested our model.'],
+  ['What did you change after feedback?','<b>Answer:</b> we dropped the app idea. <b>Evidence:</b> users said they have too many apps. <b>Link:</b> a simple sign-up board fits them better.'],
+  ['Who pays for it?','<b>Answer:</b> we do not know yet. <b>Evidence:</b> a sponsor or a small fee are options. <b>Link:</b> we will test this in Project 2.'],
+  ['Is it sustainable?','<b>Answer:</b> yes, it removes car trips. <b>Evidence:</b> fewer cars at 8 am. <b>Link:</b> SDG 11, sustainable cities.']]};
 
-const GRID_SVG=`<svg class="svgfig" viewBox="0 0 560 330" role="img" aria-label="Feedback capture grid: likes, criticisms, questions, ideas">
-  <rect x="10" y="10" width="540" height="310" rx="12" class="onwk" stroke="var(--line)"/>
-  <line x1="280" y1="10" x2="280" y2="320" stroke="var(--wk)" stroke-width="2"/><line x1="10" y1="165" x2="550" y2="165" stroke="var(--wk)" stroke-width="2"/>
-  ${[['+','Likes','What worked?',30,40],['Δ','Criticisms','What should change?',300,40],['?','Questions','What was unclear?',30,195],['!','Ideas','What could we add?',300,195]].map(([s,t,q,x,y])=>`
-  <circle cx="${x+22}" cy="${y+20}" r="20" fill="var(--wk)"/><text x="${x+22}" y="${y+27}" text-anchor="middle" font-family="Schibsted Grotesk,Arial" font-weight="800" font-size="20" class="onwk">${s}</text>
-  <text x="${x+54}" y="${y+26}" font-family="Schibsted Grotesk,Arial" font-weight="800" font-size="18" fill="var(--ink)">${t}</text>
-  <text x="${x+2}" y="${y+76}" font-family="Schibsted Grotesk,Arial" font-size="14" fill="var(--muted)">${q}</text>`).join('')}
-</svg>`;
+/* ---------- case study in depth: Airbnb ---------- */
+const DEEP=`<div class="case-read"><b class="lbl">Case study · Airbnb · San Francisco, USA · 2007–2009</b>
+<p>In 2007, Brian Chesky and Joe Gebbia could not pay their rent. A big design conference came to San Francisco. Hotels were full.</p>
+<p>They put air mattresses on their floor and built a simple website. Three guests paid to stay. That was their first proof. They called it AirBed &amp; Breakfast.</p>
+<p>In 2008, Nathan Blecharczyk joined. Their pitch deck (slides for investors) began with the problem, then the solution, then proof. Many investors still said no. Some did not even reply.</p>
+<p>To pay their debts, they sold special cereal boxes during the US election. In 2009, Y Combinator (a startup school) accepted them. Its co-founder Paul Graham doubted the idea but liked the team.</p>
+<p>Many New York listings had poor photos. The founders visited those hosts and took better photos themselves.</p></div>`;
 
 const FIX=[
-  {q:'One member speaks; the others stand behind the poster.',type:'unequal',hint:'Split the talk by part: hook, evidence, HMW, solutions, prototype, close. Everyone speaks.'},
-  {q:'The team reads the poster aloud, word for word.',type:'reading',hint:'The poster shows; you tell the story. Use the user’s quote and point to the visuals.'},
-  {q:'“No, you are wrong. Our idea works.”',type:'defensive',hint:'Thank the panel, restate the question, answer with evidence. Criticism is free feedback.'},
-  {q:'“About 90% of students have this problem.” (no source)',type:'guessing',hint:'Only give numbers you collected or found. Say “most of the students we interviewed” instead.'}];
+  {q:'One member speaks. The others stand behind the poster.',type:'unequal',hint:'Split the talk by part. Everyone speaks and answers.'},
+  {q:'The team reads the poster aloud, word for word.',type:'reading',hint:'The poster shows. You tell the story. Use the user’s quote and point.'},
+  {q:'“No, you are wrong. Our idea works.”',type:'defensive',hint:'Thank the person. Restate the question. Answer with evidence.'},
+  {q:'“About 90% of students have this problem.” No source.',type:'guessing',hint:'Only give numbers you collected or found. Say “most students we interviewed”.'}];
 
 Lecture.mount({
   id:'ent141-w09', week:9, clo:'2, 3', course:'ENT 141', short:'Week 9 · Presenting the Idea', instructor:'Nadia',
   title:'Defending the Idea · Presenting the Idea', meta:'Project 1 poster presentation day · Byers et al (2019), Stanford DPG · 2-hour lecture',
   scenes:[
   { nav:'Start here', title:'Show it, then defend it', minutes:5,
-    narration:[`Week 9 was Project 1 day: each team presented its poster and answered the panel. Revise it now: the panel’s feedback is where <a href="project-2.html">Project 2</a> starts. <span class="mono">Topics: Poster talk · Panel questions · Peer feedback. CLO 2 · CLO 3.</span>`],
-    think:`You show your family a plan for a weekend trip to Hatta. Your uncle asks: “How much will it cost?” What do you say first: a long story, or one clear answer?`,
-    src:`Reading: Byers et al. (2019). · d.school <em>Process guide</em>. · ENT 141 Project 1 presentation rubric.`,
-    fig:{label:`Lecture plan · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`Poster talk`,10,'l'],[`What the panel marked`,5,'l'],[`Answer frame`,5,'l'],[`Panel questions`,5,'l'],[`Team presentations`,55,'a'],[`Peer feedback`,10,'l'],[`Mistake → fix`,5,'l'],[`Reflection notes`,15,'a'],[`Think about it`,5,'a']])} },
+    narration:[`Today: tell your idea as a story, then answer hard questions. Each step comes with a real case. <span class="mono">Topics: Story · Poster talk · Panel questions · Feedback. CLO 2 · CLO 3.</span>`],
+    think:`You plan a weekend trip to Hatta with your family. Your uncle asks: “How much will it cost?” Do you tell a long story, or give one clear answer?`,
+    src:`Reading: Byers, T. H., Dorf, R. C., &amp; Nelson, A. J. (2019). <em>Technology ventures</em> (5th ed.). McGraw-Hill. · d.school <em>Process guide</em>. · ENT 141 Project 1 presentation rubric.`,
+    fig:{label:`Today's lecture · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`Tell a story`,10,'l'],[`Poster talk`,10,'l'],[`Answer in five moves`,10,'l'],[`Panel questions`,10,'l'],[`Feedback`,10,'l'],[`Case study in depth`,20,'a'],[`Mistake → fix`,5,'l'],[`Team reflection`,30,'a'],[`Think about it`,10,'a']])} },
 
-  { nav:'Poster talk', title:'The structure of a team poster talk', minutes:10,
-    narration:[`A poster talk tells the design-thinking story in order: one user, the evidence, the challenge, the ideas, the prototype. Every member presents one part. Click each part for the running example.`],
+  { nav:'Tell a story', title:'Tell a story: problem, answer, proof', minutes:10,
+    narration:[`A good talk is a story. Name the problem. Give your answer. Then show it working.`],
+    src:`Apple Inc. (2007, January 9). <em>Apple reinvents the phone with iPhone</em> [Press release]. Macworld San Francisco keynote.`,
+    fig:{label:`Case card · real case`, html:caseCard(CASES.iphone)} },
+
+  { nav:'Poster talk', title:'Your poster talk in six parts', minutes:10,
+    narration:[`Your poster tells the design thinking story in order. Every member presents one part. Click each part for the running example.`],
     src:`d.school <em>Process guide</em>. · ENT 141 Project 1 brief.`,
     fig:{label:`Illustrative example · click or play`, flow:TALK} },
 
-  { nav:'What the panel marked', title:'What the panel marked', minutes:5,
-    narration:[`The presentation was worth 10%: half for the quality of the presentation, half for how each student answered the panel. Open each criterion to see the levels.`],
-    src:`ENT 141 syllabus, section 12: Project 1 presentation rubric.`,
-    fig:{label:`Presentation rubric · 10 marks`, build:el=>{ el.innerHTML=ENT141.rubHTML(ENT141.RUB_PRES); }} },
+  { nav:'Answer in five moves', title:'Defend it: answer in five moves', minutes:10,
+    narration:[`A question is not an attack. It tests your evidence. Keep answers short and honest. “We do not know yet” is fine, if you say how you will find out.`],
+    src:`ENT 141 Project 1 presentation rubric (Week 9).`,
+    fig:{label:`Illustrative answers · click or play`, flow:FRAME} },
 
-  { nav:'Answer frame', title:'Defending the idea: a short answer frame', minutes:5,
-    narration:[`Panel questions are not attacks; they test your evidence. Use a short frame: <b>listen, restate, answer, evidence, link</b>. Short, honest answers score better than long ones.`],
-    fig:{label:`Five moves · click or play`, flow:FRAME} },
-
-  { nav:'Panel questions', title:'Common panel questions', minutes:5,
-    narration:[`Most panels ask the same few questions. Click each one to see an illustrative answer that follows the frame. “We do not know yet” is fine if you say how you will find out.`],
+  { nav:'Panel questions', title:'Practise: common panel questions', minutes:10,
+    narration:[`Most panels ask the same few questions. Answer each one aloud first. Then click it to compare.`],
     fig:{label:`Five questions · click to compare`, build:el=>W.picker(el,QUESTIONS,'Select a question.')} },
 
-  { nav:'Peer feedback', title:'Peer feedback: the feedback capture grid', minutes:10,
-    narration:[`While other teams present, capture feedback in four boxes: what you <b>like</b>, what to <b>change</b>, what was <b>unclear</b>, and new <b>ideas</b>. Be specific and kind.`],
-    src:`Hasso Plattner Institute of Design at Stanford. <em>Bootcamp bootleg</em>: Feedback capture grid.`,
-    fig:{label:`Four boxes`, html:GRID_SVG} },
+  { nav:'Feedback', title:'Use feedback, do not fear it', minutes:10,
+    narration:[`<b>Feedback</b> is free advice on your idea. Note what people <b>like</b>, what to <b>change</b>, what was <b>unclear</b>, and new <b>ideas</b>.`],
+    src:`Catmull, E., with Wallace, A. (2014). <em>Creativity, Inc.</em> Random House: the Braintrust. · d.school <em>Bootcamp bootleg</em>: Feedback capture grid.`,
+    fig:{label:`Case card · real case`, html:caseCard(CASES.pixar)} },
+
+  { nav:'Case study in depth', title:'Case study in depth · Airbnb’s first pitch', kind:'activity', minutes:20, wide:true,
+    narration:[`Read the case twice. Look for the evidence, the doubts and the feedback.`, DEEP],
+    src:`Gallagher, L. (2017). <em>The Airbnb story</em>. Houghton Mifflin Harcourt. · AirBed &amp; Breakfast seed pitch deck (2008), widely reprinted.`,
+    fig:{label:`Three questions · saves in your browser`, build:el=>W.worksheet(el,{id:'ent141-w09-case',title:'ENT 141 · Week 9 · Case study: Airbnb',fields:[
+      {l:'1 · What was their first evidence that people wanted it?',rows:2},
+      {l:'2 · People doubted the idea. How did the founders answer that doubt?',rows:2},
+      {l:'3 · Which feedback did they act on? What changed?',rows:2}]})} },
 
   { nav:'Mistake → fix', title:'Mistake → fix', kind:'review', minutes:5,
-    narration:[`Four mistakes seen on presentation days. Decide the fix before you reveal it.`],
+    narration:[`Four mistakes seen on presentation day. Say the fix first, then reveal it.`],
     fig:{label:`Common mistakes · reveal the fix`, build:el=>W.practice(el,FIX,{label:'Fix',prefix:'<b>Fix:</b> '})} },
 
-  { nav:'Reflection notes', title:'Activity · After-presentation reflection notes', kind:'activity', minutes:15, wide:true,
-    narration:[`Write these notes as a team while the day is fresh. Keep them: they guide section 1 of <a href="project-2.html">Project 2</a>, where you build three new ideas from the same problem.`],
+  { nav:'Team reflection', title:'Team activity · After-presentation reflection', kind:'activity', minutes:30, wide:true,
+    narration:[`Write these notes as a team. They guide your three new ideas in Project 2.`,
+      `<a class="btn" href="project-2.html#p-s1">Open Project 2, sections 1 and 2 →</a>`],
     fig:{label:`Team reflection · saves in your browser`, build:el=>W.worksheet(el,{id:'ent141-w09-reflect',title:'ENT 141 · Week 9 · After-presentation reflection',fields:[
       {l:'Questions the panel asked us',rows:3},
       {l:'Our best answer, and the one we found hard',rows:3},
-      {l:'Feedback we received (likes, criticisms, ideas)',rows:3},
-      {l:'What we will change or keep for Project 2',rows:3},
+      {l:'Feedback: likes, changes, unclear points, new ideas',rows:3},
+      {l:'What we will keep or change for Project 2',rows:3},
       {l:'Who does what next, and by when',rows:2}]})} },
 
-  { nav:'Think about it', title:'Think about it', kind:'review', minutes:5,
+  { nav:'Think about it', title:'Think about it', kind:'review', minutes:10,
     narration:[`Discuss with your team. There is no single right answer.`,
-      `<b>Exit question:</b> which panel question would you answer differently today, and how?`,
-      `<b>Next week:</b> Entrepreneurial Strategy. Bring your reflection notes and your scoring matrix.`,
+      `<b>Exit question:</b> which panel question would you answer differently today? How?`,
+      `<b>Next week:</b> Entrepreneurial Strategy. Bring your reflection notes and your scoring table.`,
       `<a class="btn" href="week-10.html">Next lecture · Week 10 · Entrepreneurial Strategy →</a>`],
     fig:{label:`Reflection · Presenting`, build:el=>W.practice(el,[
-      {q:'The panel criticised your favourite part. Was it right?',hint:'Check it against your users, not your feelings. If users agree with the panel, change it.'},
-      {q:'Which feedback did you receive more than once?',hint:'Repeated feedback is a pattern. Act on it first.'},
-      {q:'Did every team member speak and answer? What would make it more equal next time?',hint:'Split the talk by part and agree who takes which type of question.'}],{label:'One view',prefix:''})} },
+      {q:'The panel criticised your favourite part. Was it right?',hint:'Check with your users, not your feelings. If users agree with the panel, change it.'},
+      {q:'Which feedback did you hear more than once?',hint:'Repeated feedback is a pattern. Act on it first.'},
+      {q:'Did every member speak? How can it be more equal next time?',hint:'Split the talk by part. Agree who takes which type of question.'}],{label:'One view',prefix:''})} },
   ]
 });
 </script>

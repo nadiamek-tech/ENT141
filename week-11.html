@@ -10,6 +10,29 @@
 <link rel="stylesheet" href="assets/course.css">
 <style>
 :root{--wk:#0E6E8C;--wk-soft:rgba(14,110,140,.10);--wk-d:#6CD3F0;--wk-soft-d:rgba(108,211,240,.14)}
+/* case card */
+.cc{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--surface);font-family:var(--f-display);max-width:100%}
+.cc-h{display:flex;gap:14px;align-items:center;padding:12px 14px;background:var(--wk-soft);border-bottom:1px solid var(--line)}
+.cc-h .mini{flex:none;width:64px;height:64px}
+.cc-h .mini svg{width:100%;height:100%;display:block}
+.cc-h .who{min-width:0}
+.cc-h .eb{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--wk);font-weight:600}
+.cc-h b{display:block;font-size:1.2rem;font-weight:800;color:var(--ink);line-height:1.15}
+.cc-h small{display:block;font-family:var(--f-mono);font-size:.74rem;color:var(--muted);margin-top:2px}
+.cc dl{margin:0}
+.cc-r{display:grid;grid-template-columns:132px minmax(0,1fr);gap:10px;padding:10px 14px;border-bottom:1px dashed var(--line);align-items:baseline}
+.cc-r:last-child{border-bottom:0}
+.cc-r dt{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.cc-r dd{margin:0;font-size:.95rem;line-height:1.4;color:var(--ink)}
+.cc-r.ls{background:var(--wk-soft)}
+.cc-r.ls dt{color:var(--wk)}
+.cc-r.ls dd{font-weight:700}
+@media (max-width:520px){.cc-r{grid-template-columns:minmax(0,1fr);gap:2px}.cc-h .mini{width:52px;height:52px}}
+/* reading boxes */
+.rc{border:1px solid var(--line);border-left:4px solid var(--wk);border-radius:10px;padding:12px 16px;background:var(--surface);font-size:.98rem;line-height:1.55}
+.rc.fic{border-style:dashed;border-left-style:solid}
+.rc .lbl{display:block;font-family:var(--f-mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--wk);font-weight:600;margin-bottom:4px}
+.rc p{margin:.4em 0}
 </style>
 </head>
 <body>
@@ -23,150 +46,172 @@
 <script src="assets/assistant.js"></script>
 <script>
 const {W} = Lecture; const {store,esc} = ENT141;
-const F='font-family="Schibsted Grotesk,Arial"';
 
+/* ---------- strategy map ---------- */
 const MAP={center:'Strategies new ventures use',branches:[
-  {t:'Blue ocean',items:['Create a new market space','Cirque du Soleil']},
-  {t:'Lean startup',items:['Build, measure, learn, repeat','Zappos tested before building']},
-  {t:'Imitation with improvement',items:['Copy what works, fix one thing','Google after AltaVista']},
-  {t:'Platform or marketplace',items:['Connect two groups of users','Careem, Talabat']},
-  {t:'Social enterprise',items:['Social or environmental value is the goal','Grameen Bank, TOMS']}]};
+  {t:'Blue ocean',items:['Make a new market with no rivals','Cirque du Soleil']},
+  {t:'Lean startup',items:['Test small, learn, change','Zappos']},
+  {t:'Imitation with improvement',items:['Copy what works, fix one thing','Google']},
+  {t:'Platform',items:['An app that links two groups','Talabat']},
+  {t:'Social enterprise',items:['Social value is the main goal','Grameen Bank']}]};
 
-/* Blue ocean ERRC grid (Kim & Mauborgne, 2005) */
-const ERRC=`<div class="cmp"><div><h4>Eliminate</h4>Animal acts and star performers</div><div><h4>Reduce</h4>Thrill and danger</div><div><h4>Raise</h4>A unique venue</div><div><h4>Create</h4>A story theme, artistic music and dance</div></div>`;
+/* ---------- small strategy icons for case cards ---------- */
+const STK='fill="none" stroke="var(--wk)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"';
+const ICON={
+  blue:`<svg viewBox="0 0 64 64" aria-hidden="true"><rect x="2" y="2" width="60" height="60" rx="12" fill="var(--wk-soft)"/><path d="M8 26 q6 -7 12 0 t12 0 t12 0 t12 0" ${STK}/><path d="M8 40 q6 -7 12 0 t12 0 t12 0 t12 0" ${STK}/><circle cx="46" cy="14" r="4" fill="var(--wk)"/></svg>`,
+  lean:`<svg viewBox="0 0 64 64" aria-hidden="true"><rect x="2" y="2" width="60" height="60" rx="12" fill="var(--wk-soft)"/><path d="M48 32 a16 16 0 1 1 -5 -11.6" ${STK}/><path d="M44 12 l-1 9 9 0" ${STK}/><circle cx="32" cy="32" r="5" fill="var(--wk)"/></svg>`,
+  imit:`<svg viewBox="0 0 64 64" aria-hidden="true"><rect x="2" y="2" width="60" height="60" rx="12" fill="var(--wk-soft)"/><rect x="10" y="14" width="24" height="24" rx="4" fill="none" stroke="var(--muted)" stroke-width="2.5" stroke-dasharray="4 3"/><rect x="26" y="26" width="26" height="26" rx="4" fill="var(--wk)"/><path d="M39 32 v14 M32 39 h14" stroke="var(--on-wk)" stroke-width="3" stroke-linecap="round"/></svg>`,
+  plat:`<svg viewBox="0 0 64 64" aria-hidden="true"><rect x="2" y="2" width="60" height="60" rx="12" fill="var(--wk-soft)"/><path d="M15 32 H49" ${STK}/><circle cx="12" cy="32" r="6" fill="none" stroke="var(--wk)" stroke-width="3"/><circle cx="52" cy="32" r="6" fill="none" stroke="var(--wk)" stroke-width="3"/><rect x="22" y="22" width="20" height="20" rx="6" fill="var(--wk)"/></svg>`,
+  soc:`<svg viewBox="0 0 64 64" aria-hidden="true"><rect x="2" y="2" width="60" height="60" rx="12" fill="var(--wk-soft)"/><path d="M32 48 C14 36 12 24 20 19 c5 -3 10 0 12 4 c2 -4 7 -7 12 -4 c8 5 6 17 -12 29 z" fill="var(--wk)"/></svg>`};
 
-/* Lean startup loop (Ries, 2011) */
-const SVG_LOOP=`<svg viewBox="0 0 520 300" role="img" aria-label="Build, measure, learn loop">
-  <defs><marker id="ah11" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--wk)"/></marker></defs>
-  <path d="M302 70 C370 90 395 140 388 188" fill="none" stroke="var(--wk)" stroke-width="3" marker-end="url(#ah11)"/>
-  <path d="M345 255 C300 290 220 290 177 255" fill="none" stroke="var(--wk)" stroke-width="3" marker-end="url(#ah11)"/>
-  <path d="M132 190 C125 140 160 85 218 68" fill="none" stroke="var(--wk)" stroke-width="3" marker-end="url(#ah11)"/>
-  <circle cx="260" cy="55" r="44" fill="var(--wk)"/><text x="260" y="62" text-anchor="middle" ${F} font-weight="800" font-size="18" style="fill:var(--on-wk)">Build</text>
-  <circle cx="135" cy="235" r="44" fill="var(--wk-soft)" stroke="var(--wk)" stroke-width="2"/><text x="135" y="242" text-anchor="middle" ${F} font-weight="800" font-size="17">Learn</text>
-  <circle cx="385" cy="235" r="44" fill="var(--wk-soft)" stroke="var(--wk)" stroke-width="2"/><text x="385" y="242" text-anchor="middle" ${F} font-weight="800" font-size="17">Measure</text>
-  <text x="260" y="160" text-anchor="middle" ${F} font-size="13" class="t-muted">smallest test first:</text>
-  <text x="260" y="180" text-anchor="middle" ${F} font-weight="700" font-size="14">minimum viable product</text>
-</svg>`;
+/* ---------- case card ---------- */
+function caseCard(c){
+  return `<article class="cc" aria-label="Case study: ${esc(c.org)}">
+  <div class="cc-h"><div class="mini">${c.mini||''}</div><div class="who"><span class="eb">${c.tag}</span><b>${c.org}</b><small>${c.place} · ${c.year}</small></div></div>
+  <dl><div class="cc-r"><dt>What they did</dt><dd>${c.did}</dd></div>
+  <div class="cc-r"><dt>${c.whyLbl||'Why it worked'}</dt><dd>${c.why}</dd></div>
+  <div class="cc-r ls"><dt>Lesson</dt><dd>${c.lesson}</dd></div></dl></article>`;
+}
 
-/* Two-sided platform */
-const SVG_PLAT=`<svg viewBox="0 0 560 200" role="img" aria-label="A platform connects two groups: customers and captains, through the Careem app">
-  <defs><marker id="ah11b" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--wk)"/></marker></defs>
-  <rect x="10" y="60" width="140" height="80" rx="12" fill="var(--wk-soft)" stroke="var(--wk)" stroke-width="2"/>
-  <text x="80" y="97" text-anchor="middle" ${F} font-weight="800" font-size="16">Customers</text>
-  <text x="80" y="118" text-anchor="middle" ${F} font-size="12" class="t-muted">need a ride</text>
-  <rect x="205" y="45" width="150" height="110" rx="55" fill="var(--wk)"/>
-  <text x="280" y="96" text-anchor="middle" ${F} font-weight="800" font-size="17" style="fill:var(--on-wk)">Platform</text>
-  <text x="280" y="118" text-anchor="middle" ${F} font-size="13" style="fill:var(--on-wk)">the Careem app</text>
-  <rect x="410" y="60" width="140" height="80" rx="12" fill="var(--wk-soft)" stroke="var(--wk)" stroke-width="2"/>
-  <text x="480" y="97" text-anchor="middle" ${F} font-weight="800" font-size="16">Captains</text>
-  <text x="480" y="118" text-anchor="middle" ${F} font-size="12" class="t-muted">want to earn</text>
-  <line x1="153" y1="100" x2="200" y2="100" stroke="var(--wk)" stroke-width="3" marker-start="url(#ah11b)" marker-end="url(#ah11b)"/>
-  <line x1="360" y1="100" x2="407" y2="100" stroke="var(--wk)" stroke-width="3" marker-start="url(#ah11b)" marker-end="url(#ah11b)"/>
-  <text x="280" y="188" text-anchor="middle" ${F} font-size="13" class="t-muted">The platform earns a fee for each match.</text>
-</svg>`;
+const CASE_CIRQUE=caseCard({tag:'Case · blue ocean',org:'Cirque du Soleil',place:'Canada',year:'1984',mini:ICON.blue,
+  did:'It removed animal acts and star performers, the costly parts of a circus. It added a story, music and dance.',
+  why:'A new kind of show. No direct rivals. Adults paid theatre prices.',
+  lesson:'Change the rules of the game. Do not just fight rivals.'});
 
-const IMIT=[
-  {t:'Others go first',s:'1995',d:'Search engines such as AltaVista already let people search the web.'},
-  {t:'Copy what works',s:'1998',d:'Google kept the simple idea: type words, get a list of pages.'},
-  {t:'Improve one thing',s:'PageRank',d:'Google ranked pages by the links pointing to them, so better pages came first.'},
-  {t:'Win on the improvement',s:'result',d:'Better results, not being first, is what users noticed.'}];
+const CASE_ZAPPOS=caseCard({tag:'Case · lean startup',org:'Zappos',place:'USA',year:'1999',mini:ICON.lean,
+  did:'The founder put photos of shoes from local shops online. When someone ordered, he bought that pair.',
+  why:'It tested if people buy shoes online. No stock, almost no cost.',
+  lesson:'Test the smallest version first. Then build.'});
 
-const SOC={'Social enterprise models':[
-  ['Grameen Bank · microcredit','Muhammad Yunus started lending very small amounts to poor villagers in Bangladesh, mostly women, without collateral. Yunus and the bank shared the 2006 Nobel Peace Prize.'],
-  ['TOMS · one-for-one','For each pair of shoes sold, TOMS gave a pair to a child in need. In 2019 it dropped this model and now gives one third of net profits to grassroots groups.']]};
+const CASE_GOOGLE=caseCard({tag:'Case · imitation with improvement',org:'Google',place:'USA',year:'1998',mini:ICON.imit,
+  did:'Search engines like AltaVista came first. Google kept simple search. It ranked pages by the links pointing to them.',
+  why:'Better results. Users noticed the improvement, not who came first.',
+  lesson:'You do not need to be first. Be clearly better at one thing.'});
 
-const FRAME=[
-  {t:'Venture and problem',s:'Q1',d:'Who started it, and which problem does it solve, for whom?'},
-  {t:'Name the strategy',s:'Q2',d:'Use a name from Weeks 10–11: cost leadership, differentiation, focus, blue ocean, lean, imitation, platform, social enterprise.'},
-  {t:'Evidence',s:'Q3',d:'Quote or point to two facts in the text that show this strategy.'},
-  {t:'Social or environmental value',s:'Q4',d:'Which SDG, and which target? Who benefits?'},
-  {t:'Lesson for our team',s:'Q5',d:'One thing your team will copy or avoid in Project 2.'}];
+const CASE_TALABAT=caseCard({tag:'Case · platform',org:'Talabat',place:'Kuwait',year:'2004',mini:ICON.plat,
+  did:'Its app links diners, restaurants and delivery riders. Today it is part of Delivery Hero, a German company.',
+  why:'Each group brings the other. More restaurants bring more diners.',
+  lesson:'A platform needs both sides from day one.'});
+
+const CASE_GRAMEEN=caseCard({tag:'Case · social enterprise',org:'Grameen Bank',place:'Bangladesh',year:'1983',mini:ICON.soc,
+  did:'Muhammad Yunus lent very small sums to poor villagers, mostly women. Borrowers needed no property as a guarantee.',
+  why:'Many people could start small businesses. Yunus and the bank shared the 2006 Nobel Peace Prize.',
+  lesson:'A business can have social value as its main goal.'});
+
+/* ---------- Activity 2: five questions ---------- */
+const CASEQ=[
+  {t:'Venture and problem',s:'Q1',d:'Who started it? Which problem does it solve, and for whom?'},
+  {t:'Name the strategy',s:'Q2',d:'Use one name from Weeks 10–11: cost, difference, focus, blue ocean, lean, imitation, platform, social enterprise.'},
+  {t:'Evidence',s:'Q3',d:'Point to two facts in the text that show this strategy.'},
+  {t:'Social or planet value',s:'Q4',d:'Which SDG (UN goal for 2030)? Who benefits?'},
+  {t:'Lesson for us',s:'Q5',d:'One thing your team will copy or avoid in Project 2.'}];
+
+/* ---------- in-depth case (real, cited) ---------- */
+const DEPTH=`<div class="rc"><span class="lbl">Real case · read it twice</span>
+<p><b>TOMS: One for One, then a change.</b> In 2006, Blake Mycoskie visited Argentina. He met many children who had no shoes. Back in the USA, he started TOMS.</p>
+<p>The idea was called One for One. For each pair a customer bought, TOMS gave a pair to a child in need. Customers liked shoes that also helped someone. The brand grew fast. In 2011, TOMS added glasses, with a similar giving model.</p>
+<p>Later, critics asked hard questions. Free shoes do not fix poverty. Free shoes may also hurt local shoe sellers. One study in El Salvador found the shoes changed little for children.</p>
+<p>In 2019, TOMS ended One for One. It now gives one third of its profits to local groups. These groups work on causes such as mental health.</p></div>`;
+
+/* ---------- practice case (fictional) ---------- */
+const CASE_FIC=`<div class="rc fic"><span class="lbl">Fictional case · for practice only</span>
+<p><b>Second Loaf.</b> Three students in Sharjah saw bakeries throw away bread every night. They tested an idea with <b>one</b> bakery for two weeks.</p>
+<p>At 9 pm, the bakery posts its leftover bread in a WhatsApp channel. Families reserve a bag at half price. Second Loaf keeps a small fee per bag.</p>
+<p>Bread nobody reserves goes to a community fridge. After the test, four more bakeries asked to join.</p></div>`;
 
 const FIX=[
-  {q:'“The strategy is blue ocean.” (nothing else)',hint:'A name without evidence earns little. Add two facts from the text that show it.'},
-  {q:'Half a page retelling the story of the case.',hint:'Summary is not analysis. One or two lines on the story, then answer the five questions.'},
-  {q:'“It helps the SDGs.”',hint:'Name one SDG and one target, for example SDG 12, target 12.3 (food waste).'},
-  {q:'“Lesson: work hard and never give up.”',hint:'Too general. Tie it to your own team idea: what will you do differently?'}];
-
-const CASE=`<div class="box plain" style="border-style:dashed"><b class="lbl">Fictional case · written for practice only</b>
-<p><b>Second Loaf.</b> Three students in Sharjah saw bakeries near campus throw away bread every night. They tested an idea with <b>one</b> bakery for two weeks: at 9 pm the bakery posts its unsold bread in a WhatsApp channel, and families reserve a bag at half price and collect it.</p>
-<p>Second Loaf keeps a small fee for each bag. Bread nobody reserves goes to a community fridge. After the test, four more bakeries asked to join.</p></div>`;
+  {q:'“The strategy is blue ocean.” Nothing else.',hint:'A name alone earns little. Add two facts from the text that show it.'},
+  {q:'Half a page retelling the story of the case.',hint:'A summary is not analysis. Two lines of story. Then answer the five questions.'},
+  {q:'“It helps the SDGs.”',hint:'Name one SDG and one target. Example: SDG 12, target 12.3 (food waste).'},
+  {q:'“Lesson: work hard and never give up.”',hint:'Too general. Link the lesson to your own team idea.'}];
 
 Lecture.mount({
   id:'ent141-w11', week:11, clo:'1, 3, 4', course:'ENT 141', short:'Week 11 · Overview of Strategies', instructor:'Nadia',
-  title:'Overview of Entrepreneurial Strategies', meta:'Byers et al (2019), Kim & Mauborgne (2005), Ries (2011) · 2-hour lecture · Activity 2',
+  title:'Overview of Entrepreneurial Strategies', meta:'Byers et al. (2019), Kim & Mauborgne (2005), Ries (2011) · 2-hour lecture · Activity 2',
   scenes:[
   { nav:'Start here', title:'How do new ventures choose how to win?', minutes:5,
-    narration:[`Today: a map of five strategy types, a way to read any case, and your team's three ideas for Project 2. <span class="mono">Topics: Strategy map · Case reading · Activity 2. CLO 1 · CLO 3 · CLO 4.</span>`],
-    think:`Open your phone. A ride app, a food app, a brand that gives part of its profit to charity. Each one wins in a different way. Can you say how?`,
-    src:`Reading: Byers, T. H., Dorf, R. C., &amp; Nelson, A. J. (2019). <em>Technology ventures</em> (5th ed.).`,
-    fig:{label:`Today's lecture · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`Strategy map`,5,'l'],[`Blue ocean`,10,'l'],[`Lean startup`,10,'l'],[`Imitation`,5,'l'],[`Platform`,10,'l'],[`Social enterprise`,10,'l'],[`Read a case`,10,'l'],[`Mistake and fix`,5,'l'],[`Practice case`,20,'a'],[`Pick three ideas`,25,'a'],[`Think about it`,5,'a']])} },
+    narration:[`Last week: Porter's three ways to win. Today: five more strategies with real cases. Then Activity 2 and your three ideas. <span class="mono">CLO 1 · CLO 3 · CLO 4.</span>`],
+    think:`Open your phone. A ride app, a food app, a brand that gives to charity. Each one wins in a different way. Can you say how?`,
+    src:`Reading: Byers, T. H., Dorf, R. C., &amp; Nelson, A. J. (2019). <em>Technology ventures: From idea to enterprise</em> (5th ed.). McGraw-Hill.`,
+    fig:{label:`Today's lecture · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`Strategy map`,4,'l'],[`Blue ocean`,7,'l'],[`Lean startup`,7,'l'],[`Imitation`,6,'l'],[`Platform`,7,'l'],[`Social enterprise`,7,'l'],[`Read a case`,5,'l'],[`Case study in depth`,15,'a'],[`Mistake → fix`,5,'c'],[`Practice case`,15,'a'],[`Team: three ideas`,27,'a'],[`Think about it`,10,'c']])} },
 
-  { nav:'Strategy map', title:'A map of strategy types', minutes:5,
-    narration:[`New ventures often combine Porter's choices with one of five common strategy types. Open each branch: what it means, and one real example.`],
+  { nav:'Strategy map', title:'Five strategies new ventures use', minutes:4,
+    narration:[`New ventures often use one of these five strategies. Click each branch. You see its meaning and one real case.`],
     fig:{label:`Concept · strategy map`, mindmap:MAP} },
 
-  { nav:'Blue ocean', title:'Blue ocean strategy', minutes:10,
-    narration:[`A <b>red ocean</b> is a crowded market where rivals fight. A <b>blue ocean</b> is a new market space with no direct rivals. Cirque du Soleil removed what circuses cost most and added theatre.`],
-    src:`Kim, W. C., &amp; Mauborgne, R. (2005). <em>Blue ocean strategy</em>. Harvard Business School Press (Cirque du Soleil; the eliminate-reduce-raise-create grid).`,
-    fig:{label:`Concept · Cirque du Soleil's four actions`, html:ERRC} },
+  { nav:'Blue ocean', title:'1 · Blue ocean', minutes:7,
+    narration:[`A <b>red ocean</b> is a crowded market. Rivals fight on price. A <b>blue ocean</b> is a new market with no rivals. You create it.`],
+    src:`Kim, W. C., &amp; Mauborgne, R. (2005). <em>Blue ocean strategy</em>. Harvard Business School Press (Cirque du Soleil).`,
+    fig:{label:`Case study · blue ocean`, html:CASE_CIRQUE} },
 
-  { nav:'Lean startup', title:'Lean startup: build, measure, learn', minutes:10,
-    narration:[`Test the smallest version first, learn, then change or <b>pivot</b>. Zappos first photographed shoes in local shops and bought a pair only when someone ordered online.`],
-    src:`Ries, E. (2011). <em>The lean startup</em>. Crown (build-measure-learn; minimum viable product; Zappos).`,
-    fig:{label:`Concept · the loop`, html:SVG_LOOP} },
+  { nav:'Lean startup', title:'2 · Lean startup', minutes:7,
+    narration:[`Build the smallest test version, an <b>MVP</b> (minimum viable product). Measure what users do. Learn. Then improve, or <b>pivot</b> (change direction).`],
+    src:`Ries, E. (2011). <em>The lean startup</em>. Crown (build-measure-learn; Zappos).`,
+    fig:{label:`Case study · lean startup`, html:CASE_ZAPPOS} },
 
-  { nav:'Imitation', title:'Imitation with improvement', minutes:5,
-    narration:[`You do not need to be first. Copy an idea that already works, then improve the one thing users dislike. Google was not the first search engine.`],
+  { nav:'Imitation', title:'3 · Imitation with improvement', minutes:6,
+    narration:[`Copy an idea that already works. Then improve the one thing users dislike. Being first is not required.`],
     src:`Brin, S., &amp; Page, L. (1998). The anatomy of a large-scale hypertextual web search engine. <em>Computer Networks and ISDN Systems</em>, 30, 107–117.`,
-    fig:{label:`Real example · click or play`, flow:IMIT} },
+    fig:{label:`Case study · imitation with improvement`, html:CASE_GOOGLE} },
 
-  { nav:'Platform', title:'Platform or marketplace', minutes:10,
-    narration:[`A <b>platform</b> connects two groups that need each other. Careem links riders and captains; Uber announced it would buy Careem in March 2019 for US$3.1 billion. Talabat links diners, restaurants and riders.`],
-    src:`VentureBeat (2019, March). Uber confirms it's acquiring Middle East rival Careem for $3.1 billion. · Delivery Hero SE (2024). <em>Annual report 2023</em> (Talabat).`,
-    fig:{label:`Concept · two sides, one platform`, html:SVG_PLAT} },
+  { nav:'Platform', title:'4 · Platform', minutes:7,
+    narration:[`A <b>platform</b> links two groups that need each other. It earns a fee for each match. Careem, from last week, is also a platform.`],
+    src:`Delivery Hero SE. (2024). <em>Annual report 2023</em> (Talabat). · Talabat. (2026). In <em>Wikipedia</em>: history (founded in Kuwait, 2004).`,
+    fig:{label:`Case study · platform`, html:CASE_TALABAT} },
 
-  { nav:'Social enterprise', title:'Social enterprise models', minutes:10,
-    narration:[`A <b>social enterprise</b> sells or lends like a business, but its main goal is social or environmental value. Compare two models. Which one fixes a cause, and which one a symptom?`],
-    src:`Nobel Prize Outreach (2006). The Nobel Peace Prize 2006: Muhammad Yunus and Grameen Bank. · Retail Brew (2019, November 22). Toms is ending its “One for One” giving program.`,
-    fig:{label:`Real examples · click to compare`, build:el=>W.picker(el,SOC,'Select a model.')} },
+  { nav:'Social enterprise', title:'5 · Social enterprise', minutes:7,
+    narration:[`A <b>social enterprise</b> sells or lends like a business. But its main goal is social or planet value. Profit keeps it alive.`],
+    src:`Nobel Prize Outreach. (2006). <em>The Nobel Peace Prize 2006</em>: Muhammad Yunus and Grameen Bank. · Yunus, M. (2007). <em>Banker to the poor</em>. PublicAffairs.`,
+    fig:{label:`Case study · social enterprise`, html:CASE_GRAMEEN} },
 
-  { nav:'Read a case', title:'How to read a case: five questions', minutes:10,
-    narration:[`Read the case twice. First for the story, then with these five questions. They are the same five questions as <a href="activity-2.html">Activity 2</a>.`],
-    src:`Activity 2 · Article or case analysis (10%, individual), due Thu 19 Nov, 23:59, on Moodle.`,
-    fig:{label:`Case reading frame · click or play`, flow:FRAME} },
+  { nav:'Read a case', title:'Read a case: five questions', minutes:5,
+    narration:[`Read a case twice. First for the story. Then answer these five questions. They are <a href="activity-2.html">Activity 2</a>: in class today, due Thu 19 Nov, 23:59.`,
+      `<a class="btn" href="activity-2.html">Open Activity 2 →</a>`],
+    src:`ENT 141 Activity 2 · Article or case analysis (10%, individual, in-class activity), submitted on Moodle.`,
+    fig:{label:`Five questions · click or play`, flow:CASEQ} },
 
-  { nav:'Mistake and fix', title:'Common mistake → fix', kind:'review', minutes:5,
-    narration:[`These four mistakes cost marks in case analysis. Say the fix first, then reveal it.`],
-    fig:{label:`Mistake → fix`, build:el=>W.practice(el,FIX,{label:'Fix',prefix:'<b>Fix:</b> '})} },
+  { nav:'Case study in depth', title:'Case study in depth · TOMS', kind:'activity', minutes:15, wide:true,
+    narration:[`Read the real case twice. Then answer the three questions alone. Compare with a partner.`, DEPTH],
+    src:`Mycoskie, B. (2011). <em>Start something that matters</em>. Spiegel &amp; Grau. · Retail Brew. (2019, November 22). Toms is ending its “One for One” giving program. · Wydick, B., et al. (2018). Shoeing the children: The impact of the TOMS shoe donation program in rural El Salvador. <em>World Bank Economic Review</em>.`,
+    fig:{label:`Three questions · saves in your browser`, build:el=>W.worksheet(el,{id:'ent141-w11-toms',title:'ENT 141 · Week 11 · Case study in depth: TOMS',fields:[
+      {l:'Q1 · Which strategy did TOMS use? Give one fact from the text.',rows:2},
+      {l:'Q2 · What went wrong with One for One?',rows:2},
+      {l:'Q3 · Did the 2019 change make TOMS better at helping? Why?',rows:2}]})} },
 
-  { nav:'Practice case', title:'Practice · Read a mini-case', kind:'activity', minutes:20, wide:true,
-    narration:[`Read the fictional case, then answer the five questions. More than one strategy can fit; your evidence decides.`, CASE],
+  { nav:'Mistake → fix', title:'Mistake → fix', kind:'review', minutes:5,
+    narration:[`These four mistakes cost marks in Activity 2. Say the fix first, then reveal it.`],
+    src:`United Nations. (2015). <em>Transforming our world: The 2030 agenda for sustainable development</em> (SDG target 12.3).`,
+    fig:{label:`Common mistakes · reveal the fix`, build:el=>W.practice(el,FIX,{label:'Fix',prefix:'<b>Fix:</b> '})} },
+
+  { nav:'Practice case', title:'Practice · Read a mini-case', kind:'activity', minutes:15, wide:true,
+    narration:[`Read the fictional case. Answer the five questions. More than one strategy can fit. Your evidence decides.`, CASE_FIC],
     fig:{label:`Five questions · saves in your browser`, build:el=>W.worksheet(el,{id:'ent141-w11-case',title:'ENT 141 · Week 11 · Practice case: Second Loaf (fictional)',fields:[
       {l:'Q1 · The venture and its problem',rows:2},
       {l:'Q2 · The strategy it used (name it)',rows:2},
       {l:'Q3 · Evidence from the text (two facts)',rows:2},
-      {l:'Q4 · Social or environmental value (SDG and target)',rows:2},
-      {l:'Q5 · One lesson for our own team idea',rows:2}]})} },
+      {l:'Q4 · Social or planet value (which SDG?)',rows:2},
+      {l:'Q5 · One lesson for our team idea',rows:2}]})} },
 
-  { nav:'Pick three ideas', title:'Activity · Pick your three social innovation ideas', kind:'activity', minutes:25, wide:true,
-    narration:[`Team task. Start from last week's three directions. Choose three social innovation ideas for your Project 1 problem and name a strategy for each. This is section 1 of <a href="project-2.html">Project 2</a>.`],
+  { nav:'Team: three ideas', title:'Team · Three social innovation ideas', kind:'activity', minutes:27, wide:true,
+    narration:[`Start from last week's three directions. Choose three ideas for your Project 1 problem. Give each a different strategy. Then score them with the Week 8 table.`,
+      `<a class="btn" href="project-2.html#p-s1">Copy into Project 2, sections 1 and 2 →</a>`],
     fig:{label:`Team worksheet · saves in your browser`, build:el=>W.worksheet(el,{id:'ent141-w11-ideas',title:'ENT 141 · Week 11 · Three social innovation ideas',fields:[
       {l:'Our Project 1 problem (one sentence)',rows:2},
-      {l:'Idea 1 · what it is + strategy type',rows:2},
-      {l:'Idea 2 · what it is + strategy type',rows:2},
-      {l:'Idea 3 · what it is + strategy type',rows:2},
+      {l:'Idea 1 · what it is + its strategy',rows:2},
+      {l:'Idea 2 · what it is + a different strategy',rows:2},
+      {l:'Idea 3 · what it is + a different strategy',rows:2},
       {l:'Main SDG our ideas serve',rows:1},
-      {l:'Who already does something similar?',rows:2}]})} },
+      {l:'Quick score (Week 8 table): which idea is strongest, and why?',rows:2}]})} },
 
-  { nav:'Think about it', title:'Think about it', kind:'review', minutes:5,
-    narration:[`Discuss with your team, then reveal one view. <b>Exit question:</b> which strategy type fits your favourite idea, and what is your evidence?`,
-      `<b>Next week:</b> Market/Industry Analysis: how big is the market for your idea? Bring your three ideas. Activity 2 is due Thu 19 Nov, 23:59.`,
+  { nav:'Think about it', title:'Think about it', kind:'review', minutes:10,
+    narration:[`Discuss with your team. There is no single right answer.`,
+      `<b>Exit question:</b> which strategy fits your favourite idea? What is your evidence?`,
+      `<b>Next week:</b> Market/Industry Analysis. How big is the market for your idea? Activity 2 is due Thu 19 Nov, 23:59.`,
       `<a class="btn" href="week-12.html">Next lecture · Week 12 · Market/Industry Analysis →</a>`],
     fig:{label:`Reflection · strategies`, build:el=>W.practice(el,[
-      {q:'TOMS gave shoes for years, then changed its model. Why might giving products not solve the problem?',hint:'Free products can miss the cause, such as income or local jobs. Ask what the users really need.'},
+      {q:'Can one venture use two strategies at once?',hint:'Yes. Careem is a platform. It also started with a focus on companies.'},
       {q:'Is a platform a good fit for a small student team?',hint:'Only if you can attract both sides at once. Start with one small group of each.'},
-      {q:'Which of your three ideas could you test this week with a lean test?',hint:'Pick the one you can show to real users fastest and most cheaply.'}],{label:'One view',prefix:''})} },
+      {q:'Which of your three ideas could you test this week with a lean test?',hint:'The one you can show to real users fastest and most cheaply.'}],{label:'One view',prefix:''})} },
   ]
 });
 </script>

@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Week 16 · Product Differentiation (Part 2)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Schibsted+Grotesk:wght@400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<link rel="stylesheet" href="assets/course.css">
+<style>
+:root{--wk:#1E3A8A;--wk-soft:rgba(30,58,138,.09);--wk-d:#A5B4FC;--wk-soft-d:rgba(165,180,252,.14)}
+.pm{display:grid;gap:8px;font-family:var(--f-display);font-size:.88rem}
+.pm .ax{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.pm .opt{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr) minmax(0,1fr);gap:6px;align-items:center}
+.pm input[type=text]{width:100%;min-width:0;border:1px solid var(--line);border-radius:8px;padding:5px 8px;background:var(--surface);color:var(--ink);font:inherit}
+.pm input[type=range]{width:100%;min-width:0;accent-color:var(--wk)}
+.pm svg{width:100%;height:auto;max-width:440px;display:block;margin:0 auto}
+@media (max-width:560px){.pm .ax{grid-template-columns:minmax(0,1fr)}}
+.chk{display:grid;gap:6px;font-family:var(--f-display);font-size:.9rem}
+.chk label{display:grid;grid-template-columns:22px minmax(0,1fr);gap:8px;align-items:start;border:1px solid var(--line);border-radius:8px;padding:7px 9px;background:var(--bg);cursor:pointer}
+.chk input{margin-top:4px;accent-color:var(--wk)}
+.chk .meter{height:12px;border-radius:6px;background:var(--sunk);overflow:hidden}
+.chk .meter i{display:block;height:100%;background:var(--wk);transition:width .3s}
+</style>
+</head>
+<body>
+<script src="assets/site.js"></script>
+<script src="assets/supports.js"></script>
+<script src="assets/course.js"></script>
+<script src="assets/onepage.js"></script>
+<script src="assets/ent141.js"></script>
+<script src="assets/kb.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/assistant.js"></script>
+<script>
+const {W} = Lecture; const {store,esc} = ENT141;
+const T=(x,y,s,o='')=>`<text x="${x}" y="${y}" text-anchor="middle" font-family="Schibsted Grotesk,Arial" ${o} fill="var(--ink)">${esc(s)}</text>`;
+
+function plot(ax,ay,opts){
+  const X=v=>60+(v-1)*80, Y=v=>250-(v-1)*55;
+  return `<svg viewBox="0 0 440 300" role="img" aria-label="Positioning map: ${esc(ax)} by ${esc(ay)}">
+    <rect x="40" y="10" width="360" height="260" fill="none" stroke="var(--line)"/>
+    <path d="M220 10 V270 M40 140 H400" stroke="var(--line)" stroke-dasharray="4 4"/>
+    <path d="M40 270 H404" stroke="var(--ink)" stroke-width="1.5"/><path d="M40 270 V6" stroke="var(--ink)" stroke-width="1.5"/>
+    ${T(220,292,ax+' →','font-size="12.5" font-weight="700"')}
+    <text x="16" y="140" transform="rotate(-90 16 140)" text-anchor="middle" font-family="Schibsted Grotesk,Arial" font-size="12.5" font-weight="700" fill="var(--ink)">${esc(ay)} →</text>
+    ${opts.filter(o=>o.n).map((o,i)=>`<circle cx="${X(o.x)}" cy="${Y(o.y)}" r="${i===0?10:7}" fill="${i===0?'var(--wk)':'var(--muted)'}"/>${T(Math.min(Math.max(X(o.x),90),350),Y(o.y)-(i===0?15:12),o.n,`font-size="12" ${i===0?'font-weight="800"':''}`)}`).join('')}
+  </svg>`;
+}
+
+const IKEA=`<div>${plot('Design and style','Low price',[{n:'IKEA',x:4,y:4},{n:'Designer stores',x:5,y:1},{n:'Basic discount shops',x:1,y:4}])}</div>`;
+
+function mapBuilder(el){
+  const key='ent141-w16-map'; let st; try{st=JSON.parse(store.get(key)||'null')}catch(e){}
+  if(!st) st={ax:'Close to restaurants',ay:'Comfort while waiting',o:[{n:'Our rest point',x:4,y:4},{n:'Petrol station shop',x:2,y:3},{n:'Mall food court',x:2,y:4},{n:'Waiting outside',x:5,y:1},{n:'',x:3,y:3}]};
+  el.innerHTML=`<div class="pm"><div class="ax"><label>X axis (left = low)<input type="text" data-a="ax" value="${esc(st.ax)}"></label><label>Y axis (bottom = low)<input type="text" data-a="ay" value="${esc(st.ay)}"></label></div>
+    <div class="opt mono" style="color:var(--muted)"><span>Option (first = your idea)</span><span>X 1–5</span><span>Y 1–5</span></div>
+    ${st.o.map((o,i)=>`<div class="opt"><input type="text" data-i="${i}" data-f="n" value="${esc(o.n)}" placeholder="${i?'competitor or substitute':'your idea'}" aria-label="Option ${i+1} name"><input type="range" min="1" max="5" step="0.5" data-i="${i}" data-f="x" value="${o.x}" aria-label="Option ${i+1} X"><input type="range" min="1" max="5" step="0.5" data-i="${i}" data-f="y" value="${o.y}" aria-label="Option ${i+1} Y"></div>`).join('')}
+    <div id="pm-svg"></div></div>`;
+  const draw=()=>{ el.querySelector('#pm-svg').innerHTML=plot(st.ax,st.ay,st.o); store.set(key,JSON.stringify(st)); };
+  el.querySelectorAll('[data-a]').forEach(i=>i.addEventListener('input',()=>{ st[i.dataset.a]=i.value; draw(); }));
+  el.querySelectorAll('[data-f]').forEach(i=>i.addEventListener('input',()=>{ const o=st.o[+i.dataset.i]; o[i.dataset.f]=i.dataset.f==='n'?i.value:+i.value; draw(); }));
+  draw();
+}
+
+const PS=[['t','For (target customer)','delivery riders in Dubai'],['need','who (need)','need a safe place to wait between orders'],['name','our idea','our rest point'],['cat','is a (category)','shaded rest point'],['ben','that (key benefit)','keeps riders cool and close to their next order'],['comp','Unlike (main alternative)','waiting outside'],['diff','we (point of difference)','offer shade, water and charging next to busy restaurants']];
+function statement(el){
+  const key='ent141-w16-ps'; let st; try{st=JSON.parse(store.get(key)||'null')}catch(e){} if(!st){ st={}; PS.forEach(([k,,v])=>st[k]=v); }
+  el.innerHTML=`<div class="ins">${PS.map(([k,l])=>`<label for="ps-${k}">${l}</label><input type="text" id="ps-${k}" data-k="${k}" value="${esc(st[k]||'')}">`).join('')}<div class="box exam" id="ps-o"></div></div>`;
+  const upd=()=>{ const v=k=>`<b>${esc(st[k]||'…')}</b>`; el.querySelector('#ps-o').innerHTML=`<b class="lbl">Positioning statement</b>For ${v('t')} who ${v('need')}, ${v('name')} is a ${v('cat')} that ${v('ben')}. Unlike ${v('comp')}, we ${v('diff')}.`; store.set(key,JSON.stringify(st)); };
+  el.querySelectorAll('[data-k]').forEach(i=>i.addEventListener('input',()=>{ st[i.dataset.k]=i.value; upd(); }));
+  upd();
+}
+
+const CHECK=[
+  ['Section 1','Three social innovation ideas from the Project 1 problem, each with its strategy named (Weeks 10–11)'],
+  ['Section 2','Scoring matrix, chosen idea and the reasons (Week 8)'],
+  ['Section 3','TAM, SAM, SOM with real open data and sources; five forces (Week 12)'],
+  ['Section 4','Ranked customer profile, value map and fit check (Weeks 13–14)'],
+  ['Section 5','Competitor table, positioning map and positioning statement (Weeks 15–16)'],
+  ['Section 6','Main SDG and target; people, planet, profit with evidence'],
+  ['References','Every source in the text listed in APA style'],
+  ['Submit','One file per team on Moodle by Thursday 17 December, 23:59']];
+function checklist(el){
+  const key='ent141-w16-check'; let st; try{st=JSON.parse(store.get(key)||'null')}catch(e){} if(!st) st=CHECK.map(()=>0);
+  el.innerHTML=`<div class="chk">${CHECK.map(([s,t],i)=>`<label><input type="checkbox" data-i="${i}" ${st[i]?'checked':''}><span><b>${s}</b> · ${t}</span></label>`).join('')}<div class="meter" aria-hidden="true"><i></i></div><div class="feedback" id="ck-o"></div></div>`;
+  const upd=()=>{ const n=st.filter(Boolean).length; el.querySelector('.meter i').style.width=(n/CHECK.length*100)+'%'; el.querySelector('#ck-o').innerHTML=n===CHECK.length?'<b>All done.</b> Read the report once more as a team before you submit.':`<b>${n} of ${CHECK.length} done.</b> Next: ${CHECK.find((c,i)=>!st[i])[0]}.`; store.set(key,JSON.stringify(st)); };
+  el.querySelectorAll('input').forEach(c=>c.addEventListener('change',()=>{ st[+c.dataset.i]=c.checked?1:0; upd(); }));
+  upd();
+}
+
+const FIX=[
+  {q:'Axes: “price” and “quality”.',type:'linked axes',hint:'Customers expect them to move together. Choose two criteria from your ranked pains and gains that do not.'},
+  {q:'Our dot sits alone in the top-right corner. No evidence.',type:'wishful map',hint:'Place every dot using interview, price or visit evidence, including your own idea.'},
+  {q:'“We found an empty gap, so we will win.”',type:'empty for a reason',hint:'Check that customers want what is in the gap. Ask them.'},
+  {q:'The positioning statement lists six features.',type:'too long',hint:'Keep one key benefit and one point of difference.'}];
+
+function reflect(qs,exit){ return `<div class="stack ui">${qs.map((q,i)=>`<div class="feedback"><b>Q${i+1}</b> ${q}</div>`).join('')}<div class="box exam"><b class="lbl">Exit question</b>${exit}</div></div>`; }
+
+Lecture.mount({
+  id:'ent141-w16', week:16, clo:'3, 4', course:'ENT 141', short:'Week 16 · Product Differentiation (Part 2)',
+  title:'Product Differentiation (Part 2)', meta:'Byers et al. (2019), Elkington (1997) · 2-hour lecture',
+  scenes:[
+  { nav:'Start here', title:'Where does your idea stand in the customer’s mind?', minutes:5,
+    narration:[`Today: the positioning map, a one-sentence positioning statement, and the final check of all six Project 2 sections. <span class="mono">Topics: Positioning Map · Positioning Statement · Sustainability Check · Final Check. CLO 3 · CLO 4.</span>`],
+    think:`Picture two coffee shops in your favourite mall. Which one is “quick and cheap”, which one is “a place to sit and study”? How did you decide?`,
+    src:`Reading: Byers, T. H., Dorf, R. C., &amp; Nelson, A. J. (2019). <em>Technology ventures: From idea to enterprise</em> (5th ed.). McGraw-Hill.`,
+    fig:{label:`Today's lecture · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`Positioning`,10,'l'],[`Map step by step`,10,'l'],[`Try the map`,10,'l'],[`Positioning statement`,10,'l'],[`Sustainability check`,10,'l'],[`Mistake → fix`,5,'l'],[`Your positioning`,35,'a'],[`Final check`,15,'a'],[`Think about it`,10,'a']])} },
+
+  { nav:'Positioning', title:'Positioning', minutes:10,
+    narration:[`<b>Positioning</b> is the place your offer takes in customers’ minds compared with alternatives. IKEA positions itself on good design at low prices; it calls this “Democratic Design”.`],
+    src:`Byers et al. (2019). · Inter IKEA Systems B.V. (n.d.). <em>Democratic Design</em>.`,
+    fig:{label:`Illustrative map · IKEA`, html:IKEA, caption:`Dot positions are illustrative, for discussion.`} },
+
+  { nav:'Map step by step', title:'The positioning map, step by step', minutes:10,
+    narration:[`A <b>positioning map</b> places your idea and its alternatives on two axes customers care about. Build it in five steps.`],
+    fig:{label:`Five steps · click or play`, flow:[
+      {t:'Pick two axes',d:'Two criteria from your ranked pains and gains (Week 13).'},
+      {t:'Check the axes',d:'They must not move together, like price and quality do.'},
+      {t:'Place alternatives',d:'Competitors, substitutes and “do nothing”, from your competitor table (Week 15).'},
+      {t:'Place your idea',d:'With the same evidence rules as everyone else.'},
+      {t:'Read the gap',d:'Is there an empty space customers want? That is your position.'}]} },
+
+  { nav:'Try the map', title:'Try the map', minutes:10,
+    narration:[`Running example: the riders’ rest point. Move the sliders, rename the axes, then try it with your team’s options.`],
+    fig:{label:`Positioning map builder · saves in your browser`, build:mapBuilder, caption:`Prefilled with illustrative positions, not data.`} },
+
+  { nav:'Positioning statement', title:'The positioning statement', minutes:10,
+    narration:[`A <b>positioning statement</b> says your position in one sentence: for whom, which need, what you are, the key benefit, and how you differ from the main alternative.`],
+    src:`Moore, G. A. (1991). <em>Crossing the chasm</em>. HarperBusiness.`,
+    fig:{label:`Statement builder · illustrative · edit it`, build:statement} },
+
+  { nav:'Sustainability check', title:'Sustainability check', minutes:10,
+    narration:[`Section 6 of Project 2. Name your main <b>SDG and target</b>, then test the idea on Elkington’s <b>triple bottom line</b>: people, planet and profit, each with something you can count.`],
+    src:`Elkington, J. (1997). <em>Cannibals with forks: The triple bottom line of 21st century business</em>. Capstone. · United Nations (2015). <em>Transforming our world: The 2030 Agenda for Sustainable Development</em>.`,
+    fig:{label:`Triple bottom line · score your idea`, build:el=>ENT141.tbl(el,'ent141-w16-tbl',{people:{v:3,t:'People: who benefits, and how many?'},planet:{v:3,t:'Planet: what harm is reduced?'},profit:{v:3,t:'Profit: who pays, and why?'}})} },
+
+  { nav:'Mistake → fix', title:'Mistake → fix', kind:'review', minutes:5,
+    narration:[`These mistakes make a positioning map look good but prove nothing. Say the fix before you reveal it.`],
+    fig:{label:`Common mistakes · reveal the fix`, build:el=>W.practice(el,FIX,{label:'Fix',prefix:''})} },
+
+  { nav:'Your positioning', title:'Activity · Your positioning map and statement', kind:'activity', minutes:35, wide:true,
+    narration:[`Use your competitor table. Build the map in the builder, take a screenshot, then write the details here. This completes section 5 of the <a href="project-2.html">Project 2 builder</a>.`],
+    fig:{label:`Positioning · saves in your browser`, build:el=>W.worksheet(el,{id:'ent141-w16-position',title:'ENT 141 · Project 2 · Section 5b · Positioning',fields:[
+      {l:'Our two axes, and the ranked pain or gain each comes from',rows:2},
+      {l:'Where each option sits, with evidence',rows:3},
+      {l:'The gap we aim for, and proof customers want it',rows:2},
+      {l:'Our positioning statement (one sentence)',rows:3},
+      {l:'Main SDG target and one number each for people, planet, profit',rows:3}]})} },
+
+  { nav:'Final check', title:'Final Project 2 check', kind:'review', minutes:15,
+    narration:[`Go through all six sections as a team. Tick only what is finished in your report, not what is planned.`],
+    fig:{label:`Project 2 checklist · saves in your browser`, build:checklist} },
+
+  { nav:'Think about it', title:'Think about it', kind:'review', minutes:10,
+    narration:[`Discuss with your team. There is no single right answer.`,`<b>Next:</b> finish and submit Project 2 by Thursday 17 December, 23:59, on Moodle.<br><a class="btn" href="project-2.html">Project 2 builder →</a>`],
+    fig:{label:`Reflection`, html:reflect([`How did your idea change from section 1 to section 5?`,`Which evidence in your report would convince a sceptical investor?`,`If you continued this venture next semester, what would you test first?`],`In one sentence: why would your customer choose you over “do nothing”?`)} },
+  ]
+});
+</script>
+</body>
+</html>

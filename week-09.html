@@ -11,6 +11,9 @@
 <style>
 :root{--wk:#9A4A08;--wk-soft:rgba(154,74,8,.09);--wk-d:#FBBF77;--wk-soft-d:rgba(251,191,119,.14)}
 .svgfig{width:100%;height:auto;display:block}
+.svgfig .onwk{fill:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .svgfig .onwk{fill:#0E1318}}
+:root[data-theme="dark"] .svgfig .onwk{fill:#0E1318}
 </style>
 </head>
 <body>
@@ -49,10 +52,10 @@ const QUESTIONS={'Common panel questions · illustrative answers':[
   ['Is it sustainable?','<b>Answer:</b> yes, it removes car trips. <b>Evidence:</b> fewer cars at 8 am. <b>Link:</b> SDG 11, sustainable cities and communities.']]};
 
 const GRID_SVG=`<svg class="svgfig" viewBox="0 0 560 330" role="img" aria-label="Feedback capture grid: likes, criticisms, questions, ideas">
-  <rect x="10" y="10" width="540" height="310" rx="12" fill="var(--bg)" stroke="var(--line)"/>
+  <rect x="10" y="10" width="540" height="310" rx="12" class="onwk" stroke="var(--line)"/>
   <line x1="280" y1="10" x2="280" y2="320" stroke="var(--wk)" stroke-width="2"/><line x1="10" y1="165" x2="550" y2="165" stroke="var(--wk)" stroke-width="2"/>
   ${[['+','Likes','What worked?',30,40],['Δ','Criticisms','What should change?',300,40],['?','Questions','What was unclear?',30,195],['!','Ideas','What could we add?',300,195]].map(([s,t,q,x,y])=>`
-  <circle cx="${x+22}" cy="${y+20}" r="20" fill="var(--wk)"/><text x="${x+22}" y="${y+27}" text-anchor="middle" font-family="Schibsted Grotesk,Arial" font-weight="800" font-size="20" fill="var(--on-wk)">${s}</text>
+  <circle cx="${x+22}" cy="${y+20}" r="20" fill="var(--wk)"/><text x="${x+22}" y="${y+27}" text-anchor="middle" font-family="Schibsted Grotesk,Arial" font-weight="800" font-size="20" class="onwk">${s}</text>
   <text x="${x+54}" y="${y+26}" font-family="Schibsted Grotesk,Arial" font-weight="800" font-size="18" fill="var(--ink)">${t}</text>
   <text x="${x+2}" y="${y+76}" font-family="Schibsted Grotesk,Arial" font-size="14" fill="var(--muted)">${q}</text>`).join('')}
 </svg>`;

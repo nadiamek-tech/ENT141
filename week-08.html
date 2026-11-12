@@ -11,6 +11,9 @@
 <style>
 :root{--wk:#6D28D9;--wk-soft:rgba(109,40,217,.09);--wk-d:#C4B5FD;--wk-soft-d:rgba(196,181,253,.14)}
 .svgfig{width:100%;height:auto;display:block}
+.svgfig .onwk{fill:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .svgfig .onwk{fill:#0E1318}}
+:root[data-theme="dark"] .svgfig .onwk{fill:#0E1318}
 .mx-wrap{overflow-x:auto;max-width:100%}
 .mx{width:100%;border-collapse:collapse;font-family:var(--f-display);font-size:.88rem;min-width:420px}
 .mx th,.mx td{border-bottom:1px solid var(--line);padding:6px 6px;text-align:center;vertical-align:middle}
@@ -23,8 +26,10 @@
 .mx input[type=number]{width:58px;font:inherit;border:1px solid var(--line);border-radius:6px;padding:4px;background:var(--bg);color:var(--ink)}
 .mx select{font:inherit;border:1px solid var(--line);border-radius:6px;padding:3px;background:var(--bg);color:var(--ink)}
 .mx .hide{visibility:hidden}
+.mx td:nth-child(2){white-space:nowrap}
 .mx-ctl{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:0 0 10px}
 .mx-gap{height:14px}
+@media (max-width:480px){.mx{min-width:0;font-size:.76rem}.mx th,.mx td{padding:5px 3px}.mx input[type=number]{width:44px}.mx input[type=text]{min-width:0}}
 </style>
 </head>
 <body>
@@ -71,6 +76,7 @@ function matrix(el,{key,init,edit}){
       <div class="mx-wrap"><table class="mx"><thead><tr><th>Criterion</th><th>Weight</th>${hd}</tr></thead><tbody>${rows}${totRow}</tbody></table></div>
       <div class="mx-gap"></div><div class="feedback">${edit
         ? (wsum!==100?`Weights add up to <b>${wsum}%</b>. Make them add up to 100%.`
+          :tot.filter(t=>f2(t)===f2(best)).length>1?`<b>Tie:</b> two or more ideas share the top total (${f2(best)}). Change the scores with your evidence, or discuss.`
           :`Highest: <b>${esc(st.ideas[tot.indexOf(best)]||'')}</b> (${f2(best)}).${close?' <b>Close call:</b> two totals are less than 0.2 apart. Discuss before you decide.':' Check it with your evidence before you decide.'}`)
         : STEPTXT[step]}</div>`;
     if(key) store.set(key,JSON.stringify(st));
@@ -93,7 +99,7 @@ const LENSES_SVG=`<svg class="svgfig" viewBox="0 0 520 380" role="img" aria-labe
   <text x="380" y="290" text-anchor="middle" font-family="Schibsted Grotesk,Arial" font-weight="800" font-size="16" fill="var(--ink)">Viability</text>
   <text x="380" y="310" text-anchor="middle" font-family="Schibsted Grotesk,Arial" font-size="13" fill="var(--muted)">Can it pay for itself?</text>
   <circle cx="260" cy="212" r="26" fill="var(--wk)"/>
-  <text x="260" y="217" text-anchor="middle" font-family="Schibsted Grotesk,Arial" font-weight="800" font-size="12" fill="var(--on-wk)">Best</text>
+  <text x="260" y="217" text-anchor="middle" font-family="Schibsted Grotesk,Arial" font-weight="800" font-size="12" class="onwk">Best</text>
 </svg>`;
 
 function dotsSVG(){

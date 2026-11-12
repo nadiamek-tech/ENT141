@@ -82,7 +82,7 @@ const coverLines=()=>CFG.coverOut().filter(([a,b])=>b);
 async function makeDocx(){
   const d=await loadDocx(); const {Document,Packer,Paragraph,TextRun,HeadingLevel,Table,TableRow,TableCell,WidthType,ImageRun,PageBreak}=d;
   const cell=(t,b)=>new TableCell({children:String(t||'').split('\n').map(x=>new Paragraph({children:[new TextRun({text:x,bold:!!b})]}))});
-  const k=[new Paragraph({children:[new TextRun({text:'ENT 141 · Fundamentals of Innovation and Entrepreneurship 1',size:22})],spacing:{before:2000}}),
+  const k=[new Paragraph({children:[new TextRun({text:CFG.courseLine||'ENT 141 · Fundamentals of Innovation and Entrepreneurship 1',size:22})],spacing:{before:2000}}),
     new Paragraph({children:[new TextRun({text:CFG.docTitle,bold:true,size:44})],spacing:{after:200}}),
     new Paragraph({children:[new TextRun({text:V(CFG.titleKey)||'',size:30})],spacing:{after:400}})];
   coverLines().forEach(([a,b])=>String(b).split('\n').forEach((line,i)=>k.push(new Paragraph({children:[new TextRun({text:i?'':a+': ',bold:true}),new TextRun(line)],spacing:{after:60}}))));
@@ -95,7 +95,7 @@ async function makeDocx(){
     else if(b.table) k.push(new Table({width:{size:100,type:WidthType.PERCENTAGE},rows:b.table.map((r,i)=>new TableRow({children:r.map(c=>cell(c,b.head.includes(i)))}))}));
     else if(b.img){ const m=b.img, bin=atob(m.src.split(',')[1]), u=new Uint8Array(bin.length); for(let i=0;i<bin.length;i++) u[i]=bin.charCodeAt(i); const w=Math.min(560,m.w);
       k.push(new Paragraph({children:[new ImageRun({data:u,type:'jpg',transformation:{width:w,height:Math.round(m.h*w/m.w)}})]})); } }
-  const doc=new Document({creator:'ENT 141 student',title:CFG.docTitle,styles:{default:{document:{run:{font:'Calibri',size:24}}}},sections:[{children:k}]});
+  const doc=new Document({creator:(CFG.course||'ENT 141')+' student',title:CFG.docTitle,styles:{default:{document:{run:{font:'Calibri',size:24}}}},sections:[{children:k}]});
   return dl(await Packer.toBlob(doc),`${CFG.fileName()}.docx`); }
 async function dl(blob,name){ const touch=matchMedia('(pointer:coarse)').matches;
   if(touch&&navigator.canShare){ try{ const f=new File([blob],name,{type:blob.type||'application/octet-stream'}); if(navigator.canShare({files:[f]})){ await navigator.share({files:[f],title:name}); return 'shared'; } }catch(e){ if(e&&e.name==='AbortError') return 'cancel'; } }
@@ -104,7 +104,7 @@ const INAPP=/MoodleMobile|FBAN|FBAV|Instagram|Line\/|; wv\)/i.test(navigator.use
 function printPDF(){ const r=document.getElementById('print-root');
   const b=blocks().map(x=>x.h?`<h3>${esc(x.h)}</h3>`:x.h3?`<h4>${esc(x.h3)}</h4>`:x.p?`<p>${esc(x.p)}</p>`:x.cap?`<p><i>${esc(x.cap)}</i></p>`:x.img?`<img src="${x.img.src}" alt="">`:x.table?`<table>${x.table.map((row,i)=>`<tr>${row.map(c=>`<${x.head.includes(i)?'th':'td'}>${esc(c).replace(/\n/g,'<br>')}</${x.head.includes(i)?'th':'td'}>`).join('')}</tr>`).join('')}</table>`:'').join('');
   r.innerHTML=`<style>#print-root{font:11pt/1.5 Georgia,serif;color:#000}#print-root h1{font:700 22pt Arial}#print-root h3{font:700 13pt Arial;margin:16pt 0 6pt}#print-root h4{font:700 11pt Arial;margin:8pt 0 2pt}#print-root table{border-collapse:collapse;width:100%;margin:4pt 0 8pt}#print-root td,#print-root th{border:1px solid #888;padding:4pt;vertical-align:top;text-align:left}#print-root img{max-width:100%;max-height:120mm}#print-root .cv{min-height:240mm;display:flex;flex-direction:column;justify-content:center;break-after:page}</style>
-  <div class="cv"><p>ENT 141 · Fundamentals of Innovation and Entrepreneurship 1</p><h1>${esc(CFG.docTitle)}</h1><p style="font-size:14pt">${esc(V(CFG.titleKey))}</p><p>${coverLines().map(([a,b])=>`<b>${esc(a)}:</b> ${esc(b).replace(/\n/g,'<br>')}`).join('<br>')}</p></div>${b}`;
+  <div class="cv"><p>${esc(CFG.courseLine||'ENT 141 · Fundamentals of Innovation and Entrepreneurship 1')}</p><h1>${esc(CFG.docTitle)}</h1><p style="font-size:14pt">${esc(V(CFG.titleKey))}</p><p>${coverLines().map(([a,b])=>`<b>${esc(a)}:</b> ${esc(b).replace(/\n/g,'<br>')}`).join('<br>')}</p></div>${b}`;
   setTimeout(()=>window.print(),150); }
 const done=r=>r==='cancel'?'Not saved.':r==='shared'?'Saved. Choose "Save to Files" (iPhone) or Downloads (Android).':INAPP?'If nothing downloaded, open this page in Safari or Chrome and save again.':'Saved. Check your Downloads folder.';
 const msg=t=>{ const m=document.getElementById('msg'); if(!m) return; m.textContent=t; clearTimeout(msg.t); msg.t=setTimeout(()=>m.textContent='',9000); };

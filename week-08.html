@@ -62,6 +62,7 @@
 const {W} = Lecture; const {store,esc} = ENT141;
 const FF='font-family="Schibsted Grotesk,Arial"';
 
+
 /* ---------- case card ---------- */
 function caseCard(c){
   return `<article class="cc" aria-label="Case study: ${c.org}">
@@ -71,192 +72,195 @@ function caseCard(c){
       <div class="ls"><dt>Lesson</dt><dd>${c.lesson}</dd></div></dl></article>`;
 }
 const CASES={
-  embrace:{ic:'E',org:'Embrace infant warmer',where:'Stanford d.school, USA · India',year:'2007',lens:'Desirable',
+  embrace:{ic:'E',org:'Embrace infant warmer',where:'Stanford d.school, USA · India',year:'2007',lens:'Risky',
     did:'Students planned a cheap incubator for hospitals. In Nepal they saw many babies are born far from hospitals.',
-    why:'They changed the user: a warm sleeping bag for babies that needs no constant power.',
-    lesson:'Meet real users first. They show you what they really want.'},
-  ideo:{ic:'I',org:'IDEO shopping cart',where:'Palo Alto, USA',year:'1999',lens:'Feasible',
+    why:'They took a bold risk. They dropped the hospital idea. They made a warm sleeping bag that needs no constant power.',
+    lesson:'A risky idea can win. Test it early with real users.'},
+  ideo:{ic:'I',org:'IDEO shopping cart',where:'Palo Alto, USA',year:'1999',lens:'Easy',
     did:'For a TV show, the IDEO team designed a new shopping cart in five days.',
-    why:'They watched shoppers, then built rough models fast. A working cart proved it could be made.',
-    lesson:'Build a rough model early. It answers “Can we make it?”'},
-  ikea:{ic:'K',org:'IKEA flat-pack',where:'Sweden',year:'1956',lens:'Viable',
+    why:'They watched shoppers, then built rough models fast. Quick tries showed what worked.',
+    lesson:'Easy ideas are quick to try. Try them first to learn fast.'},
+  ikea:{ic:'K',org:'IKEA flat-pack',where:'Sweden',year:'1956',lens:'Aligned',
     did:'A worker took the legs off a table to fit it in a car. IKEA began selling furniture in flat boxes.',
-    why:'Flat boxes take less space in trucks and stores. Customers build it at home. Costs fall.',
-    lesson:'A smart way to deliver can make a low price still pay.'},
-  terra:{ic:'T',org:'Terra · Sustainability Pavilion',where:'Expo 2020 Dubai, UAE',year:'2021',lens:'Sustainable',
+    why:'The idea matched the exact pain: big furniture does not fit in a car.',
+    lesson:'A good idea answers the real problem, not a different one.'},
+  terra:{ic:'T',org:'Terra · Sustainability Pavilion',where:'Expo 2020 Dubai, UAE',year:'2021',lens:'Favourite',
     did:'The pavilion was designed to make its own energy from the sun and to save water.',
-    why:'Sustainability was part of the plan from day one, not added at the end.',
-    lesson:'Ask “Is it good for people and planet?” at the start.'}};
+    why:'Sustainability was the heart of the plan from day one, not added at the end.',
+    lesson:'A favourite idea gives a team energy. Still check it fits the problem.'}};
 
-/* ---------- concept graphic: four lenses ---------- */
-const LENSES=`<svg class="svgfig" viewBox="0 0 520 420" role="img" aria-label="Three overlapping circles, desirable, feasible and viable, inside a frame labelled sustainable">
-  <rect x="8" y="8" width="504" height="404" rx="18" fill="none" stroke="var(--good)" stroke-width="2.5" stroke-dasharray="8 6"/>
-  <text x="260" y="36" text-anchor="middle" ${FF} font-weight="800" font-size="16" style="fill:var(--good)">Sustainable · good for people and planet</text>
-  <circle cx="260" cy="155" r="100" fill="var(--wk)" fill-opacity=".12" stroke="var(--wk)" stroke-width="2"/>
-  <circle cx="193" cy="265" r="100" fill="var(--wk)" fill-opacity=".12" stroke="var(--wk)" stroke-width="2"/>
-  <circle cx="327" cy="265" r="100" fill="var(--wk)" fill-opacity=".12" stroke="var(--wk)" stroke-width="2"/>
-  <text x="260" y="102" text-anchor="middle" ${FF} font-weight="800" font-size="16" style="fill:var(--ink)">Desirable</text>
-  <text x="260" y="122" text-anchor="middle" ${FF} font-size="13" style="fill:var(--muted)">Do people want it?</text>
-  <text x="145" y="305" text-anchor="middle" ${FF} font-weight="800" font-size="16" style="fill:var(--ink)">Feasible</text>
-  <text x="145" y="325" text-anchor="middle" ${FF} font-size="13" style="fill:var(--muted)">Can we make it?</text>
-  <text x="375" y="305" text-anchor="middle" ${FF} font-weight="800" font-size="16" style="fill:var(--ink)">Viable</text>
-  <text x="375" y="325" text-anchor="middle" ${FF} font-size="13" style="fill:var(--muted)">Can it pay for itself?</text>
-  <circle cx="260" cy="228" r="27" fill="var(--wk)"/>
-  <text x="260" y="233" text-anchor="middle" ${FF} font-weight="800" font-size="13" style="fill:var(--on-wk)">Best</text>
+/* ---------- concept graphic: three groups ---------- */
+const GROUPS=`<svg class="svgfig" viewBox="0 0 600 250" role="img" aria-label="Three boxes: Risky, Easy and Favourite, each with a short question">
+  ${[['Risky','Bold, but uncertain','Could it change everything?'],['Easy','Quick and cheap to try','Can we test it this week?'],['Favourite','The team’s heart choice','Which one do we love?']].map(([t,s,q],i)=>{const x=12+i*196;
+  return `<rect x="${x}" y="12" width="180" height="226" rx="14" fill="var(--wk)" fill-opacity="${.08+i*.07}" stroke="var(--wk)" stroke-width="2"/>
+  <circle cx="${x+90}" cy="70" r="30" fill="var(--wk)"/>
+  <text x="${x+90}" y="78" text-anchor="middle" ${FF} font-weight="800" font-size="22" style="fill:var(--on-wk)">${t[0]}</text>
+  <text x="${x+90}" y="135" text-anchor="middle" ${FF} font-weight="800" font-size="19" style="fill:var(--ink)">${t}</text>
+  <text x="${x+90}" y="162" text-anchor="middle" ${FF} font-size="13" style="fill:var(--muted)">${s}</text>
+  <text x="${x+90}" y="205" text-anchor="middle" ${FF} font-size="13" font-style="italic" style="fill:var(--ink)">${q}</text>`;}).join('')}
 </svg>`;
 
-/* ---------- worked example (fictional), from the Week 7 HMW ---------- */
+/* ---------- concept graphic: idea and problem fit ---------- */
+const ALIGN=`<svg class="svgfig" viewBox="0 0 600 260" role="img" aria-label="The HMW problem on the left, the idea on the right, joined by three checks: who, pain, evidence">
+  <rect x="10" y="40" width="170" height="180" rx="14" fill="var(--wk-soft)" stroke="var(--wk)" stroke-width="2"/>
+  <text x="95" y="120" text-anchor="middle" ${FF} font-weight="800" font-size="18" style="fill:var(--ink)">Problem</text>
+  <text x="95" y="144" text-anchor="middle" ${FF} font-size="13" style="fill:var(--muted)">our HMW question</text>
+  <rect x="420" y="40" width="170" height="180" rx="14" fill="var(--wk-soft)" stroke="var(--wk)" stroke-width="2"/>
+  <text x="505" y="120" text-anchor="middle" ${FF} font-weight="800" font-size="18" style="fill:var(--ink)">Idea</text>
+  <text x="505" y="144" text-anchor="middle" ${FF} font-size="13" style="fill:var(--muted)">our chosen solution</text>
+  ${[['Who?','same user',70],['Pain?','same pain',130],['Evidence?','interview proof',190]].map(([t,s,y])=>`<line x1="180" y1="${y}" x2="420" y2="${y}" stroke="var(--line)" stroke-width="2"/>
+  <rect x="222" y="${y-21}" width="156" height="42" rx="21" fill="var(--bg)" stroke="var(--wk)" stroke-width="2"/>
+  <text x="300" y="${y-2}" text-anchor="middle" ${FF} font-weight="800" font-size="14" style="fill:var(--wk)">${t}</text>
+  <text x="300" y="${y+14}" text-anchor="middle" ${FF} font-size="11.5" style="fill:var(--muted)">${s}</text>`).join('')}
+</svg>`;
+
+/* ---------- sort widget (fictional ideas, Week 6 HMW) ---------- */
+const SORT={buckets:['Risky','Easy','Favourite'],items:[
+  {t:'A new metro line to campus',a:0,why:'Bold and very uncertain. Students cannot build it.'},
+  {t:'A WhatsApp carpool group',a:1,why:'Free and quick. The team can test it this week.'},
+  {t:'A shared scooter path from the metro',a:0,why:'Big impact, but it needs permits and money.'},
+  {t:'A printed bus timetable at the gate',a:1,why:'Cheap and fast to try.'},
+  {t:'A campus shuttle that also sells breakfast',a:2,why:'Many teams love it. It joins two needs in one.'},
+  {t:'Walking buddies from the metro',a:2,why:'Friendly and social. Teams often like it most.'}]};
+
+/* ---------- fit check flow ---------- */
+const FIT=[
+  {t:'Read the HMW',s:'from Week 6',d:'“How might we help first-year students reach 8 am classes on time without a car?”'},
+  {t:'Who?',s:'same user',d:'Idea: a WhatsApp carpool group. User: first-year students without a car. Match.'},
+  {t:'Pain?',s:'same pain',d:'Pain: arriving late at 8 am. Carpools leave at a fixed time. Match.'},
+  {t:'Evidence?',s:'interviews',d:'Find a quote. Example: “I wait 20 minutes for the bus.” No quote means no proof.'},
+  {t:'Decide',s:'fit or not',d:'Three matches: keep the idea. One miss: change the idea or go back.'}];
+
+/* ---------- worked scoring example (fictional), from the Week 6 HMW ---------- */
 const EXAMPLE={ideas:['Metro shuttle','Carpool board','Scooter path'],
   crit:[['Desirable',30],['Feasible',25],['Viable',20],['Sustainable',25]],
   s:[[5,4,3],[3,5,3],[3,4,3],[4,4,5]]};
 const STEPTXT=[
   'Press <b>Next step</b> to build the table.',
-  '<b>Step 1 · Weights.</b> Four criteria. The weights add up to 100%. Here, desirable matters most: 30%.',
-  '<b>Step 2 · Score.</b> Give each idea 1 (weak) to 5 (strong). Use interview facts, not feelings.',
+  '<b>Step 1 · Weights.</b> Four criteria. The weights add up to 100%.',
+  '<b>Step 2 · Score.</b> Give each idea 1 (weak) to 5 (strong). Use interview facts.',
   '<b>Step 3 · Multiply.</b> Weight × score. Carpool board, desirable: 30% × 4 = <b>1.20</b>.',
-  '<b>Step 4 · Add.</b> Add each column. Carpool board: 1.20 + 1.25 + 0.80 + 1.00 = <b>4.25</b>. The highest.',
-  '<b>Step 5 · Talk.</b> 4.25 against 3.85 is a clear winner. If two totals are close, discuss first.'];
+  '<b>Step 4 · Add.</b> Carpool board: 1.20 + 1.25 + 0.80 + 1.00 = <b>4.25</b>. The highest.',
+  '<b>Step 5 · Talk.</b> If two totals are close, discuss before you decide.'];
 const f2=x=>(Math.round(x*100)/100).toFixed(2);
 function totals(st){ return st.ideas.map((_,j)=>st.crit.reduce((a,[,w],i)=>a+w/100*(+st.s[i][j]||0),0)); }
 
-function matrix(el,{key,init,edit}){
-  let st=null; if(key){ try{st=JSON.parse(store.get(key)||'null')}catch(e){} }
-  if(!st) st=JSON.parse(JSON.stringify(init));
-  let step=edit?5:0;
+function matrix(el,{init}){
+  const st=JSON.parse(JSON.stringify(init)); let step=0;
   const draw=()=>{
     const tot=totals(st), best=Math.max(...tot), wsum=st.crit.reduce((a,c)=>a+(+c[1]||0),0);
-    const sorted=[...tot].sort((a,b)=>b-a), close=sorted.length>1&&sorted[0]-sorted[1]<0.2;
-    const hd=st.ideas.map((t,j)=>edit?`<th><input type="text" data-idea="${j}" value="${esc(t)}" aria-label="Idea ${j+1} name"></th>`:`<th>${esc(t)}</th>`).join('');
-    const rows=st.crit.map(([c,w],i)=>`<tr><td>${esc(c)}</td><td class="${step<1?'hide':''}">${edit?`<input type="number" min="0" max="100" step="5" data-w="${i}" value="${w}" aria-label="${esc(c)} weight"> %`:w+'%'}</td>${st.ideas.map((_,j)=>{ const sc=st.s[i][j];
-        const cell=edit?`<select data-s="${i},${j}" aria-label="${esc(c)} score for ${esc(st.ideas[j])}">${[1,2,3,4,5].map(n=>`<option ${n==sc?'selected':''}>${n}</option>`).join('')}</select>`:sc;
-        return `<td class="${step<2?'hide':''}">${cell}<small class="${step<3?'hide':''}">${f2(w/100*sc)}</small></td>`; }).join('')}</tr>`).join('');
-    const totRow=`<tr class="tot"><td>Total</td><td class="${step<1?'hide':''}">${wsum}%</td>${tot.map(t=>`<td class="${step<4?'hide':''} ${step>=4&&t===best&&wsum===100?'win':''}">${f2(t)}</td>`).join('')}</tr>`;
-    el.innerHTML=`${edit?'':`<div class="mx-ctl"><button type="button" class="btn mx-next">${step<5?'Next step':'Start again'}</button><span class="mono" style="color:var(--muted)">Step ${step} of 5</span></div>`}
+    const hd=st.ideas.map(t=>`<th>${esc(t)}</th>`).join('');
+    const rows=st.crit.map(([c,w],i)=>`<tr><td>${esc(c)}</td><td class="${step<1?'hide':''}">${w}%</td>${st.ideas.map((_,j)=>{ const sc=st.s[i][j];
+        return `<td class="${step<2?'hide':''}">${sc}<small class="${step<3?'hide':''}">${f2(w/100*sc)}</small></td>`; }).join('')}</tr>`).join('');
+    const totRow=`<tr class="tot"><td>Total</td><td class="${step<1?'hide':''}">${wsum}%</td>${tot.map(t=>`<td class="${step<4?'hide':''} ${step>=4&&t===best?'win':''}">${f2(t)}</td>`).join('')}</tr>`;
+    el.innerHTML=`<div class="mx-ctl"><button type="button" class="btn mx-next">${step<5?'Next step':'Start again'}</button><span class="mono" style="color:var(--muted)">Step ${step} of 5</span></div>
       <div class="mx-wrap"><table class="mx"><thead><tr><th>Criterion</th><th>Weight</th>${hd}</tr></thead><tbody>${rows}${totRow}</tbody></table></div>
-      <div class="mx-gap"></div><div class="feedback">${edit
-        ? (wsum!==100?`Weights add up to <b>${wsum}%</b>. Make them add up to 100%.`
-          :tot.filter(t=>f2(t)===f2(best)).length>1?`<b>Tie:</b> two ideas share the top total (${f2(best)}). Check your evidence, then talk.`
-          :`Highest: <b>${esc(st.ideas[tot.indexOf(best)]||'')}</b> (${f2(best)}).${close?' <b>Close call:</b> less than 0.2 apart. Talk before you decide.':' Check it with your evidence.'}`)
-        : STEPTXT[step]}</div>`;
-    if(key) store.set(key,JSON.stringify(st));
-    const nx=el.querySelector('.mx-next'); if(nx) nx.addEventListener('click',()=>{ step=step<5?step+1:0; draw(); });
-    el.querySelectorAll('[data-idea]').forEach(i=>i.addEventListener('change',()=>{ st.ideas[+i.dataset.idea]=i.value; draw(); }));
-    el.querySelectorAll('[data-w]').forEach(i=>i.addEventListener('change',()=>{ st.crit[+i.dataset.w][1]=Math.max(0,Math.min(100,+i.value||0)); draw(); }));
-    el.querySelectorAll('[data-s]').forEach(i=>i.addEventListener('change',()=>{ const [a,b]=i.dataset.s.split(',').map(Number); st.s[a][b]=+i.value; draw(); }));
+      <div class="mx-gap"></div><div class="feedback">${STEPTXT[step]}</div>`;
+    el.querySelector('.mx-next').addEventListener('click',()=>{ step=step<5?step+1:0; draw(); });
   };
   draw();
 }
 
-/* ---------- dot voting (fictional) ---------- */
-function dotsSVG(){
-  const notes=[['Metro shuttle',4],['Carpool board',5],['Scooter path',3],['8:30 start',1],['Bus breakfast',2],['Walking buddies',0]];
-  return `<svg class="svgfig" viewBox="0 0 600 270" role="img" aria-label="Six idea notes with voting dots; three get the most dots">
-  ${notes.map(([t,n],i)=>{ const x=20+(i%3)*195, y=15+Math.floor(i/3)*130, top=n>=3;
-    return `<rect x="${x}" y="${y}" width="175" height="110" rx="8" fill="${top?'var(--wk-soft)':'var(--bg)'}" stroke="${top?'var(--wk)':'var(--line)'}" stroke-width="${top?2:1}"/>
-    <text x="${x+14}" y="${y+32}" ${FF} font-weight="700" font-size="15" style="fill:var(--ink)">${t}</text>
-    ${Array.from({length:n},(_,k)=>`<circle cx="${x+24+k*26}" cy="${y+72}" r="9" fill="var(--wk)"/>`).join('')}
-    <text x="${x+160}" y="${y+98}" text-anchor="end" font-family="JetBrains Mono,monospace" font-size="12" style="fill:var(--muted)">${n} dot${n===1?'':'s'}</text>`; }).join('')}
-  </svg>`;
-}
-
 /* ---------- case study in depth: Grameen Bank ---------- */
 const DEEP=`<div class="case-read"><b class="lbl">Case study · Grameen Bank · Bangladesh · 1976–2006</b>
-<p>In 1976, economics professor Muhammad Yunus visited Jobra, a village in Bangladesh. He taught at Chittagong University nearby. Poor women made bamboo stools. They borrowed money from lenders who charged very high interest. Banks would not lend to them. They had no collateral (something the bank can keep).</p>
+<p>In 1976, economics professor Muhammad Yunus visited Jobra, a village in Bangladesh. Poor women made bamboo stools. They borrowed from lenders who charged very high interest.</p>
+<p>Banks would not lend to them. They had no collateral (something the bank can keep).</p>
 <p>Yunus lent his own money, about US$27, to 42 villagers. They paid him back.</p>
-<p>He then built a new kind of bank. Its name, Grameen, means “of the village”. Staff went to the villages. Borrowers joined small groups and supported each other. They paid back in small weekly amounts. Most borrowers were women. In 1983, Grameen became a formal bank by law.</p>
-<p>The idea spread to many countries as <b>microcredit</b> (very small loans). In 2006, Yunus and Grameen Bank shared the Nobel Peace Prize.</p></div>`;
+<p>He then built a new kind of bank. Grameen means “of the village”. Borrowers joined small groups and paid back in small weekly amounts. In 1983, Grameen became a formal bank by law.</p>
+<p>In 2006, Yunus and Grameen Bank shared the Nobel Peace Prize.</p></div>`;
 
 const FIX=[
-  {q:'All four criteria get 25%. Nobody discussed it.',type:'lazy weights',hint:'Ask what matters most for your user. Write one reason for each weight.'},
-  {q:'The team gives its favourite idea 5 on everything.',type:'bias',hint:'Score one criterion at a time, for all ideas. Back each score with a quote or a fact.'},
-  {q:'One member fills in the whole table.',type:'no teamwork',hint:'Each member scores alone first. Then compare and agree.'},
-  {q:'The weights add up to 120%.',type:'math error',hint:'Weights must add up to 100%. Otherwise totals cannot be compared.'}];
+  {q:'Every idea goes into the Favourite group.',type:'no sorting',hint:'Each group needs ideas. Ask: which one is bold? Which one is quick?'},
+  {q:'The team picks only Easy ideas.',type:'playing safe',hint:'Keep one Risky idea in view. It may solve the problem better.'},
+  {q:'The chosen idea helps a different user.',type:'no fit',hint:'Go back to the HMW. Same user, same pain.'},
+  {q:'“Students will love it.” No quote.',type:'no evidence',hint:'Add one interview quote that shows the pain.'}];
 
-function scoreActivity(el){
-  const m=document.createElement('div'); el.appendChild(m);
-  matrix(m,{key:'ent141-w08-matrix',init:{ideas:['Idea A','Idea B','Idea C'],crit:[['Desirable',25],['Feasible',25],['Viable',25],['Sustainable',25]],s:[[3,3,3],[3,3,3],[3,3,3],[3,3,3]]},edit:true});
-  const gap=document.createElement('div'); gap.style.height='22px'; el.appendChild(gap);
-  const w=document.createElement('div'); el.appendChild(w);
-  W.worksheet(w,{id:'ent141-w08-select',title:'ENT 141 · Week 8 · Idea selection',fields:[
-    {l:'Our three ideas, one line each',rows:3},
-    {l:'Why these weights? One reason per criterion',rows:3},
-    {l:'Evidence behind our scores (quotes, costs, open data)',rows:3},
+function sortActivity(el){
+  W.worksheet(el,{id:'ent141-w08-select',title:'ENT 141 · Week 8 · Idea evaluation and selection',fields:[
+    {l:'Risky ideas (bold, uncertain)',rows:2},
+    {l:'Easy ideas (quick to try)',rows:2},
+    {l:'Favourite ideas (our heart choice)',rows:2},
     {l:'Chosen idea and why (one sentence)',rows:2},
-    {l:'What could change our decision?',rows:2}]});
+    {l:'Fit check: who, pain, evidence (one line each)',rows:3}]});
 }
 
 Lecture.mount({
   id:'ent141-w08', week:8, clo:'3, 4', course:'ENT 141', short:'Week 8 · Idea Evaluation', instructor:'Nadia',
-  title:'Idea Evaluation', meta:'Byers et al (2019) Ch. 2, Stanford DPG · 2-hour lecture',
+  title:'Idea Evaluation', meta:'Traifeh et al. (2021) · 2-hour lecture',
   scenes:[
   { nav:'Start here', title:'Many ideas. Which one do we build?', minutes:5,
-    narration:[`Today we judge ideas with clear rules, not the loudest voice. Each rule comes with a real case. <span class="mono">Topics: Four lenses · Weighted scoring · Dot voting. CLO 3 · CLO 4.</span>`],
-    think:`You are choosing a phone. One is cheapest. One has the best camera. One lasts longest. How do you choose?`,
-    src:`Reading: Byers, T. H., Dorf, R. C., &amp; Nelson, A. J. (2019). <em>Technology ventures</em> (5th ed.), Ch. 2. McGraw-Hill. · d.school <em>Process guide</em>.`,
-    fig:{label:`Today's lecture · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`Four lenses`,8,'l'],[`Desirable`,8,'l'],[`Feasible`,8,'l'],[`Viable`,8,'l'],[`Sustainable`,8,'l'],[`Score it`,15,'l'],[`Dot voting`,5,'l'],[`Case study in depth`,20,'a'],[`Mistake → fix`,5,'l'],[`Score your ideas`,25,'a'],[`Think about it`,5,'a']])} },
+    narration:[`Last week you made many ideas. Today you sort them and pick one. Then you check it fits the problem. <span class="mono">Topics: Risky, Easy, Favourite · Idea and problem fit. CLO 3 · CLO 4.</span>`],
+    think:`You are choosing a phone. One is cheapest. One has the best camera. One is your favourite colour. How do you choose?`,
+    src:`Reading: Traifeh, H., Refaei, R. A., von Thienen, J., von Schmieden, K., Mayer, L., Osman, S., &amp; Meinel, C. (2021). Mapping design thinking in the Arab world. In C. Meinel &amp; L. Leifer (Eds.), <em>Design thinking research</em> (pp. 41–60). Springer.`,
+    fig:{label:`Today's lecture · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`Three groups`,8,'l'],[`Sort the ideas`,10,'l'],[`Risky`,6,'l'],[`Easy`,6,'l'],[`Favourite`,6,'l'],[`Idea ↔ problem`,8,'l'],[`Fit check`,8,'l'],[`Aligned case`,5,'l'],[`Score your top idea`,8,'l'],[`Case study in depth`,15,'a'],[`Mistake → fix`,5,'l'],[`Sort and choose`,25,'a'],[`Think about it`,5,'a']])} },
 
-  { nav:'Four lenses', title:'Four lenses to judge an idea', minutes:8,
-    narration:[`A strong idea passes three lenses. <b>Desirable</b>: people want it. <b>Feasible</b>: we can make it. <b>Viable</b>: it pays for itself. In ENT 141 it must also be <b>sustainable</b>.`],
-    src:`Brown, T. (2009). <em>Change by design</em>. HarperBusiness. · Elkington, J. (1997). <em>Cannibals with forks</em>. Capstone.`,
-    fig:{label:`Concept · three circles inside one frame`, html:LENSES} },
+  { nav:'Three groups', title:'Assessing ideas: Risky, Easy, Favourite', minutes:8,
+    narration:[`Sort every idea into one group. <b>Risky</b>: bold, but uncertain. <b>Easy</b>: quick and cheap to try. <b>Favourite</b>: the team’s heart choice.`],
+    fig:{label:`Concept · three groups`, html:GROUPS} },
 
-  { nav:'Desirable', title:'Lens 1 · Desirable: do people want it?', minutes:8,
-    narration:[`<b>Desirable</b> means real users need it. You learn this from users, not from your own guess.`],
+  { nav:'Sort the ideas', title:'Try it: sort six ideas', minutes:10,
+    narration:[`Fictional ideas for our Week 6 problem: students late for 8 am classes. Sort each idea. Then compare with the suggested answer.`],
+    fig:{label:`Sort · fictional example`, build:el=>W.sort(el,SORT)} },
+
+  { nav:'Risky', title:'Risky: bold, but uncertain', minutes:6,
+    narration:[`A <b>risky</b> idea may change everything. It may also fail. Test it early with real users.`],
     src:`Hasso Plattner Institute of Design at Stanford. Design for Extreme Affordability: Embrace (2007). · Embrace Innovations, company history.`,
     fig:{label:`Case card · real case`, html:caseCard(CASES.embrace)} },
 
-  { nav:'Feasible', title:'Lens 2 · Feasible: can we make it?', minutes:8,
-    narration:[`<b>Feasible</b> means your team can build it. You need the skills, time and materials. A quick model tests this.`],
+  { nav:'Easy', title:'Easy: quick to try', minutes:6,
+    narration:[`An <b>easy</b> idea is fast and cheap to test. It teaches you quickly. It may be less bold.`],
     src:`Kelley, T. (2001). <em>The art of innovation</em>. Currency/Doubleday. · ABC News <em>Nightline</em> (1999, July 13). The deep dive.`,
     fig:{label:`Case card · real case`, html:caseCard(CASES.ideo)} },
 
-  { nav:'Viable', title:'Lens 3 · Viable: can it pay for itself?', minutes:8,
-    narration:[`<b>Viable</b> means money comes in. It must cover the costs. Then the idea can last.`],
+  { nav:'Favourite', title:'Favourite: the team’s heart choice', minutes:6,
+    narration:[`A <b>favourite</b> idea is the one your team loves. Love gives energy. But love is not proof.`],
+    src:`Grimshaw Architects. (2021). <em>Terra – The Sustainability Pavilion, Expo 2020 Dubai</em>.`,
+    fig:{label:`Case card · real case`, html:caseCard(CASES.terra)} },
+
+  { nav:'Idea ↔ problem', title:'How to align the idea to the problem?', minutes:8,
+    narration:[`Your idea must solve your HMW problem from Week 6. Check three things. Same <b>user</b>. Same <b>pain</b>. <b>Evidence</b> from your interviews.`],
+    fig:{label:`Concept · three checks join problem and idea`, html:ALIGN} },
+
+  { nav:'Fit check', title:'Fit check, step by step', minutes:8,
+    narration:[`Running example: the WhatsApp carpool group. Press play. Check each step against the HMW.`],
+    fig:{label:`Fit check · fictional example`, flow:FIT} },
+
+  { nav:'Aligned case', title:'A real idea that fits its problem', minutes:5,
+    narration:[`IKEA saw one clear pain. Big furniture did not fit in a car. The flat box solved that pain.`],
     src:`IKEA. (n.d.). <em>The IKEA story</em>: 1956, flat packs (Gillis Lundgren and the Lövet table).`,
     fig:{label:`Case card · real case`, html:caseCard(CASES.ikea)} },
 
-  { nav:'Sustainable', title:'Lens 4 · Sustainable: good for people and planet?', minutes:8,
-    narration:[`<b>Sustainable</b> means the idea helps people and protects the planet. Check the triple bottom line (people, planet, profit) and one SDG.`],
-    src:`Grimshaw Architects. (2021). <em>Terra – The Sustainability Pavilion, Expo 2020 Dubai</em>. · United Nations (2015). <em>Transforming our world: The 2030 agenda for sustainable development</em>.`,
-    fig:{label:`Case card · real case`, html:caseCard(CASES.terra)} },
-
-  { nav:'Score it', title:'Score it: the weighted scoring table', minutes:15,
-    narration:[`A <b>weighted scoring table</b> compares ideas fairly. Give each lens a weight. Score each idea 1 to 5. Multiply, then add.`,
-      `Fictional example: three ideas to reach 8 am classes. Predict each number first.`],
+  { nav:'Score your top idea', title:'Optional · Then score your top idea', minutes:8,
+    narration:[`Still unsure? Score your top ideas. Give each criterion a weight. Score 1 to 5. Multiply, then add.`],
     src:`Based on concept selection in Pugh, S. (1991). <em>Total design</em>. Addison-Wesley.`,
-    fig:{label:`Fictional example · press Next step`, build:el=>matrix(el,{init:EXAMPLE,edit:false})} },
+    fig:{label:`Fictional example · press Next step`, build:el=>matrix(el,{init:EXAMPLE})} },
 
-  { nav:'Dot voting', title:'Optional · Dot voting to shortlist', minutes:5,
-    narration:[`Too many ideas? Use <b>dot voting</b> (quick group vote). Each member places three dots. The top three ideas go into the table.`],
-    src:`Gray, D., Brown, S., &amp; Macanufo, J. (2010). <em>Gamestorming</em>. O’Reilly: Dot voting.`,
-    fig:{label:`Fictional example · top 3 highlighted`, html:dotsSVG()} },
-
-  { nav:'Case study in depth', title:'Case study in depth · Grameen Bank', kind:'activity', minutes:20, wide:true,
-    narration:[`Read the case twice. Then judge it with the four lenses.`, DEEP],
+  { nav:'Case study in depth', title:'Case study in depth · Grameen Bank', kind:'activity', minutes:15, wide:true,
+    narration:[`Read the case twice. Then check how the idea fits the problem.`, DEEP],
     src:`Yunus, M. (1999). <em>Banker to the poor</em>. PublicAffairs. · Nobel Prize Outreach. (2006). <em>The Nobel Peace Prize 2006</em>.`,
     fig:{label:`Three questions · saves in your browser`, build:el=>W.worksheet(el,{id:'ent141-w08-case',title:'ENT 141 · Week 8 · Case study: Grameen Bank',fields:[
-      {l:'1 · Which lens was the biggest risk at the start? Why?',rows:2},
-      {l:'2 · One fact from the text that shows it was viable',rows:2},
-      {l:'3 · Which SDG does it serve? Who benefits?',rows:2}]})} },
+      {l:'1 · In 1976, was it Risky, Easy or Favourite? Why?',rows:2},
+      {l:'2 · The problem: who had it, and what was the pain?',rows:2},
+      {l:'3 · One fact that shows the idea fit the problem',rows:2}]})} },
 
   { nav:'Mistake → fix', title:'Mistake → fix', kind:'review', minutes:5,
-    narration:[`Four mistakes teams make with the scoring table. Say the fix first, then reveal it.`],
+    narration:[`Four mistakes teams make. Say the fix first, then reveal it.`],
     fig:{label:`Common mistakes · reveal the fix`, build:el=>W.practice(el,FIX,{label:'Fix',prefix:'<b>Fix:</b> '})} },
 
-  { nav:'Score your ideas', title:'Team activity · Score your top ideas', kind:'activity', minutes:25, wide:true,
-    narration:[`Enter your top three ideas. Agree the weights. Score with evidence. Write your reasons.`,
+  { nav:'Sort and choose', title:'Team activity · Sort, choose, check', kind:'activity', minutes:25, wide:true,
+    narration:[`Sort your 15 ideas into Risky, Easy and Favourite. Pick one. Check it fits your HMW.`,
       `<a class="btn" href="project-2.html#p-s1">Copy into Project 2, sections 1 and 2 →</a>`],
-    fig:{label:`Team table and notes · saves in your browser`, build:scoreActivity} },
+    fig:{label:`Team notes · saves in your browser`, build:sortActivity} },
 
   { nav:'Think about it', title:'Think about it', kind:'review', minutes:5,
     narration:[`Discuss with your team. There is no single right answer.`,
-      `<b>Exit question:</b> which lens did your team weight highest? What evidence made you choose it?`,
+      `<b>Exit question:</b> which quote proves your idea fits the problem?`,
       `<b>Next week:</b> Defending the Idea · Presenting the Idea. Bring your poster.`,
       `<a class="btn" href="week-09.html">Next lecture · Week 9 · Defending the Idea →</a>`],
     fig:{label:`Reflection · Idea evaluation`, build:el=>W.practice(el,[
-      {q:'The table picks an idea nobody likes. Do you follow it?',hint:'The table helps you decide. It does not decide for you. Check the weights and scores again.'},
-      {q:'Why might a very desirable idea still fail?',hint:'If you cannot make it, or it cannot pay, users never get it.'},
-      {q:'Should sustainability always get the highest weight?',hint:'Not always. But a zero there is a warning for a social idea.'}],{label:'One view',prefix:''})} },
+      {q:'Your favourite idea fails the fit check. What do you do?',hint:'Change the idea, or pick another one. Do not change the problem to fit.'},
+      {q:'When is a Risky idea worth it?',hint:'When it could solve the pain much better, and you can test it small.'},
+      {q:'Why start with an Easy idea?',hint:'You learn fast and cheap. Then you can try bolder ideas.'}],{label:'One view',prefix:''})} },
   ]
 });
 </script>

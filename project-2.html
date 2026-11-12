@@ -62,10 +62,11 @@ const SECTIONS=[
  {id:'s2',n:'2',title:'Idea evaluation and selection',tag:'Week 8',fmt:true,wc:200,howto:'Score each idea from 1 (weak) to 5 (strong). Weights must add up to 100. The ★ shows the highest score. <a href="week-08.html">Week 8</a>',
   items:[{t:'matrix',k:'mx',crit:[['Desirability · people want it',30],['Feasibility · we can build it',25],['Viability · it can pay for itself',25],['Sustainability · SDG and planet',20]],opts:['i1','i2','i3']},
    {t:'q',k:'sel',label:'Which idea did you choose, and why? Use the scores.',rows:3}]},
- {id:'s3',n:'3',title:'Market and industry analysis',tag:'Week 12',fmt:true,wc:400,howto:'Size the market with real open data, then look at the industry around your idea. <a href="week-12.html">Week 12</a>',
+ {id:'s3',n:'3',title:'Market analysis and PESTLE',tag:'Week 12',fmt:true,wc:400,howto:'Who is your market? Then check the six PESTLE forces around your idea, with real facts. <a href="week-12.html">Week 12</a>',
   items:[{t:'table',k:'mk',cols:['Level','Who','Number','Source'],rows:3,ph:['TAM / SAM / SOM','Which people','Estimate','Website, year']},
-   {t:'q',k:'riv',label:'Rivalry · who already solves this problem?',rows:2},{t:'q',k:'ent',label:'New entrants · how easy is it for others to copy you?',rows:2},
-   {t:'q',k:'sub',label:'Substitutes · what do people use instead today?',rows:2},{t:'q',k:'buy',label:'Buyers · how much power do your customers have?',rows:2},{t:'q',k:'sup',label:'Suppliers · who do you depend on?',rows:2}]},
+   {t:'q',k:'pP',label:'Political · government rules or support that affect your idea',rows:2},{t:'q',k:'pE',label:'Economic · prices, costs, how much people can pay',rows:2},
+   {t:'q',k:'pS',label:'Social · habits and values of your customers (use your interviews)',rows:2},{t:'q',k:'pT',label:'Technological · apps or tools you depend on',rows:2},
+   {t:'q',k:'pL',label:'Legal · licences, laws, permits',rows:2},{t:'q',k:'pV',label:'Environmental · effect on the planet, waste, heat',rows:2}]},
  {id:'s4',n:'4',title:'Value proposition canvas',tag:'Weeks 13–14',fmt:true,wc:300,howto:'Left: what your customer needs (from your Project 1 interviews). Right: what your idea offers. <a href="week-13.html">Week 13</a> · <a href="week-14.html">Week 14</a>',
   items:[{t:'boxes',cls:'vpc',boxes:[
     {h:'Customer jobs',sub:'customer profile',cls:'b3',items:[['vj1','Job 1'],['vj2','Job 2'],['vj3','Job 3']]},{h:'Products and services',sub:'value map',cls:'b1',items:[['vp1','Product or service 1'],['vp2','Product or service 2'],['vp3','Product or service 3']]},
@@ -88,7 +89,7 @@ const EX={title:'Pre-order breakfast kiosk for 8 am classes',team:'Team Morning'
  mx_w0:'30',mx_w1:'25',mx_w2:'25',mx_w3:'20',mx_0_0:'5',mx_0_1:'3',mx_0_2:'4',mx_1_0:'4',mx_1_1:'4',mx_1_2:'2',mx_2_0:'3',mx_2_1:'4',mx_2_2:'3',mx_3_0:'4',mx_3_1:'4',mx_3_2:'3',
  sel:'We chose the kiosk. It scored highest on desirability: in our Project 1 interviews, students said time, not money, was the reason they skip breakfast.',
  mk_0_0:'TAM',mk_0_1:'University students in Dubai',mk_0_2:'Illustrative only',mk_0_3:'Use your open data source',mk_1_0:'SAM',mk_1_1:'Students on our campus with morning classes',mk_1_2:'Illustrative only',mk_1_3:'Campus figures you are allowed to use',mk_2_0:'SOM',mk_2_1:'Students we can serve in year 1',mk_2_2:'Illustrative only',mk_2_3:'Your own estimate',
- riv:'The campus café sells breakfast, but queues are long before 9 am.',ent:'Easy to copy; our advantage is the pre-order timing and location.',sub:'Energy drinks, snacks from home, skipping the meal.',buy:'Students compare prices easily, so price must stay close to the café.',sup:'A local bakery and fruit supplier.',
+ pP:'Campus rules on food sellers; the university must approve the kiosk.',pE:'Students compare prices with the café, so the box must stay close in price.',pS:'Our interviews: students value time more than price in the morning.',pT:'A simple pre-order form or app with a pick-up time.',pL:'A food trade licence and food-safety rules apply.',pV:'Pre-orders cut food waste; we avoid single-use plastic.',
  vj1:'Get to an 8 am class on time',vj2:'Stay focused until noon',vj3:'Spend little',va1:'No time in the morning',va2:'Long queue at the café',va3:'Unhealthy options',vg1:'Feel awake in class',vg2:'Healthy habit',vg3:'Save money',
  vp1:'Pre-ordered breakfast box',vp2:'Order app with pick-up time',vp3:'Weekly meal plan',vr1:'Ready at 7:45, pick up in 30 seconds',vr2:'No queue: separate pick-up shelf',vr3:'Menu made with a nutrition student club',vg1c:'',vc1:'Protein and fruit in every box',vc2:'Streak reminder in the app',vc3:'Weekly plan discount',
  fit:'The kiosk removes the time pain best. Price is still a risk: we have not tested how much students will pay.',
@@ -106,7 +107,7 @@ document.getElementById('mdl').innerHTML=MOODLE?`<a class="bbtn pri" href="${esc
 const B=['Exemplary','Proficient','Developing','Poor'];
 const RUB=[['1 · Three ideas',10,['Three distinct ideas, each with a named strategy and clear user.','Three ideas, strategies partly clear.','Ideas similar or vague.','Fewer than three ideas.']],
  ['2 · Evaluation and selection',15,['Weighted matrix complete; choice explained with scores and interview evidence.','Matrix complete; choice explained briefly.','Matrix incomplete or choice not linked to scores.','No evaluation.']],
- ['3 · Market and industry',20,['TAM/SAM/SOM with real sources; all five forces discussed.','Market sized with some sources; most forces discussed.','Numbers without sources; forces thin.','Missing.']],
+ ['3 · Market and PESTLE',20,['Market clearly defined; all six PESTLE forces with real, sourced facts.','Market defined; most PESTLE forces with some facts.','PESTLE thin or without facts.','Missing.']],
  ['4 · Value proposition canvas',20,['All six boxes from real interview evidence; honest fit statement.','Canvas complete; fit partly explained.','Canvas incomplete or generic.','Missing.']],
  ['5 · Differentiation',15,['Real competitors compared; clear points of difference; positioning statement and map.','Competitors compared; positioning partly clear.','Weak comparison.','Missing.']],
  ['6 · Sustainability and writing',20,['SDG and triple bottom line explained; evidence labelled; APA references; clear writing.','Mostly complete; minor errors.','Thin sustainability; little evidence.','Missing or hard to follow.']]];

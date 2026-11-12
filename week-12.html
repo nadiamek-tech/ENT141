@@ -42,12 +42,6 @@ const MKT_IND=`<svg viewBox="0 0 520 230" role="img" aria-label="Market is the b
   <text x="410" y="210" text-anchor="middle" font-family="Schibsted Grotesk,Arial" font-size="13" fill="var(--muted)">firms selling similar products</text>
 </svg>`;
 
-const FUNNEL=`<svg viewBox="0 0 520 240" role="img" aria-label="TAM, SAM and SOM as a narrowing funnel" style="width:100%;height:auto">
-  ${[['TAM','Total addressable market','Everyone who has the need',0,500],['SAM','Serviceable available market','The part you can reach',80,340],['SOM','Serviceable obtainable market','The part you can win soon',160,180]].map(([k,t,d,y,w],i)=>`<rect x="${(520-w)/2}" y="${y+6}" width="${w}" height="68" rx="10" fill="var(--wk)" fill-opacity="${.18+i*.3}" stroke="var(--wk)"/>
-  <text x="260" y="${y+34}" text-anchor="middle" font-family="Schibsted Grotesk,Arial" font-weight="800" font-size="19" fill="var(--ink)">${k}</text>
-  <text x="260" y="${y+56}" text-anchor="middle" font-family="Schibsted Grotesk,Arial" font-size="12.5" fill="var(--ink)">${i<2?t+' · ':''}${d}</text>`).join('')}
-</svg>`;
-
 function sizeCalc(el){
   const key='ent141-w12-size'; let st; try{st=JSON.parse(store.get(key)||'null')}catch(e){}
   if(!st) st={n:100000,p:240,sam:40,som:2};
@@ -80,70 +74,96 @@ const DATA={'UAE':[
   ['World Bank Open Data','data.worldbank.org: population, income, education and business indicators by country and year.'],
   ['UN SDG Global Database','Official data for every SDG indicator, by country. Useful for your sustainability section too.']]};
 
-const FORCES={center:'Food delivery in the UAE',branches:[
-  {t:'Rivalry among firms',items:['Talabat, Careem, Deliveroo and others compete','Discounts and free delivery offers','<b>High</b>']},
-  {t:'Threat of new entrants',items:['An app is easy to copy','Riders, restaurants and users are hard to win','<b>Medium</b>']},
-  {t:'Power of buyers',items:['Users switch apps in seconds','Compare prices on two phones','<b>High</b>']},
-  {t:'Power of suppliers',items:['Popular restaurants can choose apps','Riders can move to another platform','<b>Medium</b>']},
-  {t:'Threat of substitutes',items:['Cook at home','Eat at the restaurant or campus canteen','<b>Medium</b>']}]};
+const NEED_PAY=`<svg viewBox="0 0 520 240" role="img" aria-label="Two overlapping circles: people with a need, and people able to pay. The overlap is the market" style="width:100%;height:auto">
+  <circle cx="200" cy="120" r="105" fill="var(--wk)" fill-opacity=".12" stroke="var(--wk)" stroke-width="2"/>
+  <circle cx="320" cy="120" r="105" fill="var(--wk)" fill-opacity=".12" stroke="var(--wk)" stroke-width="2"/>
+  <text x="150" y="115" text-anchor="middle" font-family="Schibsted Grotesk,Arial" font-weight="800" font-size="16" fill="var(--ink)">Has a need</text>
+  <text x="150" y="137" text-anchor="middle" font-family="Schibsted Grotesk,Arial" font-size="12.5" fill="var(--muted)">a real pain</text>
+  <text x="370" y="115" text-anchor="middle" font-family="Schibsted Grotesk,Arial" font-weight="800" font-size="16" fill="var(--ink)">Can pay</text>
+  <text x="370" y="137" text-anchor="middle" font-family="Schibsted Grotesk,Arial" font-size="12.5" fill="var(--muted)">money or budget</text>
+  <rect x="222" y="104" width="76" height="32" rx="16" fill="var(--wk)"/>
+  <text x="260" y="125" text-anchor="middle" font-family="Schibsted Grotesk,Arial" font-weight="800" font-size="14" fill="var(--on-wk)">Market</text>
+</svg>`;
+
+const PESTLE=[
+  {t:'Political',s:'government',d:'What does the government plan or support? Policies, strategies, programmes.'},
+  {t:'Economic',s:'money',d:'Taxes, prices, costs, income. Can customers pay? Can the business earn?'},
+  {t:'Social',s:'people',d:'Habits, culture, age, lifestyle. Will people change how they act?'},
+  {t:'Technological',s:'tools',d:'Which tools, apps or materials exist? Can your team use them?'},
+  {t:'Legal',s:'laws',d:'Which laws, licences and rules apply to your idea?'},
+  {t:'Environmental',s:'planet',d:'Waste, energy, water, climate. Does your idea help or harm?'}];
+
+const PEX={
+  'P · Political':[['UAE Net Zero 2050','In October 2021, the UAE announced its Net Zero by 2050 strategic initiative. Green ideas fit national goals. <span class="tag good">opportunity</span>']],
+  'E · Economic':[['Corporate tax 9%','Since June 2023, UAE businesses pay 9% tax on profit above AED 375,000. Plan it in your costs. <span class="tag">cost</span>'],['VAT 5%','Since 1 January 2018, most sales in the UAE carry 5% VAT. Add it to your price. <span class="tag">cost</span>']],
+  'S · Social':[['Shopping habits','Shoppers must now remember a bag. Find this pain in your own interviews. <span class="tag">your evidence</span>']],
+  'T · Technological':[['Tracking bags','Could a QR code track each bag? Check what your team can really build. <span class="tag">your evidence</span>']],
+  'L · Legal':[['Plastic bag ban','Dubai Executive Council Resolution No. 124 of 2023. Single-use plastic bags are banned from 1 January 2024. <span class="tag good">opportunity</span>']],
+  'E · Environmental':[['Less plastic waste','The same ban aims to cut plastic waste. Reusable bags support this aim. <span class="tag good">opportunity</span>']]};
 
 const FIX=[
-  {q:'“Our market is everyone in the UAE.”',type:'too broad',hint:'Name the customer with the need: “riders who work midday shifts in Dubai”. Then count them.'},
-  {q:'“TAM is AED 1 billion.” No source.',type:'no evidence',hint:'Show the calculation (customers × price) and name the open data source and year.'},
-  {q:'“We have no competitors.”',type:'blind spot',hint:'Every need is solved somehow today. List substitutes too, even “do nothing”.'},
-  {q:'“We will win 50% of the market in year one.”',type:'too optimistic',hint:'Start small and explain why: how many customers can your team really reach in a year?'}];
+  {q:'“Our market is everyone in the UAE.”',type:'too broad',hint:'Name the customer with the need and the money. Then count them.'},
+  {q:'PESTLE lists facts with no source.',type:'no evidence',hint:'Write the law, the body and the year next to each fact.'},
+  {q:'Only good news in the PESTLE table.',type:'blind spot',hint:'Add at least one threat. A cost or a law can stop you.'},
+  {q:'“Market” and “industry” used as the same word.',type:'mixed terms',hint:'Market = buyers. Industry = sellers.'}];
 
 function reflect(qs,exit){ return `<div class="stack ui">${qs.map((q,i)=>`<div class="feedback"><b>Q${i+1}</b> ${q}</div>`).join('')}<div class="box exam"><b class="lbl">Exit question</b>${exit}</div></div>`; }
 
 Lecture.mount({
-  id:'ent141-w12', week:12, clo:'3', course:'ENT 141', short:'Week 12 · Market/Industry Analysis',
-  title:'Market/Industry Analysis', meta:'Byers et al. (2019), Porter (2008) · 2-hour lecture',
+  id:'ent141-w12', week:12, clo:'3', course:'ENT 141', short:'Week 12 · Market/Industry Analysis', instructor:'Nadia',
+  title:'Market/Industry Analysis', meta:'Byers et al. (2019) Ch. 2, 3 · 2-hour lecture',
   scenes:[
   { nav:'Start here', title:'Is there a market for your idea?', minutes:5,
-    narration:[`Today your team sizes the market for its chosen idea and looks at the industry around it. This is section 3 of Project 2. <span class="mono">Topics: Market vs Industry · TAM, SAM, SOM · Five Forces. CLO 3.</span>`],
-    think:`A friend wants to open a karak tea stand at the campus gate. Before spending any money, what would you count to know if enough people will buy?`,
-    src:`Reading: Byers, T. H., Dorf, R. C., &amp; Nelson, A. J. (2019). <em>Technology ventures: From idea to enterprise</em> (5th ed.). McGraw-Hill.`,
-    fig:{label:`Today's lecture · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`Market vs industry`,10,'l'],[`TAM, SAM, SOM`,10,'l'],[`Size it step by step`,15,'l'],[`Find real data`,10,'l'],[`Five forces`,15,'l'],[`Mistake → fix`,5,'l'],[`Project 2 · section 3`,40,'a'],[`Think about it`,10,'a']])} },
+    narration:[`Today you ask two questions. Who will buy? What is happening around us? <span class="mono">Topics: What is a market? · PESTLE analysis. CLO 3.</span>`],
+    think:`A friend wants to open a karak tea stand at the campus gate. What would you check before spending any money?`,
+    src:`Reading: Byers, T. H., Dorf, R. C., &amp; Nelson, A. J. (2019). <em>Technology ventures: From idea to enterprise</em> (5th ed.), Ch. 2, 3. McGraw-Hill.`,
+    fig:{label:`Today's lecture · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`What is a market?`,10,'l'],[`Market vs industry`,10,'l'],[`PESTLE`,15,'l'],[`PESTLE in the UAE`,15,'l'],[`Find real data`,10,'l'],[`How big is the market?`,10,'l'],[`Mistake → fix`,5,'l'],[`Project 2 · section 3`,30,'a'],[`Think about it`,10,'a']])} },
+
+  { nav:'What is a market?', title:'What is a market?', minutes:10,
+    narration:[`A <b>market</b> is people with a need who can pay. A need alone is not a market. Money alone is not a market. You need both.`],
+    src:`Byers et al. (2019), Ch. 2, 3.`,
+    fig:{label:`Concept · need + ability to pay`, html:NEED_PAY} },
 
   { nav:'Market vs industry', title:'Market vs industry', minutes:10,
-    narration:[`A <b>market</b> is the customers who have a need and can pay. An <b>industry</b> is the firms selling similar products. Uber agreed to buy Careem (March 2019, US$3.1 billion): the industry changed, riders’ need did not.`],
+    narration:[`The <b>market</b> is the buyers. The <b>industry</b> is the firms selling similar products. Uber agreed to buy Careem in March 2019. The industry changed. Riders’ need did not.`],
     src:`Byers et al. (2019). · Uber Technologies (2019, March 26). Uber to acquire Careem [Press release].`,
     fig:{label:`Two sides of the same exchange`, html:MKT_IND} },
 
-  { nav:'TAM, SAM, SOM', title:'Market size: TAM, SAM, SOM', minutes:10,
-    narration:[`<b>TAM</b> is everyone with the need. <b>SAM</b> is the part your offer can reach (place, language, channel). <b>SOM</b> is the share you can realistically win in the first year.`],
-    src:`Byers et al. (2019): market size and opportunity assessment.`,
-    fig:{label:`From everyone to your first customers`, html:FUNNEL} },
+  { nav:'PESTLE', title:'PESTLE analysis', minutes:15,
+    narration:[`<b>PESTLE</b> scans the world around your idea. Six letters, six questions. Each one shows an opportunity or a threat. Press play.`],
+    src:`Byers et al. (2019), Ch. 2, 3: the business environment.`,
+    fig:{label:`Concept · six steps`, flow:PESTLE} },
 
-  { nav:'Size it step by step', title:'Size it step by step', minutes:15,
-    narration:[`Running example: a shaded rest point with cold water for delivery riders, AED 20 a month (AED 240 a year). Multiply customers by price, then narrow twice. Change the numbers and watch the circles.`],
-    fig:{label:`Market size calculator · illustrative numbers`, build:sizeCalc, caption:`Illustrative numbers only, not real data. Your team must use real figures with a source.`} },
+  { nav:'PESTLE in the UAE', title:'PESTLE step by step: a UAE example', minutes:15,
+    narration:[`Fictional idea: a reusable bag rental at Dubai supermarkets. The facts are real. Click each letter.`],
+    src:`Dubai Executive Council Resolution No. (124) of 2023 Regulating the Use of Single-use Products. · Federal Decree-Law No. 47 of 2022 on the Taxation of Corporations and Businesses. · Federal Decree-Law No. 8 of 2017 on Value Added Tax. · UAE Government (2021). UAE Net Zero 2050 strategic initiative.`,
+    fig:{label:`Real facts · click a letter`, build:el=>W.picker(el,PEX,'Select a letter.')} },
 
   { nav:'Find real data', title:'Where to find real numbers', minutes:10,
-    narration:[`Count customers with <b>official open data</b>, then write the source and year next to each number. Prices come from your interviews or from competitors’ public prices. More sources in the <a href="toolkit.html#s4">open data finder</a>.`],
+    narration:[`Use <b>official open data</b>. Write the source and year next to each number. More sources in the <a href="toolkit.html#s4">open data finder</a>.`],
     fig:{label:`Trusted open data · click to read`, build:el=>W.picker(el,DATA,'Select a source.')} },
 
-  { nav:'Five forces', title:'Porter’s five forces (light)', minutes:15,
-    narration:[`Porter’s <b>five forces</b> show how hard it is to make money in an industry. Rate each force low, medium or high, with one reason. Applied here to food delivery apps.`],
-    src:`Porter, M. E. (2008). The five competitive forces that shape strategy. <em>Harvard Business Review</em>, 86(1), 78–93.`,
-    fig:{label:`Five forces · our class rating`, mindmap:FORCES, caption:`Ratings are a class discussion, not data. Your team rates its own industry.`} },
+  { nav:'How big is the market?', title:'Optional · How big is the market?', minutes:10,
+    narration:[`<b>TAM</b>: everyone with the need. <b>SAM</b>: the part you can reach. <b>SOM</b>: the part you can win in year 1. Change the numbers.`],
+    fig:{label:`Market size calculator · illustrative numbers`, build:sizeCalc, caption:`Illustrative numbers only, not real data. Your team must use real figures with a source.`} },
 
   { nav:'Mistake → fix', title:'Mistake → fix', kind:'review', minutes:5,
-    narration:[`These four mistakes appear in many market sections. Say the fix out loud before you reveal it.`],
+    narration:[`Four common mistakes. Say the fix out loud before you reveal it.`],
     fig:{label:`Common mistakes · reveal the fix`, build:el=>W.practice(el,FIX,{label:'Fix',prefix:''})} },
 
-  { nav:'Project 2 · section 3', title:'Activity · Project 2, section 3 draft', kind:'activity', minutes:40, wide:true,
-    narration:[`Work on your team’s chosen idea from section 2. Use the calculator with real numbers, then write the draft here. Paste it into section 3 of the <a href="project-2.html">Project 2 builder</a>.`],
-    fig:{label:`Market and industry analysis · saves in your browser`, build:el=>W.worksheet(el,{id:'ent141-w12-market',title:'ENT 141 · Project 2 · Section 3 · Market and industry analysis',fields:[
-      {l:'Our customer (who has the need and pays)',rows:2},
-      {l:'TAM: number of customers × price per year = AED …',rows:2},
-      {l:'SAM and SOM: who we can reach, and what share we win in year 1',rows:3},
-      {l:'Sources: open data portal, table name, year',rows:2},
-      {l:'Five forces: the two strongest forces and why',rows:3}]})} },
+  { nav:'Project 2 · section 3', title:'Team activity · PESTLE for your idea', kind:'activity', minutes:30, wide:true,
+    narration:[`Use your chosen idea from section 2. Fill one line per letter. Add a source for each fact.`,
+      `<a class="btn" href="project-2.html">Paste into Project 2, section 3 →</a>`],
+    fig:{label:`Market and PESTLE · saves in your browser`, build:el=>W.worksheet(el,{id:'ent141-w12-market',title:'ENT 141 · Project 2 · Section 3 · Market and PESTLE analysis',fields:[
+      {l:'Our market: who has the need and can pay',rows:2},
+      {l:'P and E: one fact each, with source',rows:3},
+      {l:'S and T: one finding each (interviews or source)',rows:3},
+      {l:'L and E: one fact each, with source',rows:3},
+      {l:'Biggest opportunity and biggest threat',rows:2}]})} },
 
   { nav:'Think about it', title:'Think about it', kind:'review', minutes:10,
-    narration:[`Discuss with your team. There is no single right answer.`,`<b>Next week:</b> Value Proposition Canvas, part 1. Bring your Project 1 interview notes and empathy map.<br><a class="btn" href="week-13.html">Next lecture · Week 13 · Value Proposition Canvas (Part 1) →</a>`],
-    fig:{label:`Reflection`, html:reflect([`Your SOM looks very small. Is that bad news for a social venture?`,`Which of the five forces could stop your idea, and what could your team do about it?`,`Where did your price come from: a guess, an interview or a competitor?`],`In one sentence: who exactly is in your SAM?`)} },
+    narration:[`Discuss with your team. There is no single right answer.`,`<b>Next week:</b> Value Proposition Canvas, part 1. Bring your interview notes and empathy map.<br><a class="btn" href="week-13.html">Next lecture · Week 13 · Value Proposition Canvas (Part 1) →</a>`],
+    fig:{label:`Reflection`, html:reflect([`A new law appears next year. Which PESTLE letter could hurt your idea most?`,`Your users have the need but little money. Is that still a market?`,`Which PESTLE fact surprised your team?`],`In one sentence: who is your market?`)} },
   ]
 });
 </script>

@@ -124,5 +124,5 @@ function mount(cfg){ CFG=cfg; try{ D=JSON.parse(localStorage.getItem(cfg.key)||'
   const fixBar=()=>{ const h=document.getElementById('hub'), b=document.getElementById('bar'); if(b) b.style.top=(h?h.offsetHeight:0)+'px'; }; fixBar(); addEventListener('resize',fixBar);
   draw(); IDB.all().then(a=>{ IMGS=a; drawFigs(); counts(); });
   const go=()=>{ const t=location.hash&&document.getElementById(location.hash.slice(1)); if(t) setTimeout(()=>t.scrollIntoView({block:'start'}),100); }; addEventListener('hashchange',go); go(); }
-window.DocB={mount,V,esc};
+window.DocB={mount,V,esc,set:(k,v)=>{ D[k]=v; store(); draw(); },get:k=>D[k]};
 })();

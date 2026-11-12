@@ -7,7 +7,7 @@ window.COURSE={
     {key:'lectures',label:'Lectures',href:'lectures.html',icon:'lectures',blurb:'Each week: real examples, the textbook model, reflection.'},
     {key:'act1',label:'Activity 1',href:'activity-1.html',icon:'present',blurb:'In-class activity · 10% · video pitch: done.'},
     {key:'project',label:'Project 1',href:'project-1.html',icon:'project',blurb:'Team poster and presentation · 40%: done.'},
-    {key:'act2',label:'Activity 2',href:'activity-2.html',icon:'toolkit',blurb:'In-class activity · 10% · article or case analysis.'},
+    {key:'act2',label:'Activity 2',href:'activity-2.html',icon:'toolkit',blurb:'In-class activity · 10% · pick 1 of 20 real cases, analyse, reflect.'},
     {key:'project2',label:'Project 2',href:'project-2.html',icon:'project',blurb:'Idea Validation Report · 40%: write it on the page, save as Word, submit.'}
   ],
   navExtra:[['roadmap.html','Roadmap','roadmap'],['toolkit.html','Toolkit','toolkit']],
@@ -33,7 +33,7 @@ window.COURSE={
       submit:{link:'',dueText:'Week 9'},revise:[['Project guide','project-1.html'],['Poster template','poster.html']],done:true},
     {id:'p1p',name:'Project 1 · Presentation',short:'Presentation',type:'Project',weight:'10%',when:'Week 9',covers:['Present the poster with your team','Answer the panel’s questions'],clos:'2',format:'Team, graded individually',
       revise:[['How to present','project-1.html#s11']],done:true},
-    {id:'a2',name:'Activity 2 · Article or case (in class)',short:'Activity 2',type:'Activity',weight:'10%',when:'Week 11',date:'2026-11-19T09:00:00+04:00',time:false,covers:['One article or case assigned in class','Five questions: venture, strategy, evidence, value, lesson'],clos:'1',format:'Individual',caseLink:'',
+    {id:'a2',name:'Activity 2 · Case analysis (in class)',short:'Activity 2',type:'Activity',weight:'10%',when:'Week 11',date:'2026-11-19T09:00:00+04:00',time:false,covers:['Choose one of 20 real cases around us','Three facts with sources, five analysis questions, a short reflection'],clos:'1',format:'Individual',caseLink:'',
       submit:{link:'',due:'2026-11-19T23:59:00+04:00',dueText:'Thu 19 Nov'},revise:[['Activity 2 page','activity-2.html'],['Weeks 8–11 · From idea to strategy','week-08-11.html#s9']]},
     {id:'p2',name:'Project 2 · Idea Validation Report',short:'Project 2',type:'Project',weight:'40%',when:'Week 16',date:'2026-12-17T09:00:00+04:00',time:false,covers:['Three social innovation ideas, evaluated and one selected','Market and industry analysis','Value proposition canvas, differentiation, sustainability check'],clos:'1, 3, 4',format:'Team',
       submit:{link:'',due:'2026-12-17T23:59:00+04:00',dueText:'Thu 17 Dec'},revise:[['Project 2 builder','project-2.html']]}

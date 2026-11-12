@@ -11,12 +11,13 @@
 <link rel="stylesheet" href="assets/portal.css">
 <link rel="stylesheet" href="assets/docbuilder.css">
 <style>:root{--wk:#0E7490;--wk-soft:rgba(14,116,144,.09);--wk-d:#67E8F9;--wk-soft-d:rgba(103,232,249,.14)}</style>
+<style>.topics{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin:8px 0 18px}.tp{text-align:left;font:inherit;background:var(--surface);color:var(--ink);border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;cursor:pointer;display:grid;gap:4px}.tp:hover{border-color:var(--wk)}.tp[aria-pressed=true]{border-color:var(--wk);box-shadow:inset 0 0 0 2px var(--wk);background:var(--wk-soft)}.tp .c{font:700 .68rem var(--f-mono);text-transform:uppercase;letter-spacing:.06em;color:var(--wk)}.tp b{font-size:1rem}.tp small{color:var(--muted);font-size:.85rem;line-height:1.35}.tfil{display:flex;gap:6px;flex-wrap:wrap}.tfil button{font:700 .85rem var(--f-display);border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:6px 12px;cursor:pointer}.tfil button[aria-pressed=true]{background:var(--wk);border-color:var(--wk);color:var(--on-wk,#fff)}.guide3{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:12px 0 16px}.guide3>div{border:1px solid var(--line);border-radius:14px;padding:12px;background:var(--surface)}.guide3 .n{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--wk);color:var(--on-wk,#fff);font-weight:800;font-size:.85rem}.guide3 b{display:block;margin:6px 0 2px}.guide3 small{color:var(--muted)}.picked{background:var(--wk-soft);border-left:4px solid var(--wk);border-radius:8px;padding:10px 14px;margin:0 0 14px}@media(max-width:720px){.guide3{grid-template-columns:1fr 1fr}.topics,.guide3,.tfil,.picked,.pw>h2{margin-left:16px;margin-right:16px}}</style>
 </head>
 <body>
 <div id="hub" data-cur="act2"></div>
 <main class="pw" id="pw">
-  <h1>Activity 2 · Article or case analysis</h1>
-  <p class="lead">An in-class activity. Read the article or case your instructor assigns. Answer five questions directly on the page, then save as Word or PDF and submit.</p>
+  <h1>Activity 2 · Case analysis and reflection</h1>
+  <p class="lead">An in-class activity. Pick one real case around us, follow four guided steps, and reflect.</p>
   <div class="chips" id="chips"></div>
   <div class="bar" id="bar">
     <div class="seg" role="group" aria-label="Show"><button type="button" data-m="edit" aria-pressed="true">My analysis</button><button type="button" data-m="ex" aria-pressed="false">Example</button></div>
@@ -24,11 +25,16 @@
     <button type="button" class="bbtn" data-act="pdf">Print or PDF</button>
     <button type="button" class="bbtn" data-act="save">Save file</button>
     <label class="bbtn">Open file<input type="file" data-act="open" accept=".json,application/json" hidden></label>
-    <span id="case"></span>
+    
     <span class="prog" id="prog"></span>
   </div>
   <p class="msg" id="msg" aria-live="polite"></p>
-  <p class="exnote"><b>Example:</b> a made-up mini-case, to show the depth expected. Your case is the one your instructor assigns.</p>
+  <p class="exnote"><b>Example:</b> one student’s answer on Dubai Can, to show the depth expected. Choose your own case.</p>
+  <div class="guide3"><div><span class="n">1</span><b>Choose</b><small>One of 20 real cases below.</small></div><div><span class="n">2</span><b>Find facts</b><small>Three facts, with sources.</small></div><div><span class="n">3</span><b>Analyse</b><small>Five questions.</small></div><div><span class="n">4</span><b>Reflect</b><small>Three short questions.</small></div></div>
+  <h2 style="margin:6px 0 8px">Step 1 · Choose your case</h2>
+  <div class="tfil" id="tfil"></div>
+  <div class="topics" id="topics"></div>
+  <p class="picked" id="picked" hidden></p>
   <div id="doc"></div>
   <section class="sub" id="submit">
     <h2>Submit</h2>
@@ -53,29 +59,69 @@
 Portal.header('act2');
 const {esc,V}=DocB;
 const A2=COURSE.assess.find(a=>a.id==='a2')||{}, MOODLE=(A2.submit||{}).link||'', DUE=(A2.submit||{}).dueText||'', CASE=A2.caseLink||'';
-const STRAT=['Cost leadership','Differentiation','Focus (niche)','Blue ocean','Lean startup / iterate','Imitation with improvement','Platform / marketplace','Social enterprise model'];
+const STRAT=['Cost leadership','Differentiation','Focus (niche)','Blue ocean','Lean startup / iterate','Imitation with improvement','Platform / marketplace','Social enterprise model','Government or public initiative'];
+const TOPICS=[
+ ['v','Careem','Ride-hailing app founded in Dubai in 2012. Uber agreed to buy it in 2019.','Careem Uber acquisition 2019'],
+ ['v','Talabat','Food delivery app that started in Kuwait. Now part of Delivery Hero.','Talabat history Delivery Hero'],
+ ['v','Noon','Online shopping platform in the UAE and Saudi Arabia, launched in 2017.','noon e-commerce launch 2017'],
+ ['v','Kitopi','Dubai cloud kitchen company, founded in 2018: restaurants cook in shared kitchens.','Kitopi cloud kitchen Dubai'],
+ ['v','Tabby','UAE "buy now, pay later" app: pay in four parts.','Tabby buy now pay later UAE'],
+ ['v','Anghami','Music streaming app from Beirut, made for Arabic music.','Anghami music streaming history'],
+ ['v','Souq.com','Middle East online store bought by Amazon in 2017. It became Amazon.ae.','Amazon acquires Souq 2017'],
+ ['v','Swvl','Bus-booking app from Cairo for daily commuters.','Swvl bus booking startup'],
+ ['v','Grameen Bank','Small loans for poor families in Bangladesh. Nobel Peace Prize 2006.','Grameen Bank microcredit Nobel 2006'],
+ ['v','TOMS','Shoe brand known for "buy one, give one". It changed this model in 2019.','TOMS one for one model change 2019'],
+ ['p','Dubai Can','Free water refill stations to cut single-use plastic bottles. Launched in 2022.','Dubai Can initiative','https://mediaoffice.ae/en/news/2022/Feb/15-02/Hamdan-bin-Mohammed-launches-Dubai-Can-initiative'],
+ ['p','Plastic bag ban','Dubai banned single-use plastic bags from 1 January 2024.','Dubai single-use plastic bag ban 2024','https://mediaoffice.ae/en/news/2023/December/31-12/Hamdan-bin-Mohammed-issues-Resolution'],
+ ['p','Ne’ma · food waste','UAE national initiative to reduce food loss and waste.','Nema UAE food loss and waste initiative','https://www.wam.ae/en/details/1395303025558'],
+ ['p','UAE Food Bank','Collects extra food and gives it to people in need.','UAE Food Bank'],
+ ['p','Summer midday break','Outdoor workers stop work at midday in summer to stay safe from heat.','UAE midday break outdoor workers summer'],
+ ['p','Dubai Metro','Driverless metro opened in 2009 to reduce traffic.','Dubai Metro opening 2009 traffic'],
+ ['p','Solar Park','Mohammed bin Rashid Al Maktoum Solar Park: clean energy for Dubai.','Mohammed bin Rashid Al Maktoum Solar Park'],
+ ['p','Masdar City','A planned low-carbon city in Abu Dhabi.','Masdar City sustainable city'],
+ ['p','Dubai Cares','Charity that helps children get an education.','Dubai Cares education'],
+ ['p','Embrace warmer','A low-cost baby warmer, born in a Stanford design class.','Embrace infant warmer Stanford']];
+let TF='all';
+function drawTopics(){ const cur=DocB.get('topic')||'';
+  document.getElementById('tfil').innerHTML=[['all','All 20'],['v','Ventures around us'],['p','Real problems around us']].map(([k,l])=>`<button type="button" data-f="${k}" aria-pressed="${TF===k}">${l}</button>`).join('');
+  document.getElementById('topics').innerHTML=TOPICS.map((t,i)=>[t,i]).filter(([t])=>TF==='all'||t[0]===TF).map(([t,i])=>`<button type="button" class="tp" data-t="${i}" aria-pressed="${cur===t[1]}"><span class="c">${t[0]==='v'?'Venture':'Problem'} · ${i+1}</span><b>${esc(t[1])}</b><small>${esc(t[2])}</small></button>`).join('');
+  const t=TOPICS.find(x=>x[1]===cur), p=document.getElementById('picked');
+  p.hidden=!t; if(t) p.innerHTML=`<b>Your case: ${esc(t[1])}.</b> Start here: ${t[4]?`<a href="${t[4]}" target="_blank" rel="noopener">official source ↗</a> · `:''}search <a href="https://www.google.com/search?q=${encodeURIComponent(t[3])}" target="_blank" rel="noopener">“${esc(t[3])}” ↗</a>. Use news sites, official pages or the company site, not social media.`; }
+document.getElementById('tfil').addEventListener('click',e=>{ const b=e.target.closest('[data-f]'); if(b){ TF=b.dataset.f; drawTopics(); } });
+document.getElementById('topics').addEventListener('click',e=>{ const b=e.target.closest('[data-t]'); if(!b) return; const t=TOPICS[+b.dataset.t]; DocB.set('topic',t[1]); if(!DocB.get('title')) DocB.set('title',t[1]); drawTopics(); document.getElementById('p-facts').scrollIntoView({behavior:'smooth',block:'start'}); });
 const SECTIONS=[
- {id:'cover',cover:true,titleKey:'title',titlePh:'Title of the article or case',items:[{t:'in',k:'name',label:'Name'},{t:'in',k:'sid',label:'Student ID'},{t:'in',k:'ref',label:'Reference',ph:'Author (year). Title. Source.'}]},
- {id:'a',n:'Q',title:'Five questions',tag:'about one page',fmt:true,wc:350,howto:'Use evidence from the text in every answer. <a href="week-11.html">Week 11 · how to read a case</a>',
-  items:[{t:'q',k:'q1',n:'1',label:'The venture · who are they, and what problem do they solve?',rows:3},
-   {t:'pick',k:'q2s',label:'2 · Main strategy',opts:STRAT},{t:'q',k:'q2',n:'2',label:'The strategy · explain how they use it.',rows:3},
-   {t:'q',k:'q3',n:'3',label:'Evidence · two facts or quotes from the text that show this strategy.',rows:3},
-   {t:'q',k:'q4',n:'4',label:'Value · does it create social or environmental value? Which SDG?',rows:3},
-   {t:'q',k:'q5',n:'5',label:'Lesson · one thing your team can use in your Project 2 idea.',rows:3}]}];
-const EX={title:'Fictional mini-case: "FreshCrate", a fruit box for busy families',name:'Student A',sid:'2026XXXX',ref:'Fictional case written for practice (2026).',
- q1:'FreshCrate is a small startup that delivers weekly fruit boxes. It solves the problem of busy families buying unhealthy snacks because fresh fruit spoils before they eat it.',
- q2s:'Focus (niche)',q2:'FreshCrate does not sell to everyone. It targets families with children under 12 and sizes each box to one week, so less fruit is wasted.',
- q3:'The case says the box "fits one family for one week" and that the founders "turned down office orders to stay with families".',
- q4:'Yes. Less spoiled fruit means less food waste (SDG 12), and children eat more fruit (SDG 3).',
- q5:'Our team should choose one clear user group first, as FreshCrate did, instead of trying to serve all students.','fmt-a':'qa'};
-DocB.mount({key:'ent141-a2',docTitle:'Activity 2 · Article or Case Analysis',titleKey:'title',root:document.getElementById('pw'),sections:SECTIONS,ex:EX,
+ {id:'cover',cover:true,titleKey:'title',titlePh:'Your case (choose above)',items:[{t:'in',k:'name',label:'Name'},{t:'in',k:'sid',label:'Student ID'}]},
+ {id:'facts',n:'2',title:'Find three facts',tag:'with sources',howto:'Three facts about your case. Each one with where you found it.',
+  items:[1,2,3].flatMap(i=>[{t:'q',k:`f${i}`,label:`Fact ${i}`,rows:2},{t:'in',k:`f${i}s`,label:`Source ${i}`,ph:'Website or newspaper, date'}])},
+ {id:'a',n:'3',title:'Analyse · five questions',tag:'about 300 words',fmt:true,wc:300,howto:'Use your facts. <a href="week-11.html">Week 11 · how to read a case</a>',
+  items:[{t:'q',k:'q1',n:'1',label:'Who is it, and what problem does it solve?',rows:3},
+   {t:'pick',k:'q2s',label:'2 · Main strategy or approach',opts:STRAT},{t:'q',k:'q2',n:'2',label:'How do they use this strategy?',rows:3},
+   {t:'q',k:'q3',n:'3',label:'Which of your facts show this strategy?',rows:3},
+   {t:'q',k:'q4',n:'4',label:'What social or environmental value does it create? Which SDG?',rows:3},
+   {t:'q',k:'q5',n:'5',label:'Did it work? What is one problem or risk?',rows:3}]},
+ {id:'r',n:'4',title:'Reflect',tag:'about 150 words',fmt:true,wc:150,howto:'Write in the first person: "I".',
+  items:[{t:'q',k:'r1',n:'1',label:'What surprised me about this case?',rows:2},
+   {t:'q',k:'r2',n:'2',label:'What would I do differently if I ran it?',rows:2},
+   {t:'q',k:'r3',n:'3',label:'One lesson for my team’s Project 2 idea.',rows:2}]}];
+const EX={title:'Dubai Can',name:'Student A',sid:'2026XXXX',
+ f1:'Dubai Can was launched in February 2022 to cut single-use plastic water bottles.',f1s:'Dubai Media Office, 15 Feb 2022',
+ f2:'It offers free drinking water at public refill stations across the city.',f2s:'Dubai Media Office, 2022',
+ f3:'Companies joined by offering free refills in their buildings.',f3s:'Khaleej Times',
+ q1:'Dubai Can is a public initiative. It tries to reduce plastic bottle waste in Dubai.',q2s:'Government or public initiative',
+ q2:'It makes the better choice easy: free, clean water close to where people walk.',
+ q3:'Facts 1 and 2: free stations in public places remove the cost and effort of refilling.',
+ q4:'Less plastic waste and fewer bottles to produce (SDG 12, responsible consumption).',
+ q5:'It works best where stations are visible. A risk is that people forget their bottle.',
+ r1:'I did not know refilling could be free in so many places.',r2:'I would add a map in an app that shows the closest station.',
+ r3:'Our idea must make the healthy choice the easy choice, not only the cheap one.','fmt-a':'qa','fmt-r':'qa'};
+DocB.mount({key:'ent141-a2',docTitle:'Activity 2 · Case Analysis and Reflection',titleKey:'title',root:document.getElementById('pw'),sections:SECTIONS,ex:EX,
   coverOut:()=>[['Name',V('name')],['Student ID',V('sid')],['Reference',V('ref')],['Instructor','Nadia']],
   fileName:()=>`${(V('name')||'Student').replace(/[^\w\- ]+/g,'').replace(/\s+/g,'_')}_${V('sid')||'ID'}_ENT141_Activity2`});
 document.getElementById('chips').innerHTML=`<span>In class</span><span>Individual</span><span><b>10%</b></span><span>Due <b>${esc(DUE)}</b></span><span>CLO <b>1</b></span>`;
-document.getElementById('case').innerHTML=CASE?`<a class="bbtn" href="${esc(CASE)}" target="_blank" rel="noopener">Open the case ↗</a>`:`<span class="bbtn" aria-disabled="true">Case: given in class</span>`;
 document.getElementById('due').textContent=DUE+', 23:59';
 document.getElementById('mdl').innerHTML=MOODLE?`<a class="bbtn pri" href="${esc(MOODLE)}" target="_blank" rel="noopener">Submit on Moodle ↗</a>`:`<span class="bbtn" aria-disabled="true">Moodle link coming soon</span>`;
-document.getElementById('rub').innerHTML=`<div class="rub"><dl>${[['Venture and problem',2],['Strategy named and explained',2],['Evidence from the text',2],['Social or environmental value',2],['Lesson for your team',2]].map(([t,m])=>`<dt>${m} marks</dt><dd>${t}</dd>`).join('')}</dl></div>`;
+document.getElementById('rub').innerHTML=`<div class="rub"><dl>${[['Three facts with real sources',2],['Strategy named and explained with facts',3],['Social or environmental value',2],['Reflection: personal, honest, linked to your team',3]].map(([t,m])=>`<dt>${m} marks</dt><dd>${t}</dd>`).join('')}</dl></div>`;
+drawTopics();
 </script>
 </body>
 </html>

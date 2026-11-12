@@ -116,7 +116,7 @@ const CASE_PAT=caseCard({tag:'Case · communicating a purpose',org:'Patagonia',p
   whyLbl:'Why it works',why:'One line, a story from the founder, and an action that proves it.',
   lesson:'Say it in one line. Then show it with actions.'});
 
-/* ---------- Activity 2: five questions ---------- */
+/* ---------- Activity 1: five questions ---------- */
 const CASEQ=[
   {t:'Venture and problem',s:'Q1',d:'Who started it? Which problem does it solve, and for whom?'},
   {t:'Name the strategy',s:'Q2',d:'Use one name from Weeks 10–11: cost, difference, focus, blue ocean, lean, imitation, platform, social enterprise.'},
@@ -145,10 +145,10 @@ const FIX=[
 
 Lecture.mount({
   id:'ent141-w11', week:11, clo:'1, 3, 4', course:'ENT 141', short:'Week 11 · Overview of Strategies', instructor:'Nadia',
-  title:'Overview of Entrepreneurial Strategies', meta:'Collins &amp; Porras (1996), Harvard Business Review · 2-hour lecture · Activity 2',
+  title:'Overview of Entrepreneurial Strategies', meta:'Collins &amp; Porras (1996), Harvard Business Review · 2-hour lecture · Activity 1',
   scenes:[
   { nav:'Start here', title:'How do ventures share and check their strategy?', minutes:5,
-    narration:[`Last week: vision, mission, goals, objectives, tactics. Today: how to communicate them, and how to review them. Then Activity 2. <span class="mono">CLO 1 · CLO 3 · CLO 4.</span>`],
+    narration:[`Last week: vision, mission, goals, objectives, tactics. Today: how to communicate them, and how to review them. Then Activity 1. <span class="mono">CLO 1 · CLO 3 · CLO 4.</span>`],
     think:`Open an app you use daily. Can you find one sentence saying why it exists? Where did you see it?`,
     src:`Reading: Collins, J. C., &amp; Porras, J. I. (1996). Building your company's vision. <em>Harvard Business Review</em>, 74(5), 65–77.`,
     fig:{label:`Today's lecture · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`Two parts of a vision`,7,'l'],[`Communicate it`,8,'l'],[`Real case: Patagonia`,6,'l'],[`Review the strategy`,8,'l'],[`Keep · change · stop`,15,'a'],[`Strategies to review against`,6,'l'],[`Read a case`,5,'l'],[`Mistake → fix`,5,'c'],[`Practice case`,15,'a'],[`Team: three ideas`,30,'a'],[`Think about it`,10,'c']])} },
@@ -187,13 +187,13 @@ Lecture.mount({
     fig:{label:`Concept · strategy map`, mindmap:MAP} },
 
   { nav:'Read a case', title:'Read a case: five questions', minutes:5,
-    narration:[`Read a case twice. First for the story. Then answer these five questions. They are <a href="activity-2.html">Activity 2</a>: in class today, due Thu 19 Nov, 23:59.`,
-      `<a class="btn" href="activity-2.html">Open Activity 2 →</a>`],
-    src:`ENT 141 Activity 2 · Article or case analysis (10%, individual, in-class activity), submitted on Moodle.`,
+    narration:[`Read a case twice. First for the story. Then answer these five questions. They are <a href="activity-1.html">Activity 1</a>: in class today, due Thu 19 Nov, 23:59.`,
+      `<a class="btn" href="activity-1.html">Open Activity 1 →</a>`],
+    src:`ENT 141 Activity 1 · Article or case analysis (10%, individual, in-class activity), submitted on Moodle.`,
     fig:{label:`Five questions · click or play`, flow:CASEQ} },
 
   { nav:'Mistake → fix', title:'Mistake → fix', kind:'review', minutes:5,
-    narration:[`These four mistakes cost marks in Activity 2. Say the fix first, then reveal it.`],
+    narration:[`These four mistakes cost marks in Activity 1. Say the fix first, then reveal it.`],
     src:`United Nations. (2015). <em>Transforming our world: The 2030 agenda for sustainable development</em> (SDG target 12.3).`,
     fig:{label:`Common mistakes · reveal the fix`, build:el=>W.practice(el,FIX,{label:'Fix',prefix:'<b>Fix:</b> '})} },
 
@@ -220,7 +220,7 @@ Lecture.mount({
   { nav:'Think about it', title:'Think about it', kind:'review', minutes:10,
     narration:[`Discuss with your team. There is no single right answer.`,
       `<b>Exit question:</b> when will your team next check its objectives? What will you count?`,
-      `<b>Next week:</b> Market/Industry Analysis. How big is the market for your idea? Activity 2 is due Thu 19 Nov, 23:59.`,
+      `<b>Next week:</b> Market/Industry Analysis. How big is the market for your idea? Activity 1 is due Thu 19 Nov, 23:59.`,
       `<a class="btn" href="week-12.html">Next lecture · Week 12 · Market/Industry Analysis →</a>`],
     fig:{label:`Reflection · strategies`, build:el=>W.practice(el,[
       {q:'Is changing a strategy a sign of failure?',hint:'No. TOMS changed after it checked results. Reviewing is part of the plan.'},

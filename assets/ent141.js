@@ -5,7 +5,7 @@ const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;',
 const SDGS=['No poverty','Zero hunger','Good health and well-being','Quality education','Gender equality','Clean water and sanitation','Affordable and clean energy','Decent work and economic growth','Industry, innovation and infrastructure','Reduced inequalities','Sustainable cities and communities','Responsible consumption and production','Climate action','Life below water','Life on land','Peace, justice and strong institutions','Partnerships for the goals'];
 
 /* assessment weights (syllabus section 8) */
-const ASSESS=[['Project 1 · Poster',30,'Week 9'],['Project 1 · Presentation',10,'Week 9'],['Project 2 · Idea Validation Report',40,'Week 16'],['Activity 1 · video pitch',10,'Week 4'],['Activity 2 · article or case',10,'Week 11']];
+const ASSESS=[['Project 1 · Poster',30,'Week 9'],['Project 1 · Presentation',10,'Week 9'],['Project 2 · Idea Validation Report',40,'Week 16'],['Activity 1 · case analysis',10,'Thu 19 Nov'],['Activity 2 · video pitch',10,'Thu 3 Dec']];
 function weights(el){
   let x=0; const cols=['var(--wk)','color-mix(in srgb,var(--wk) 55%,var(--bg))','color-mix(in srgb,var(--wk) 30%,var(--bg))','var(--muted)','color-mix(in srgb,var(--muted) 55%,var(--bg))'];
   el.innerHTML=`<svg viewBox="0 0 600 60" style="width:100%;height:auto" role="img" aria-label="Assessment weights">${ASSESS.map(([t,w],i)=>{ const r=`<rect x="${x*6}" y="6" width="${w*6-2}" height="40" rx="4" fill="${cols[i]}"/><text x="${x*6+w*3}" y="32" text-anchor="middle" font-family="Schibsted Grotesk,Arial" font-weight="700" font-size="14" fill="${i<1?'var(--on-wk)':'var(--ink)'}">${w}%</text>`; x+=w; return r; }).join('')}</svg>

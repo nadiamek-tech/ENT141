@@ -78,22 +78,22 @@ const {W} = Lecture; const {store,esc} = ENT141;
 const F='font-family="Schibsted Grotesk,Arial"';
 
 /* ---------- grades map (from Weeks 8–11 page) ---------- */
-const GRADES_HTML=`<div class="gm" role="img" aria-label="Course marks: 50% done, 50% left">
+const GRADES_HTML=`<div class="gm" role="img" aria-label="Course marks: 40% done, 60% left">
   <div class="gm-bar">
-    <div class="gm-seg done" style="flex:10" title="Activity 1 · 10%">10%</div>
     <div class="gm-seg done" style="flex:30" title="Project 1 poster · 30%">30%</div>
     <div class="gm-seg done" style="flex:10" title="Project 1 presentation · 10%">10%</div>
+    <div class="gm-seg next" style="flex:10" title="Activity 1 · 10%">10%</div>
     <div class="gm-seg next" style="flex:10" title="Activity 2 · 10%">10%</div>
     <div class="gm-seg next" style="flex:40" title="Project 2 · 40%">40%</div>
   </div>
-  <div class="gm-half"><span>0%</span><span style="text-align:center">50%</span><span>100%</span></div>
+  <div class="gm-half"><span>0%</span><span style="text-align:center">40% done</span><span>100%</span></div>
   <div class="gm-cols">
-    <div class="gm-col d"><h4>Done · 50%</h4><ul>
-      <li><b>Activity 1</b> · video pitch · 10%<small>Week 4</small></li>
+    <div class="gm-col d"><h4>Done · 40%</h4><ul>
       <li><b>Project 1</b> · poster · 30%<small>Week 9</small></li>
       <li><b>Project 1</b> · presentation · 10%<small>Week 9</small></li></ul></div>
-    <div class="gm-col n"><h4>Next · 50%</h4><ul>
-      <li><a href="activity-2.html"><b>Activity 2</b></a> · case analysis · 10%<small>individual · in class Week 11 · due Thu 19 Nov 23:59</small></li>
+    <div class="gm-col n"><h4>Next · 60%</h4><ul>
+      <li><a href="activity-1.html"><b>Activity 1</b></a> · case analysis · 10%<small>individual · in class Week 11 · due Thu 19 Nov 23:59</small></li>
+      <li><a href="activity-2.html"><b>Activity 2</b></a> · video pitch · 10%<small>individual · due Thu 3 Dec 23:59</small></li>
       <li><a href="project-2.html"><b>Project 2</b></a> · Idea Validation Report · 40%<small>team · due Thu 17 Dec 23:59</small></li></ul></div>
   </div></div>`;
 
@@ -212,7 +212,7 @@ Lecture.mount({
     fig:{label:`Today's lecture · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`Your grades map`,5,'c'],[`Project 2 map`,5,'c'],[`Vision`,8,'l'],[`Mission`,8,'l'],[`The strategy ladder`,8,'l'],[`SMART objectives`,8,'l'],[`Team example`,8,'l'],[`How will we win?`,5,'l'],[`Case: Careem`,15,'a'],[`Mistake → fix`,5,'c'],[`Team: our strategy`,30,'a'],[`Think about it`,10,'c']])} },
 
   { nav:'Your grades map', title:'Your grades map', kind:'review', minutes:5,
-    narration:[`Half of your marks are done. The other half come from Activity 2 (alone) and Project 2 (team).`],
+    narration:[`40% of your marks are done. The rest: Activity 1 and Activity 2 (alone), and Project 2 (team).`],
     src:`ENT 141 syllabus, Fall 2026: assessment plan.`,
     fig:{label:`Course marks · 100%`, html:GRADES_HTML} },
 
@@ -279,7 +279,7 @@ Lecture.mount({
   { nav:'Think about it', title:'Think about it', kind:'review', minutes:10,
     narration:[`Discuss with your team. There is no single right answer.`,
       `<b>Exit question:</b> read your mission aloud. Would a user understand it in ten seconds?`,
-      `<b>Next week:</b> Overview of Entrepreneurial Strategies. How to share and review a strategy. Activity 2 in class.`,
+      `<b>Next week:</b> Overview of Entrepreneurial Strategies. How to share and review a strategy. Activity 1 in class.`,
       `<a class="btn" href="week-11.html">Next lecture · Week 11 · Overview of Entrepreneurial Strategies →</a>`],
     fig:{label:`Reflection · strategy`, build:el=>W.practice(el,[
       {q:'Should a vision change every year?',hint:'Usually not. Objectives and tactics change. The vision stays as the direction.'},

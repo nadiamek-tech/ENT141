@@ -35,12 +35,12 @@ const PITCH=[['Hook',5,'A question or a number about the problem.'],['Problem',1
 
 Lecture.mount({
   id:'ent141-w4', week:4, clo:'1, 3', course:'ENT 141', short:'Week 4 · Design Thinking Process',
-  title:'Design Thinking Process (DTP) for Sustainable Innovation', meta:'Kummitha (2019) · 2-hour lecture · Activity 1',
+  title:'Design Thinking Process (DTP) for Sustainable Innovation', meta:'Kummitha (2019) · 2-hour lecture',
   scenes:[
   { nav:'Start here', title:'How do you solve a problem you do not have yourself?', minutes:5,
     narration:[`Design thinking starts with the people who have the problem, not with your idea. <span class="mono">Topics: Introduction to Design Thinking Process · Building an Innovative Mindset · Activity 1. CLO 1 · CLO 3.</span>`],
     src:`Reading: Kummitha, R. K. R. (2019). Design thinking in social organizations: Understanding the role of user engagement. <em>Creativity and Innovation Management</em>, 28(1), 101–112.`,
-    fig:{label:`Today's lecture · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`What is design thinking?`,15,'l'],[`The five steps`,15,'l'],[`Case: Embrace`,10,'l'],[`Innovative mindset`,20,'l'],[`Activity 1 · pitch`,40,'a'],[`Think about it`,15,'a']])} },
+    fig:{label:`Today's lecture · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`What is design thinking?`,15,'l'],[`The five steps`,15,'l'],[`Case: Embrace`,10,'l'],[`Innovative mindset`,20,'l'],[`Pitch practice`,40,'a'],[`Think about it`,15,'a']])} },
 
   { nav:'What is design thinking?', title:'Introduction to the design thinking process', minutes:15,
     narration:[`<b>Design thinking</b> is a human-centred way to solve problems by understanding users, trying many ideas and testing them early. Kummitha (2019) shows the role of engaging users when social organisations innovate.`],
@@ -66,8 +66,8 @@ Lecture.mount({
     src:`Hasso Plattner Institute of Design at Stanford. <em>Bootcamp bootleg</em>: d.school mindsets.`,
     fig:{label:`Seven mindsets · click to read`, build:el=>W.picker(el,MIND,'Select a mindset.')} },
 
-  { nav:'Activity 1 · pitch', title:'Activity 1 · Your 30–45 second video pitch', kind:'activity', minutes:40,
-    narration:[`Individual, 10%. Pitch the topic your instructor assigns in <b>30–45 seconds</b> and post it on the Moodle forum before the deadline. Practise with the timer.`],
+  { nav:'Pitch practice', title:'Pitch practice · 30–45 seconds', kind:'activity', minutes:40,
+    narration:[`Practise a <b>30–45 second</b> pitch with the timer. You will record one for <a href="activity-2.html">Activity 2</a>.`],
     fig:{label:`45-second pitch timer`, build:el=>{ ENT141.timer(el,PITCH); const r=document.createElement('div'); r.style.marginTop='16px'; r.innerHTML=`<span class="eyebrow">How it is marked · syllabus</span>`+ENT141.rubHTML(ENT141.RUB_ACT1); el.appendChild(r); }} },
 
   { nav:'Think about it', title:'Think about it', kind:'activity', minutes:15,

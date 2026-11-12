@@ -62,7 +62,7 @@ table.rm{width:100%;border-collapse:collapse;font-size:.95rem;min-width:760px}
 <div id="hub" data-cur="roadmap"></div>
 <main class="rw">
   <h1>Where we are</h1>
-  <p class="lead">Project 1 is done. Two pieces left: Activity 2 (individual, Thu 19 Nov) and Project 2 (team, Thu 17 Dec).</p>
+  <p class="lead">Project 1 is done. Next: Activity 1 (Thu 19 Nov), Activity 2 (Thu 3 Dec), Project 2 (team, Thu 17 Dec).</p>
   <div class="score" id="score"></div>
 
   <section class="today" aria-labelledby="th">
@@ -99,7 +99,7 @@ const WEEKS=[
   [2,'10 Sep','Innovation and Creativity','Creativity exercises'],
   [3,'17 Sep','Introduction to Sustainability','SDGs, chose a social problem']]],
  ['Design thinking',[
-  [4,'24 Sep','Design Thinking Process','Video pitch','Activity 1 · 10%'],
+  [4,'24 Sep','Design Thinking Process','Pitch practice'],
   [5,'1 Oct','Empathy','Interviews, empathy map'],
   [6,'8 Oct','Defining','Journey map, problem statement'],
   [7,'15 Oct','Ideation','Brainstormed solutions'],
@@ -109,11 +109,11 @@ const WEEKS=[
  ['Strategy',[
   [10,'5 Nov','Entrepreneurial Strategy','Cost, differentiation, focus'],
   [11,'12 Nov','Overview of Strategies','Case reading, three ideas for Project 2'],
-  [11.5,'19 Nov','—','Submit Activity 2 on Moodle','Activity 2 · 10% · Thu 23:59',true]]],
+  [11.5,'19 Nov','—','Submit Activity 1 on Moodle','Activity 1 · 10% · Thu 23:59',true]]],
  ['Validate',[
   [12,'19 Nov','Market/Industry Analysis','Project 2 · section 3'],
   [13,'26 Nov','Value Proposition Canvas 1','Customer profile'],
-  [14,'3 Dec','Value Proposition Canvas 2','Value map and fit · section 4'],
+  [14,'3 Dec','Value Proposition Canvas 2','Value map and fit · section 4','Activity 2 · 10% · Thu 23:59',true],
   [15,'10 Dec','Product Differentiation 1','Competitor table'],
   [16,'17 Dec','Product Differentiation 2','Positioning, final check, submit','Project 2 · 40% · Thu 23:59',true]]]];
 const status=w=>w<TODAY?'d':w===TODAY?'t':'u';
@@ -121,14 +121,14 @@ const SL={d:'Done',t:'Today',u:'Upcoming'};
 document.getElementById('rows').innerHTML=WEEKS.map(([ph,rows])=>`<tr class="ph"><td colspan="6">${ph}</td></tr>`+rows.map(([w,d,t,what,as,big])=>{ const s=status(w), dl=t==='—';
   return `<tr class="${s}"><td><b>${dl?'':w}</b></td><td>${d}</td><td>${dl?'<b>Deadline</b>':`<a href="week-${String(w).padStart(2,'0')}.html">${esc(t)}</a>`}</td><td>${esc(what)}</td><td>${as?`<span class="as${big?' big':''}">${esc(as)}</span>`:''}</td><td><span class="st ${s}">${SL[s]}</span></td></tr>`; }).join('')).join('');
 
-const SC=[['Activity 1 · Video pitch','10%','Week 4','d'],['Project 1 · Poster','30%','Week 9','d'],['Project 1 · Presentation','10%','Week 9','d'],['Activity 2 · Case analysis','10%','Thu 19 Nov','n','activity-2.html'],['Project 2 · Validation report','40%','Thu 17 Dec','n','project-2.html']];
+const SC=[['Project 1 · Poster','30%','Week 9','d'],['Project 1 · Presentation','10%','Week 9','d'],['Activity 1 · Case analysis','10%','Thu 19 Nov','n','activity-1.html'],['Activity 2 · Video pitch','10%','Thu 3 Dec','n','activity-2.html'],['Project 2 · Validation report','40%','Thu 17 Dec','n','project-2.html']];
 document.getElementById('score').innerHTML=SC.map(([t,w,d,s,l])=>`<div class="${s==='d'?'done':'next'}"><span class="w">${w}</span><b>${l?`<a href="${l}" style="color:inherit">${t} →</a>`:t}</b><small>${s==='d'?'✓ Done':'Due '+d}</small></div>`).join('');
 
 const STEPS=[
  [10,'Your grades and Project 2','What is done, what is left, and the Project 2 map.','week-10.html#s1','Open Week 10'],
- [35,'Three ways to win','Cost, difference, focus: IKEA, Southwest, Patagonia, Careem.','week-10.html#s3','Open Week 10'],
- [30,'More strategies','Blue ocean, lean, imitation, platform, social enterprise.','week-11.html#s1','Open Week 11'],
- [15,'Activity 2 explained','Pick 1 of 20 real cases, facts, five questions, reflect.','activity-2.html','Open Activity 2'],
+ [35,'Vision, mission, goals','Vision → mission → goal → SMART objectives → tactics. IKEA, Patagonia, Careem.','week-10.html#s3','Open Week 10'],
+ [30,'Share and review a strategy','Communicate the vision; review: keep, change or stop.','week-11.html#s1','Open Week 11'],
+ [15,'Activity 1 explained','Pick 1 of 20 real cases, facts, five questions, reflect.','activity-1.html','Open Activity 1'],
  [30,'Team: three ideas','Write three ideas, score them, copy into Project 2.','week-11.html#s11','Open Week 11']];
 const COL=['var(--muted)','var(--wk)','color-mix(in srgb,var(--wk) 70%,var(--bg))','color-mix(in srgb,var(--wk) 45%,var(--bg))','var(--good)'];
 document.getElementById('tbar').innerHTML=STEPS.map((s,i)=>`<i style="width:${s[0]/1.2}%;background:${COL[i]}" title="${s[1]} · ${s[0]} min"></i>`).join('');

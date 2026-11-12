@@ -16,16 +16,16 @@ window.SITE={
     ['CLO 4','Identify key elements of the sustainability framework in the proposed innovative opportunities.']],
   /* assessments: id, name, weight, week, date ('' = on Moodle), type, who, what is included, Moodle submission link */
   assess:[
-    {id:'a1',name:'Activity 1 · Video pitch',weight:10,week:4,date:'',type:'In-class activity',who:'Individual',
-     includes:['30–45 second video pitch on the topic your instructor assigns','Posted on the Moodle forum before the deadline'],guide:'week-04.html#s5',moodle:''},
+    {id:'a1',name:'Activity 1 · Case analysis',weight:10,week:11,date:'Thu 19 Nov',type:'In-class activity',who:'Individual',
+     includes:['Choose 1 of 20 real cases around us','Three facts, five questions, a reflection'],guide:'activity-1.html',moodle:'https://my.cud.ac.ae/mod/assign/view.php?id=23249'},
     {id:'p1',name:'Project 1 · Poster',weight:30,week:9,date:'',type:'Project',who:'Team',
      includes:['Empathy map and journey map from your interviews','“How might we…” questions','At least 3 solutions (risky, easy, favourite) and your choice','Prototype (drawing or design)'],guide:'project-1.html',moodle:''},
     {id:'p1p',name:'Project 1 · Presentation',weight:10,week:9,date:'',type:'Presentation',who:'Graded individually',
      includes:['Present the poster with your team','Answer the panel’s questions'],guide:'project-1.html#s10',moodle:''},
-    {id:'a2',name:'Activity 2 · Article or case',weight:10,week:11,date:'',type:'In-class activity',who:'Individual',
-     includes:['Analysis of a journal article or case study assigned by the instructor','Requirements published later'],guide:'',moodle:''},
+    {id:'a2',name:'Activity 2 · Video pitch',weight:10,week:14,date:'Thu 3 Dec',type:'Activity',who:'Individual',
+     includes:['30–45 second video pitch of your team’s Project 2 idea','One MP4 or MOV file'],guide:'activity-2.html',moodle:'https://my.cud.ac.ae/mod/assign/view.php?id=23251'},
     {id:'p2',name:'Project 2 · Idea Validation Report',weight:40,week:16,date:'',type:'Project',who:'Team',
-     includes:['Three social innovation ideas','Market analysis, idea evaluation and selection','Requirements published later'],guide:'',moodle:''}],
+     includes:['Three ideas, scoring and choice','Market and PESTLE, value proposition canvas, differentiation, sustainability check'],guide:'project-2.html',moodle:'https://my.cud.ac.ae/mod/assign/view.php?id=23253'}],
   /* weeks: n, title, subtopics, reading, page ('' = in preparation) */
   weeks:[
     [1,'Overview of the Course · Introduction to Entrepreneurship',['Course Material','Course Assignments','Groups formation','What is Entrepreneurship?','Role of Entrepreneurs in the Society'],'Byers et al (2019) Ch. 1','week-01.html'],

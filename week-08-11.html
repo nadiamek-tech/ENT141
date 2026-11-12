@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Weeks 8–11 · From idea to strategy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Schibsted+Grotesk:wght@400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<link rel="stylesheet" href="assets/course.css">
+<style>
+:root{--wk:#3730A3;--wk-soft:rgba(55,48,163,.09);--wk-d:#A5B4FC;--wk-soft-d:rgba(165,180,252,.14)}
+/* grades map */
+.gm{font-family:var(--f-display)}
+.gm-bar{display:flex;gap:3px;height:46px;margin:4px 0 6px}
+.gm-seg{display:flex;align-items:center;justify-content:center;border-radius:6px;font-weight:800;font-size:.82rem;min-width:0;overflow:hidden;white-space:nowrap}
+.gm-seg.done{background:var(--good);color:var(--on-wk)}
+.gm-seg.next{background:var(--wk-soft);border:2px dashed var(--wk);color:var(--ink)}
+.gm-half{display:flex;font-family:var(--f-mono);font-size:.74rem;color:var(--muted);margin-bottom:14px}
+.gm-half span{flex:1}
+.gm-half span:last-child{text-align:right}
+.gm-cols{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}
+.gm-col{border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.gm-col h4{margin:0 0 8px;font-size:.95rem;color:var(--ink)}
+.gm-col.d h4{color:var(--good)}
+.gm-col.n{border-color:var(--wk)}
+.gm-col.n h4{color:var(--wk)}
+.gm-col ul{list-style:none;margin:0;padding:0;display:grid;gap:7px}
+.gm-col li{font-size:.86rem;line-height:1.3;color:var(--ink)}
+.gm-col li b{font-weight:800}
+.gm-col li small{display:block;font-family:var(--f-mono);font-size:.72rem;color:var(--muted)}
+@media (max-width:520px){.gm-cols{grid-template-columns:minmax(0,1fr)}.gm-bar{gap:2px}.gm-seg{font-size:.68rem}}
+/* project 2 road */
+.road{list-style:none;margin:0;padding:0 0 0 4px;font-family:var(--f-display);position:relative}
+.road li{display:grid;grid-template-columns:38px minmax(0,1fr);gap:12px;align-items:center;position:relative;padding:6px 0}
+.road li:not(:last-child)::after{content:"";position:absolute;left:18px;top:42px;bottom:-12px;border-left:3px dotted var(--line)}
+.road .dot{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:.95rem;border:2px solid var(--line);background:var(--surface);color:var(--ink);position:relative;z-index:1}
+.road li.now .dot{background:var(--wk);border-color:var(--wk);color:var(--on-wk)}
+.road li.end .dot{background:var(--good);border-color:var(--good);color:var(--on-wk)}
+.road .t{font-weight:700;font-size:.95rem;color:var(--ink)}
+.road .w{display:inline-block;margin-left:6px;font-family:var(--f-mono);font-size:.72rem;color:var(--muted)}
+.road li.now .w{color:var(--wk);font-weight:600}
+/* scoring matrix (from Week 8) */
+.mx-wrap{overflow-x:auto;max-width:100%}
+.mx{width:100%;border-collapse:collapse;font-family:var(--f-display);font-size:.88rem;min-width:420px}
+.mx th,.mx td{border-bottom:1px solid var(--line);padding:6px 6px;text-align:center;vertical-align:middle}
+.mx th:first-child,.mx td:first-child{text-align:left}
+.mx thead th{font-weight:700;color:var(--ink)}
+.mx td small{display:block;font-family:var(--f-mono);font-size:.72rem;color:var(--muted)}
+.mx tr.tot td{font-weight:800;border-top:2px solid var(--ink);border-bottom:0}
+.mx td.win{background:var(--wk-soft);color:var(--wk)}
+.mx .hide{visibility:hidden}
+.mx td:nth-child(2){white-space:nowrap}
+.mx-ctl{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:0 0 10px}
+.mx-gap{height:14px}
+@media (max-width:480px){.mx{min-width:0;font-size:.76rem}.mx th,.mx td{padding:5px 3px}}
+</style>
+</head>
+<body>
+<script src="assets/site.js"></script>
+<script src="assets/supports.js"></script>
+<script src="assets/course.js"></script>
+<script src="assets/onepage.js"></script>
+<script src="assets/ent141.js"></script>
+<script src="assets/kb.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/assistant.js"></script>
+<script>
+const {W} = Lecture; const {store,esc} = ENT141;
+const F811='font-family="Schibsted Grotesk,Arial"';
+
+/* ---------- grades map ---------- */
+const GRADES_HTML=`<div class="gm" role="img" aria-label="Course marks: 50% done, 50% left">
+  <div class="gm-bar">
+    <div class="gm-seg done" style="flex:10" title="Activity 1 · 10%">10%</div>
+    <div class="gm-seg done" style="flex:30" title="Project 1 poster · 30%">30%</div>
+    <div class="gm-seg done" style="flex:10" title="Project 1 presentation · 10%">10%</div>
+    <div class="gm-seg next" style="flex:10" title="Activity 2 · 10%">10%</div>
+    <div class="gm-seg next" style="flex:40" title="Project 2 · 40%">40%</div>
+  </div>
+  <div class="gm-half"><span>0%</span><span style="text-align:center">50%</span><span>100%</span></div>
+  <div class="gm-cols">
+    <div class="gm-col d"><h4>Done · 50%</h4><ul>
+      <li><b>Activity 1</b> · video pitch · 10%<small>Week 4</small></li>
+      <li><b>Project 1</b> · poster · 30%<small>Week 9</small></li>
+      <li><b>Project 1</b> · presentation · 10%<small>Week 9</small></li></ul></div>
+    <div class="gm-col n"><h4>Next · 50%</h4><ul>
+      <li><a href="activity-2.html"><b>Activity 2</b></a> · case analysis · 10%<small>individual · due Thu 19 Nov 23:59</small></li>
+      <li><a href="project-2.html"><b>Project 2</b></a> · Idea Validation Report · 40%<small>team · due Thu 17 Dec 23:59</small></li></ul></div>
+  </div></div>`;
+
+/* ---------- Project 2 road ---------- */
+const ROAD_HTML=`<ol class="road" aria-label="Project 2 sections and when each is built">
+  <li class="now"><span class="dot">1</span><span class="t">Three ideas<span class="w">today</span></span></li>
+  <li class="now"><span class="dot">2</span><span class="t">Score and choose<span class="w">today</span></span></li>
+  <li><span class="dot">3</span><span class="t">Market<span class="w">Week 12</span></span></li>
+  <li><span class="dot">4</span><span class="t">Value proposition canvas<span class="w">Weeks 13–14</span></span></li>
+  <li><span class="dot">5</span><span class="t">Differentiation<span class="w">Weeks 15–16</span></span></li>
+  <li><span class="dot">6</span><span class="t">Sustainability check<span class="w">+ evidence and references</span></span></li>
+  <li class="end"><span class="dot">✓</span><span class="t">Submit on Moodle<span class="w">Thu 17 Dec 23:59</span></span></li>
+</ol>`;
+
+/* ---------- Week 8: lenses + sustainability (one graphic) ---------- */
+const LENSES811=`<svg viewBox="0 0 520 420" role="img" aria-label="Three overlapping circles, desirability, feasibility and viability, inside a frame labelled sustainability">
+  <rect x="8" y="8" width="504" height="404" rx="18" fill="none" stroke="var(--good)" stroke-width="2.5" stroke-dasharray="8 6"/>
+  <text x="260" y="36" text-anchor="middle" ${F811} font-weight="800" font-size="16" style="fill:var(--good)">Sustainability · good for people and planet</text>
+  <circle cx="260" cy="155" r="100" fill="var(--wk)" fill-opacity=".12" stroke="var(--wk)" stroke-width="2"/>
+  <circle cx="193" cy="265" r="100" fill="var(--wk)" fill-opacity=".12" stroke="var(--wk)" stroke-width="2"/>
+  <circle cx="327" cy="265" r="100" fill="var(--wk)" fill-opacity=".12" stroke="var(--wk)" stroke-width="2"/>
+  <text x="260" y="102" text-anchor="middle" ${F811} font-weight="800" font-size="16">Desirable</text>
+  <text x="260" y="122" text-anchor="middle" ${F811} font-size="13" class="t-muted">Do people want it?</text>
+  <text x="145" y="305" text-anchor="middle" ${F811} font-weight="800" font-size="16">Feasible</text>
+  <text x="145" y="325" text-anchor="middle" ${F811} font-size="13" class="t-muted">Can we make it?</text>
+  <text x="375" y="305" text-anchor="middle" ${F811} font-weight="800" font-size="16">Viable</text>
+  <text x="375" y="325" text-anchor="middle" ${F811} font-size="13" class="t-muted">Can it pay for itself?</text>
+  <circle cx="260" cy="228" r="27" fill="var(--wk)"/>
+  <text x="260" y="233" text-anchor="middle" ${F811} font-weight="800" font-size="13" style="fill:var(--on-wk)">Best</text>
+</svg>`;
+
+/* ---------- Week 8: worked scoring example (fictional) ---------- */
+const EX811={ideas:['Metro shuttle','Carpool board','Scooter path'],
+  crit:[['Desirable',30],['Feasible',25],['Viable',20],['Sustainable',25]],
+  s:[[5,4,3],[3,5,3],[3,4,3],[4,4,5]]};
+const STEP811=[
+  'Press <b>Next step</b> to build the table.',
+  '<b>Step 1 · Weights.</b> Four criteria. The weights add up to 100%. Here, desirable matters most: 30%.',
+  '<b>Step 2 · Score.</b> Give each idea 1 (weak) to 5 (strong). Use interview facts, not feelings.',
+  '<b>Step 3 · Multiply.</b> Weight × score. Carpool board, desirable: 30% × 4 = <b>1.20</b>.',
+  '<b>Step 4 · Add.</b> Add each column. Carpool board: 1.20 + 1.25 + 0.80 + 1.00 = <b>4.25</b>. The highest.',
+  '<b>Step 5 · Talk.</b> 4.25 against 3.85 is a clear winner. If two totals are close, discuss first.'];
+const f2_811=x=>(Math.round(x*100)/100).toFixed(2);
+function matrix811(el,init){
+  const st=JSON.parse(JSON.stringify(init)); let step=0;
+  const draw=()=>{
+    const tot=st.ideas.map((_,j)=>st.crit.reduce((a,[,w],i)=>a+w/100*st.s[i][j],0)), best=Math.max(...tot);
+    const rows=st.crit.map(([c,w],i)=>`<tr><td>${esc(c)}</td><td class="${step<1?'hide':''}">${w}%</td>${st.ideas.map((_,j)=>`<td class="${step<2?'hide':''}">${st.s[i][j]}<small class="${step<3?'hide':''}">${f2_811(w/100*st.s[i][j])}</small></td>`).join('')}</tr>`).join('');
+    el.innerHTML=`<div class="mx-ctl"><button type="button" class="btn mx-next">${step<5?'Next step':'Start again'}</button><span class="mono" style="color:var(--muted)">Step ${step} of 5</span></div>
+      <div class="mx-wrap"><table class="mx"><thead><tr><th>Criterion</th><th>Weight</th>${st.ideas.map(t=>`<th>${esc(t)}</th>`).join('')}</tr></thead><tbody>${rows}
+      <tr class="tot"><td>Total</td><td class="${step<1?'hide':''}">100%</td>${tot.map(t=>`<td class="${step<4?'hide':''} ${step>=4&&t===best?'win':''}">${f2_811(t)}</td>`).join('')}</tr></tbody></table></div>
+      <div class="mx-gap"></div><div class="feedback">${STEP811[step]}</div>`;
+    el.querySelector('.mx-next').addEventListener('click',()=>{ step=step<5?step+1:0; draw(); });
+  };
+  draw();
+}
+
+/* ---------- Week 9: answer frame ---------- */
+const FRAME811=[
+  {t:'Listen',s:'to the end',d:'Let the person finish. Catch the key word in the question.'},
+  {t:'Restate',s:'one line',d:'“You are asking how we know students want this.”'},
+  {t:'Answer',s:'one sentence',d:'“Most students we interviewed raised this problem first.”'},
+  {t:'Evidence',s:'a quote or a fact',d:'“One student told us: ‘I leave home at 6:30 and still come late.’”'},
+  {t:'Link',s:'back to the user',d:'“That is why our idea starts at the metro station.”'}];
+
+/* ---------- Week 10: strategy = where + how ---------- */
+const STRAT811=`<svg viewBox="0 0 560 230" role="img" aria-label="A strategy answers two questions: where to compete and how to win">
+  <rect x="10" y="20" width="220" height="80" rx="12" fill="var(--wk-soft)" stroke="var(--wk)" stroke-width="2"/>
+  <text x="120" y="55" text-anchor="middle" ${F811} font-weight="800" font-size="18">Where to compete?</text>
+  <text x="120" y="80" text-anchor="middle" ${F811} font-size="13" class="t-muted">which users, which need, which place</text>
+  <rect x="10" y="130" width="220" height="80" rx="12" fill="var(--wk-soft)" stroke="var(--wk)" stroke-width="2"/>
+  <text x="120" y="165" text-anchor="middle" ${F811} font-weight="800" font-size="18">How to win?</text>
+  <text x="120" y="190" text-anchor="middle" ${F811} font-size="13" class="t-muted">cheaper, or different and better</text>
+  <path d="M232 60 C300 60 300 115 360 115" fill="none" stroke="var(--wk)" stroke-width="3"/>
+  <path d="M232 170 C300 170 300 115 360 115" fill="none" stroke="var(--wk)" stroke-width="3"/>
+  <circle cx="440" cy="115" r="78" fill="var(--wk)"/>
+  <text x="440" y="122" text-anchor="middle" ${F811} font-weight="800" font-size="22" style="fill:var(--on-wk)">Strategy</text>
+</svg>`;
+
+/* ---------- Week 10: Porter's three ways, real cases ---------- */
+const PORTER811={
+  'Cost leadership':[['Southwest Airlines','<b>Cheapest for many people.</b> One plane type, the Boeing 737. Short direct routes. Fast turnarounds. Low costs mean low fares.']],
+  'Differentiation':[['Patagonia','<b>People pay more for something better.</b> Strong outdoor clothes. Free repairs through Worn Wear. It gives 1% of sales to nature groups.']],
+  'Focus':[['Careem (2012)','<b>Serve one group very well.</b> Careem started in Dubai with car bookings for companies only. Later it grew into rides for everyone.']]};
+
+/* ---------- Week 11: more strategies, real cases ---------- */
+const MORE811={
+  'Blue ocean':[['Cirque du Soleil','<b>A new market with no rivals.</b> It removed animal acts and star performers, the costly parts of a circus. It added theatre: a story, music and dance. A new kind of show.']],
+  'Lean startup':[['Zappos','<b>Test small first.</b> Before buying stock, it put photos of shoes from local shops online. When someone ordered, it bought that pair. It tested demand first.']],
+  'Imitation':[['Google','<b>Copy what works, then improve it.</b> AltaVista and others came first. Google kept the same simple search. It improved one thing: it ranked pages by the links pointing to them.']],
+  'Platform':[
+    ['Careem','<b>An app that connects two groups.</b> The app connects riders and captains (drivers). Uber announced in March 2019 it would buy Careem for US$3.1 billion.'],
+    ['Talabat','<b>An app that connects two groups.</b> The app connects diners, restaurants and delivery riders. Talabat is owned by Delivery Hero, a German company.']],
+  'Social enterprise':[
+    ['Grameen Bank','<b>The main goal is social value.</b> Muhammad Yunus lent very small sums to poor villagers in Bangladesh, mostly women. Yunus and the bank shared the 2006 Nobel Peace Prize.'],
+    ['TOMS','<b>The main goal is social value.</b> For each pair sold, TOMS gave a pair to a child. In 2019 it stopped this. It now gives one third of profits to local groups.']]};
+
+/* ---------- Week 11: five questions = Activity 2 ---------- */
+const CASEQ811=[
+  {t:'Venture and problem',s:'Q1',d:'Who started it? Which problem does it solve, and for whom?'},
+  {t:'Name the strategy',s:'Q2',d:'Use one name from today: cost, difference, focus, blue ocean, lean, imitation, platform, social enterprise.'},
+  {t:'Evidence',s:'Q3',d:'Point to two facts in the text that show this strategy.'},
+  {t:'Social or planet value',s:'Q4',d:'Which SDG (UN goal for 2030)? Who benefits?'},
+  {t:'Lesson for us',s:'Q5',d:'One thing your team will copy or avoid in Project 2.'}];
+
+/* ---------- mistake → fix, merged ---------- */
+const FIX811=[
+  {q:'The team gives its favourite idea 5 on everything.',type:'Week 8',hint:'Score one criterion at a time, for all ideas. Back each score with a quote or a fact.'},
+  {q:'“No, you are wrong. Our idea works.”',type:'Week 9',hint:'Thank the person. Restate the question. Answer with evidence.'},
+  {q:'“Our idea is the cheapest and the best, for everyone.”',type:'Week 10',hint:'Porter calls this “stuck in the middle”. Choose one way to win.'},
+  {q:'“The strategy is blue ocean.” Nothing else.',type:'Week 11',hint:'A name alone earns little. Add two facts from the text that show it.'}];
+
+/* ---------- practice case (fictional) ---------- */
+const CASE811=`<div class="box plain" style="border-style:dashed"><b class="lbl">Fictional case · for practice only</b>
+<p><b>Second Loaf.</b> Three students in Sharjah saw bakeries throw away bread every night. They tested an idea with <b>one</b> bakery for two weeks.</p>
+<p>At 9 pm, the bakery posts its leftover bread in a WhatsApp channel. Families reserve a bag at half price. Second Loaf keeps a small fee per bag.</p>
+<p>Bread nobody reserves goes to a community fridge. After the test, four more bakeries asked to join.</p></div>`;
+
+function ideas811(el){
+  const w=document.createElement('div'); el.appendChild(w);
+  W.worksheet(w,{id:'ent141-w811-ideas',title:'ENT 141 · Weeks 8–11 · Three ideas and a score',fields:[
+    {l:'Our Project 1 problem (one sentence)',rows:2},
+    {l:'Idea 1 · what it is + its strategy',rows:2},
+    {l:'Idea 2 · what it is + a different strategy',rows:2},
+    {l:'Idea 3 · what it is + a different strategy',rows:2},
+    {l:'Our weights (add up to 100%) and one reason for each',rows:3},
+    {l:'Our chosen idea, its total score, and why',rows:2}]});
+}
+
+Lecture.mount({
+  id:'ent141-w0811', week:11, clo:'1, 3', course:'ENT 141', short:'Weeks 8–11 · From idea to strategy', instructor:'Nadia',
+  title:'From idea to strategy', meta:'Weeks 8–11 · Byers et al. (2019), Porter (1985), Kim & Mauborgne (2005) · 2-hour lecture',
+  scenes:[
+  { nav:'Start here', title:'From idea to strategy', minutes:5,
+    narration:[`Today we join four weeks into one story. First, pick the best idea. Then, defend it. Then, choose how it will win. <span class="mono">CLO 1 · CLO 3.</span>`],
+    think:`Near campus, one cafeteria sells cheap karak in paper cups. A café nearby charges more, with seats and Wi-Fi. Both are always full. How?`,
+    src:`Reading: Byers, T. H., Dorf, R. C., &amp; Nelson, A. J. (2019). <em>Technology ventures</em> (5th ed.). McGraw-Hill. · Porter, M. E. (1985). <em>Competitive advantage</em>. Free Press. · Kim, W. C., &amp; Mauborgne, R. (2005). <em>Blue ocean strategy</em>. Harvard Business School Press.`,
+    fig:{label:`Today's lecture · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`Your grades map`,5,'c'],[`Project 2 map`,5,'c'],[`Judge an idea`,8,'l'],[`Score it`,10,'l'],[`Defend it`,5,'l'],[`What is a strategy?`,5,'l'],[`Three ways to win`,10,'l'],[`More strategies`,10,'l'],[`Read a case`,5,'l'],[`Mistake → fix`,5,'c'],[`Practice case`,15,'a'],[`Team: three ideas and a score`,25,'a'],[`Think about it`,7,'c']])} },
+
+  { nav:'Your grades map', title:'Your grades map', kind:'review', minutes:5,
+    narration:[`Half of your marks are done. The other half come from Activity 2 (alone) and Project 2 (team).`],
+    src:`ENT 141 syllabus, Fall 2026: assessment plan.`,
+    fig:{label:`Course marks · 100%`, html:GRADES_HTML} },
+
+  { nav:'Project 2 map', title:'Project 2 map', kind:'review', minutes:5,
+    narration:[`Project 2 is one team report. We build one section in each lecture. Today you start sections 1 and 2.`,
+      `<a class="btn" href="project-2.html">Open the Project 2 builder →</a>`],
+    src:`ENT 141 Project 2 · Idea Validation Report (40%, team), due Thu 17 Dec, 23:59, on Moodle.`,
+    fig:{label:`The road to 17 December`, html:ROAD_HTML} },
+
+  { nav:'Judge an idea', title:'Judge an idea: four lenses', minutes:8,
+    narration:[`A strong idea is <b>desirable</b> (people want it), <b>feasible</b> (we can make it) and <b>viable</b> (it pays for itself). In ENT 141 it must also be <b>sustainable</b>.`],
+    src:`Brown, T. (2009). <em>Change by design</em>. HarperBusiness. · Elkington, J. (1997). <em>Cannibals with forks</em>. Capstone. · United Nations (2015). <em>Transforming our world: The 2030 agenda for sustainable development</em>.`,
+    fig:{label:`Concept · three circles inside one frame`, html:LENSES811} },
+
+  { nav:'Score it', title:'Score it: the weighted scoring table', minutes:10,
+    narration:[`Give each criterion a weight. Score each idea from 1 to 5. Multiply, then add. The highest total wins, after a team talk.`],
+    src:`Based on concept selection in Pugh, S. (1991). <em>Total design</em>. Addison-Wesley.`,
+    fig:{label:`Fictional example · press Next step`, build:el=>matrix811(el,EX811)} },
+
+  { nav:'Defend it', title:'Defend it: answer in five moves', minutes:5,
+    narration:[`A question is not an attack. It tests your evidence. Keep answers short and honest. “We do not know yet” is fine, if you say how you will find out.`],
+    src:`ENT 141 Project 1 presentation rubric (Week 9).`,
+    fig:{label:`Illustrative answers · click or play`, flow:FRAME811} },
+
+  { nav:'What is a strategy?', title:'What is a strategy?', minutes:5,
+    narration:[`A <b>strategy</b> is a plan to win. It answers two questions. Where do we compete? How do we win there?`],
+    src:`Byers et al. (2019), competitive strategy. · Porter, M. E. (1996). What is strategy? <em>Harvard Business Review</em>, 74(6), 61–78.`,
+    fig:{label:`Concept · two questions, one strategy`, html:STRAT811} },
+
+  { nav:'Three ways to win', title:'Three ways to win', minutes:10,
+    narration:[`Porter gives three ways to win. Be the <b>cheapest</b>. Be <b>different and better</b>. Or <b>focus</b> on one small group. Pick one, not all three.`],
+    src:`Porter, M. E. (1985). <em>Competitive advantage</em>. Free Press. · Porter (1996), What is strategy? (Southwest Airlines). · Chouinard, Y. (2005). <em>Let my people go surfing</em>. Penguin; Patagonia, Worn Wear. · Careem. (2026). In <em>Wikipedia</em>: history (corporate car bookings, 2012).`,
+    fig:{label:`Real cases · click to compare`, build:el=>W.picker(el,PORTER811,'Select a case.')} },
+
+  { nav:'More strategies', title:'More strategies new ventures use', minutes:10,
+    narration:[`New ventures often use one of five other strategies. Click each real case. Ask: where does it compete, and how does it win?`],
+    src:`Kim &amp; Mauborgne (2005) (Cirque du Soleil). · Ries, E. (2011). <em>The lean startup</em>. Crown (Zappos). · Brin, S., &amp; Page, L. (1998). The anatomy of a large-scale hypertextual web search engine. <em>Computer Networks and ISDN Systems</em>, 30, 107–117. · VentureBeat (2019, March). Uber confirms it's acquiring Middle East rival Careem for $3.1 billion. · Delivery Hero SE (2024). <em>Annual report 2023</em> (Talabat). · Nobel Prize Outreach (2006). The Nobel Peace Prize 2006. · Retail Brew (2019, November 22). Toms is ending its “One for One” giving program.`,
+    fig:{label:`Strategy map · real cases · click to compare`, build:el=>W.picker(el,MORE811,'Select a case.')} },
+
+  { nav:'Read a case', title:'Read a case: five questions', minutes:5,
+    narration:[`Read a case twice. First for the story. Then answer these five questions. They are <a href="activity-2.html">Activity 2</a>, due Thu 19 Nov, 23:59.`],
+    src:`ENT 141 Activity 2 · Article or case analysis (10%, individual), on Moodle.`,
+    fig:{label:`Five questions · click or play`, flow:CASEQ811} },
+
+  { nav:'Mistake → fix', title:'Mistake → fix', kind:'review', minutes:5,
+    narration:[`One mistake from each week. Say the fix first, then reveal it.`],
+    fig:{label:`Common mistakes · reveal the fix`, build:el=>W.practice(el,FIX811,{label:'Fix',prefix:'<b>Fix:</b> '})} },
+
+  { nav:'Practice case', title:'Practice · Read a mini-case', kind:'activity', minutes:15, wide:true,
+    narration:[`Read the case. Answer the five questions. More than one strategy can fit. Your evidence decides.`, CASE811],
+    fig:{label:`Five questions · saves in your browser`, build:el=>W.worksheet(el,{id:'ent141-w811-case',title:'ENT 141 · Weeks 8–11 · Practice case: Second Loaf (fictional)',fields:[
+      {l:'Q1 · The venture and its problem',rows:2},
+      {l:'Q2 · The strategy it used (name it)',rows:2},
+      {l:'Q3 · Evidence from the text (two facts)',rows:2},
+      {l:'Q4 · Social or planet value (which SDG?)',rows:2},
+      {l:'Q5 · One lesson for our team idea',rows:2}]})} },
+
+  { nav:'Team: three ideas and a score', title:'Team · Three ideas and a score', kind:'activity', minutes:25, wide:true,
+    narration:[`Start from your Project 1 problem. Write three ideas. Give each a different strategy. Then weight, score and choose one.`,
+      `<a class="btn" href="project-2.html#p-s1">Copy into Project 2, sections 1 and 2 →</a>`],
+    fig:{label:`Team worksheet · saves in your browser`, build:ideas811} },
+
+  { nav:'Think about it', title:'Think about it', kind:'review', minutes:7,
+    narration:[`Discuss with your team. There is no single right answer.`,
+      `<b>Exit question:</b> in one sentence, where does your chosen idea compete, and how will it win?`,
+      `<b>Next week:</b> Market/Industry Analysis`,
+      `<a class="btn" href="week-12.html">Next lecture · Week 12 · Market/Industry Analysis →</a>`],
+    fig:{label:`Reflection · from idea to strategy`, build:el=>W.practice(el,[
+      {q:'The scoring table picks an idea nobody likes. Do you follow it?',hint:'The table helps you decide. It does not decide for you. Check the weights and scores again.'},
+      {q:'Is the cheapest idea always best for people with low income?',hint:'Not always. If quality drops, they pay again. Ask users what they value.'}],{label:'One view',prefix:''})} },
+  ]
+});
+</script>
+</body>
+</html>

@@ -27,7 +27,7 @@ window.ENT141_KB=[
 {q:'How many interviews do we need?',k:'interview number how many enough many',a:'The rubric gives the top band for “many” interviews; one interview is only “acceptable”. Aim for at least 3 to 5 with deep answers.',l:'project-1.html#s4'},
 {q:'How is the presentation graded?',k:'presentation rubric oral individual panel engagement',a:'10 marks: quality of the presentation (5) and panel engagement (5). Each student is graded individually.',l:'project-1.html#s11'},
 {q:'What is Activity 1?',k:'activity 1 case analysis 20 cases reflection',a:'Individual, 10%, in class: choose 1 of 20 real cases around us, note three facts, answer five questions, reflect. Due Thu 19 Nov.',l:'activity-1.html'},
-{q:'What is Activity 2?',k:'activity 2 video pitch 30 45 seconds record',a:'Individual, 10%: a 30–45 second video pitch of your team’s Project 2 idea. Due Thu 3 Dec on Moodle.',l:'activity-2.html'},
+{q:'What is Activity 2?',k:'activity 2 pestle real case political economic social technological legal environmental',a:'Individual, 10%, in class: choose a real case around us (not your Activity 1 case), do a PESTLE with a fact and source for each force, name the biggest opportunity and threat, reflect. Due Thu 3 Dec.',l:'activity-2.html'},
 {q:'What is Project 2?',k:'project 2 idea validation report evaluation 40',a:'A team Idea Validation Report (40%) on three social innovation ideas, due Week 16. Requirements are published later.',l:'index.html#calendar'},
 {q:'Who is the instructor?',k:'instructor lecturer teacher professor contact',a:'Nadia. Contact details and office hours are on Moodle.',l:'index.html'},
 {q:'What is the textbook?',k:'book textbook reading byers',a:'Byers, Dorf & Nelson (2019). Technology ventures: From idea to enterprise (5th ed.). Each lecture names its chapter.',l:'week-01.html#s1'},
@@ -61,7 +61,7 @@ window.ENT141_KB=[
 {q:'What are the steps of design thinking?',k:'steps stages five empathize define ideate prototype test',a:'Empathize, define, ideate, prototype, test, repeated in loops.',l:'week-04.html#s2'},
 {q:'What is the Embrace case?',k:'embrace incubator infant warmer stanford nepal',a:'Stanford students designed a low-cost infant warmer (2007); observing families in Nepal led them to add a model for use at home.',l:'week-04.html#s3'},
 {q:'What is an innovative mindset?',k:'mindset mindsets innovative d.school bias action',a:'The d.school names seven: human values, show don’t tell, craft clarity, embrace experimentation, mindful of process, bias toward action, radical collaboration.',l:'week-04.html#s4'},
-{q:'How long is the video pitch?',k:'pitch length seconds video long',a:'30 to 45 seconds. Practise with the timer on the Activity 2 page.',l:'activity-2.html'},
+{q:'How long is the video pitch?',k:'pitch length seconds video long',a:'30 to 45 seconds. Practise with the timer in Week 4.',l:'week-04.html'},
 /* ---------- week 5 ---------- */
 {q:'What is empathy?',k:'empathy sympathy understand user',a:'Understanding a person’s experience from their point of view: observe, engage and immerse.',l:'week-05.html#s1'},
 {q:'How do I interview for empathy?',k:'interview questions ask tips how',a:'Ask about real past events (“Tell me about the last time…”), then ask why. Avoid leading, yes/no and selling questions.',l:'week-05.html#s2'},

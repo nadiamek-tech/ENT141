@@ -22,8 +22,8 @@ window.SITE={
      includes:['Empathy map and journey map from your interviews','“How might we…” questions','At least 3 solutions (risky, easy, favourite) and your choice','Prototype (drawing or design)'],guide:'project-1.html',moodle:''},
     {id:'p1p',name:'Project 1 · Presentation',weight:10,week:9,date:'',type:'Presentation',who:'Graded individually',
      includes:['Present the poster with your team','Answer the panel’s questions'],guide:'project-1.html#s10',moodle:''},
-    {id:'a2',name:'Activity 2 · Video pitch',weight:10,week:14,date:'Thu 3 Dec',type:'Activity',who:'Individual',
-     includes:['30–45 second video pitch of your team’s Project 2 idea','One MP4 or MOV file'],guide:'activity-2.html',moodle:'https://my.cud.ac.ae/mod/assign/view.php?id=23251'},
+    {id:'a2',name:'Activity 2 · PESTLE of a real case',weight:10,week:14,date:'Thu 3 Dec',type:'In-class activity',who:'Individual',
+     includes:['Choose a real case around us','PESTLE with facts and sources, opportunity, threat, reflection'],guide:'activity-2.html',moodle:'https://my.cud.ac.ae/mod/assign/view.php?id=23251'},
     {id:'p2',name:'Project 2 · Idea Validation Report',weight:40,week:16,date:'',type:'Project',who:'Team',
      includes:['Three ideas, scoring and choice','Market and PESTLE, value proposition canvas, differentiation, sustainability check'],guide:'project-2.html',moodle:'https://my.cud.ac.ae/mod/assign/view.php?id=23253'}],
   /* weeks: n, title, subtopics, reading, page ('' = in preparation) */

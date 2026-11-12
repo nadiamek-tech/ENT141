@@ -16,7 +16,7 @@
 <div id="hub" data-cur="act2"></div>
 <main class="pw" id="pw">
   <h1>Activity 2 · Article or case analysis</h1>
-  <p class="lead">Read the article or case your instructor assigns. Answer five questions directly on the page, then save as Word or PDF and submit.</p>
+  <p class="lead">An in-class activity. Read the article or case your instructor assigns. Answer five questions directly on the page, then save as Word or PDF and submit.</p>
   <div class="chips" id="chips"></div>
   <div class="bar" id="bar">
     <div class="seg" role="group" aria-label="Show"><button type="button" data-m="edit" aria-pressed="true">My analysis</button><button type="button" data-m="ex" aria-pressed="false">Example</button></div>
@@ -71,7 +71,7 @@ const EX={title:'Fictional mini-case: "FreshCrate", a fruit box for busy familie
 DocB.mount({key:'ent141-a2',docTitle:'Activity 2 · Article or Case Analysis',titleKey:'title',root:document.getElementById('pw'),sections:SECTIONS,ex:EX,
   coverOut:()=>[['Name',V('name')],['Student ID',V('sid')],['Reference',V('ref')],['Instructor','Nadia']],
   fileName:()=>`${(V('name')||'Student').replace(/[^\w\- ]+/g,'').replace(/\s+/g,'_')}_${V('sid')||'ID'}_ENT141_Activity2`});
-document.getElementById('chips').innerHTML=`<span>Individual</span><span><b>10%</b></span><span>Due <b>${esc(DUE)}</b></span><span>CLO <b>1</b></span>`;
+document.getElementById('chips').innerHTML=`<span>In class</span><span>Individual</span><span><b>10%</b></span><span>Due <b>${esc(DUE)}</b></span><span>CLO <b>1</b></span>`;
 document.getElementById('case').innerHTML=CASE?`<a class="bbtn" href="${esc(CASE)}" target="_blank" rel="noopener">Open the case ↗</a>`:`<span class="bbtn" aria-disabled="true">Case: given in class</span>`;
 document.getElementById('due').textContent=DUE+', 23:59';
 document.getElementById('mdl').innerHTML=MOODLE?`<a class="bbtn pri" href="${esc(MOODLE)}" target="_blank" rel="noopener">Submit on Moodle ↗</a>`:`<span class="bbtn" aria-disabled="true">Moodle link coming soon</span>`;

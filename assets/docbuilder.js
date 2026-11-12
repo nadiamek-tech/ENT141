@@ -96,14 +96,18 @@ async function makeDocx(){
     else if(b.img){ const m=b.img, bin=atob(m.src.split(',')[1]), u=new Uint8Array(bin.length); for(let i=0;i<bin.length;i++) u[i]=bin.charCodeAt(i); const w=Math.min(560,m.w);
       k.push(new Paragraph({children:[new ImageRun({data:u,type:'jpg',transformation:{width:w,height:Math.round(m.h*w/m.w)}})]})); } }
   const doc=new Document({creator:'ENT 141 student',title:CFG.docTitle,styles:{default:{document:{run:{font:'Calibri',size:24}}}},sections:[{children:k}]});
-  dl(await Packer.toBlob(doc),`${CFG.fileName()}.docx`); }
-function dl(blob,name){ const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=name; document.body.appendChild(a); a.click(); setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); },800); }
+  return dl(await Packer.toBlob(doc),`${CFG.fileName()}.docx`); }
+async function dl(blob,name){ const touch=matchMedia('(pointer:coarse)').matches;
+  if(touch&&navigator.canShare){ try{ const f=new File([blob],name,{type:blob.type||'application/octet-stream'}); if(navigator.canShare({files:[f]})){ await navigator.share({files:[f],title:name}); return 'shared'; } }catch(e){ if(e&&e.name==='AbortError') return 'cancel'; } }
+  const a=document.createElement('a'); a.href=URL.createObjectURL(/\.json$/.test(name)?new Blob([blob],{type:'application/octet-stream'}):blob); a.download=name; a.rel='noopener'; document.body.appendChild(a); a.click(); setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); },60000); return 'dl'; }
+const INAPP=/MoodleMobile|FBAN|FBAV|Instagram|Line\/|; wv\)/i.test(navigator.userAgent);
 function printPDF(){ const r=document.getElementById('print-root');
   const b=blocks().map(x=>x.h?`<h3>${esc(x.h)}</h3>`:x.h3?`<h4>${esc(x.h3)}</h4>`:x.p?`<p>${esc(x.p)}</p>`:x.cap?`<p><i>${esc(x.cap)}</i></p>`:x.img?`<img src="${x.img.src}" alt="">`:x.table?`<table>${x.table.map((row,i)=>`<tr>${row.map(c=>`<${x.head.includes(i)?'th':'td'}>${esc(c).replace(/\n/g,'<br>')}</${x.head.includes(i)?'th':'td'}>`).join('')}</tr>`).join('')}</table>`:'').join('');
   r.innerHTML=`<style>#print-root{font:11pt/1.5 Georgia,serif;color:#000}#print-root h1{font:700 22pt Arial}#print-root h3{font:700 13pt Arial;margin:16pt 0 6pt}#print-root h4{font:700 11pt Arial;margin:8pt 0 2pt}#print-root table{border-collapse:collapse;width:100%;margin:4pt 0 8pt}#print-root td,#print-root th{border:1px solid #888;padding:4pt;vertical-align:top;text-align:left}#print-root img{max-width:100%;max-height:120mm}#print-root .cv{min-height:240mm;display:flex;flex-direction:column;justify-content:center;break-after:page}</style>
   <div class="cv"><p>ENT 141 · Fundamentals of Innovation and Entrepreneurship 1</p><h1>${esc(CFG.docTitle)}</h1><p style="font-size:14pt">${esc(V(CFG.titleKey))}</p><p>${coverLines().map(([a,b])=>`<b>${esc(a)}:</b> ${esc(b).replace(/\n/g,'<br>')}`).join('<br>')}</p></div>${b}`;
   setTimeout(()=>window.print(),150); }
-const msg=t=>{ const m=document.getElementById('msg'); if(!m) return; m.textContent=t; clearTimeout(msg.t); msg.t=setTimeout(()=>m.textContent='',5000); };
+const done=r=>r==='cancel'?'Not saved.':r==='shared'?'Saved. Choose "Save to Files" (iPhone) or Downloads (Android).':INAPP?'If nothing downloaded, open this page in Safari or Chrome and save again.':'Saved. Check your Downloads folder.';
+const msg=t=>{ const m=document.getElementById('msg'); if(!m) return; m.textContent=t; clearTimeout(msg.t); msg.t=setTimeout(()=>m.textContent='',9000); };
 
 function mount(cfg){ CFG=cfg; try{ D=JSON.parse(localStorage.getItem(cfg.key)||'{}')||{}; }catch(e){ D={}; }
   const root=cfg.root;
@@ -116,10 +120,10 @@ function mount(cfg){ CFG=cfg; try{ D=JSON.parse(localStorage.getItem(cfg.key)||'
   root.addEventListener('click',e=>{ const b=e.target.closest('[data-fmt]'); if(b){ D['fmt-'+b.dataset.fmt]=b.dataset.v; store(); const sec=b.closest('.pg'); sec.classList.toggle('para',b.dataset.v==='para'); sec.classList.toggle('qa',b.dataset.v==='qa'); sec.querySelectorAll('[data-fmt]').forEach(x=>x.setAttribute('aria-pressed',x===b)); return; }
     const x=e.target.closest('[data-del]'); if(x){ IDB.del(x.dataset.del).then(()=>{ IMGS=IMGS.filter(m=>m.id!==x.dataset.del); drawFigs(); counts(); }); } });
   document.querySelectorAll('.seg button').forEach(b=>b.addEventListener('click',()=>{ mode=b.dataset.m; document.querySelectorAll('.seg button').forEach(x=>x.setAttribute('aria-pressed',x===b)); draw(); }));
-  const doDocx=async()=>{ msg('Preparing your Word file…'); try{ await makeDocx(); msg('Saved. Check your Downloads folder.'); }catch(e){ msg('Word export did not work in this browser. Use Print or PDF.'); } };
+  const doDocx=async()=>{ msg('Preparing your Word file…'); try{ const r=await makeDocx(); msg(done(r)); }catch(e){ msg('Word export did not work in this browser. Use Print or PDF.'); } };
   document.querySelectorAll('[data-act=docx]').forEach(b=>b.onclick=doDocx);
   document.querySelectorAll('[data-act=pdf]').forEach(b=>b.onclick=printPDF);
-  document.querySelectorAll('[data-act=save]').forEach(b=>b.onclick=()=>{ dl(new Blob([JSON.stringify({v:1,key:cfg.key,data:D,imgs:IMGS})],{type:'application/json'}),`${cfg.fileName()}.json`); msg('File saved. Open it here on any device to continue.'); });
+  document.querySelectorAll('[data-act=save]').forEach(b=>b.onclick=async()=>{ const r=await dl(new Blob([JSON.stringify({v:1,key:cfg.key,data:D,imgs:IMGS})],{type:'application/json'}),`${cfg.fileName()}.json`); msg(r==='dl'?done(r)+' Open it here later with Open file.':done(r)); });
   document.querySelectorAll('[data-act=open]').forEach(inp=>inp.addEventListener('change',e=>{ const f=e.target.files[0]; if(!f) return; f.text().then(async t=>{ try{ const o=JSON.parse(t); if(!o||!o.data||(o.key&&o.key!==cfg.key)) throw 0; D=o.data; store(); await IDB.clear(); IMGS=o.imgs||[]; for(const m of IMGS) await IDB.put(m); mode='edit'; document.querySelectorAll('.seg button').forEach(x=>x.setAttribute('aria-pressed',x.dataset.m==='edit')); draw(); msg('Opened. Your work is back.'); }catch(x){ msg('This file is not for this page.'); } }); e.target.value=''; }));
   const fixBar=()=>{ const h=document.getElementById('hub'), b=document.getElementById('bar'); if(b) b.style.top=(h?h.offsetHeight:0)+'px'; }; fixBar(); addEventListener('resize',fixBar);
   draw(); IDB.all().then(a=>{ IMGS=a; drawFigs(); counts(); });

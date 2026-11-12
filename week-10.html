@@ -129,20 +129,30 @@ const SVG_PORTER=`<svg viewBox="0 0 560 330" role="img" aria-label="Porter's thr
   <text x="335" y="264" text-anchor="middle" ${F} font-size="13" class="t-muted">serve one small group very well</text>
 </svg>`;
 
-/* mini Porter grid for case cards: which way to win */
-const miniPorter=cell=>{
-  const on='fill="var(--wk)"', off='fill="none" stroke="var(--line)" stroke-width="2"';
-  return `<svg viewBox="0 0 64 64" aria-hidden="true">
-  <rect x="2" y="2" width="28" height="28" rx="5" ${cell==='cost'?on:off}/>
-  <rect x="34" y="2" width="28" height="28" rx="5" ${cell==='diff'?on:off}/>
-  <rect x="2" y="34" width="60" height="28" rx="5" ${cell==='focus'?on:off}/></svg>`;};
+/* ---------- strategy ladder (concept) ---------- */
+const rung=(y,w,fill,txtFill,big,small)=>`<rect x="${280-w/2}" y="${y}" width="${w}" height="54" rx="10" ${fill}/>
+  <text x="280" y="${y+24}" text-anchor="middle" ${F} font-weight="800" font-size="17" ${txtFill}>${big}</text>
+  <text x="280" y="${y+43}" text-anchor="middle" ${F} font-size="13" ${txtFill==='style="fill:var(--on-wk)"'?txtFill:'class="t-muted"'}>${small}</text>`;
+const SVG_LADDER=`<svg viewBox="0 0 560 345" role="img" aria-label="Strategy ladder: vision, mission, goal, objectives, tactics">
+  <path d="M40 335 V30" stroke="var(--wk)" stroke-width="3" marker-end="url(#ar)"/>
+  <defs><marker id="ar" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="var(--wk)"/></marker></defs>
+  <text x="58" y="40" ${F} font-size="12" class="t-muted">big, long term</text>
+  <text x="58" y="338" ${F} font-size="12" class="t-muted">small, this week</text>
+  ${rung(10,260,'fill="var(--wk)"','style="fill:var(--on-wk)"','Vision','where we want to be')}
+  ${rung(74,300,'fill="var(--wk-soft)" stroke="var(--wk)" stroke-width="2"','','Mission','what we do, for whom, why')}
+  ${rung(138,340,'fill="none" stroke="var(--wk)" stroke-width="2"','','Goal','one broad result we want')}
+  ${rung(202,380,'fill="none" stroke="var(--wk)" stroke-width="2" stroke-dasharray="6 5"','','Objectives','SMART: a number and a date')}
+  ${rung(266,420,'fill="none" stroke="var(--line)" stroke-width="2"','','Tactics','actions we do this week')}
+</svg>`;
 
-/* where + how mini graphic (strategy concept) */
-const MINI_WH=`<svg viewBox="0 0 64 64" aria-hidden="true">
-  <rect x="2" y="6" width="26" height="22" rx="5" fill="var(--wk-soft)" stroke="var(--wk)" stroke-width="2"/>
-  <rect x="2" y="36" width="26" height="22" rx="5" fill="var(--wk-soft)" stroke="var(--wk)" stroke-width="2"/>
-  <path d="M28 17 C38 17 38 32 44 32 M28 47 C38 47 38 32 44 32" fill="none" stroke="var(--wk)" stroke-width="2.5"/>
-  <circle cx="52" cy="32" r="10" fill="var(--wk)"/></svg>`;
+/* mini graphics for case cards */
+const MINI_EYE=`<svg viewBox="0 0 64 64" aria-hidden="true">
+  <path d="M4 32 C16 12 48 12 60 32 C48 52 16 52 4 32 z" fill="var(--wk-soft)" stroke="var(--wk)" stroke-width="2.5"/>
+  <circle cx="32" cy="32" r="10" fill="var(--wk)"/></svg>`;
+const MINI_ARROW=`<svg viewBox="0 0 64 64" aria-hidden="true">
+  <circle cx="32" cy="32" r="28" fill="var(--wk-soft)" stroke="var(--wk)" stroke-width="2"/>
+  <circle cx="32" cy="32" r="16" fill="none" stroke="var(--wk)" stroke-width="2"/>
+  <circle cx="32" cy="32" r="5" fill="var(--wk)"/></svg>`;
 
 /* ---------- case card ---------- */
 function caseCard(c){
@@ -153,50 +163,53 @@ function caseCard(c){
   <div class="cc-r ls"><dt>Lesson</dt><dd>${c.lesson}</dd></div></dl></article>`;
 }
 
-const CASE_IKEA=caseCard({tag:'Case · a clear strategy',org:'IKEA',place:'Sweden',year:'founded 1943 · flat packs from 1956',mini:MINI_WH,
-  rows:[['Where','People who furnish a home on a small budget.'],['How','Low prices, made possible by flat packs.']],
-  did:'It sells furniture flat, in a box. Customers carry it home and build it.',
-  why:'Flat boxes take less space. Shipping and storing cost less, so prices stay low.',
-  lesson:'A strategy says who you serve and how you win.'});
+const CASE_IKEA=caseCard({tag:'Case · a vision',org:'IKEA',place:'Sweden',year:'founded 1943',mini:MINI_EYE,
+  rows:[['Vision','“To create a better everyday life for the many people.”']],
+  did:'It sells well-designed furniture at low prices. Flat packs keep costs down.',
+  whyLbl:'Why it helps',why:'Short and easy to remember. Every team can check its work against it.',
+  lesson:'A vision is a picture of the future. It is not a product.'});
 
-const CASE_SW=caseCard({tag:'Case · cost leadership',org:'Southwest Airlines',place:'USA',year:'first flights 1971',mini:miniPorter('cost'),
-  did:'One plane type, the Boeing 737. Short, direct routes. Fast turnarounds at the gate.',
-  why:'Low costs allow low fares for many travellers.',
-  lesson:'Cut every cost your users do not care about.'});
+const CASE_PAT=caseCard({tag:'Case · a mission',org:'Patagonia',place:'USA',year:'statement adopted 2018',mini:MINI_ARROW,
+  rows:[['Purpose','“We’re in business to save our home planet.”']],
+  did:'It repairs worn clothes through Worn Wear. In 2022, its founder gave the company to fight climate change.',
+  whyLbl:'Why it helps',why:'The words guide big choices. Customers see actions, not only words.',
+  lesson:'A mission says what you do and why. Actions must match it.'});
 
-const CASE_PAT=caseCard({tag:'Case · differentiation',org:'Patagonia',place:'USA',year:'1973',mini:miniPorter('diff'),
-  did:'Strong outdoor clothes. It repairs worn clothes through Worn Wear. It gives 1% of sales to nature groups.',
-  why:'Customers trust the brand. Many pay more for it.',
-  lesson:'Be different in a way your users really value.'});
+const CASE_CAREEM=caseCard({tag:'Case · a purpose',org:'Careem',place:'UAE (Dubai)',year:'founded 2012',mini:MINI_ARROW,
+  rows:[['Purpose','“To simplify and improve the lives of people, and build an awesome organisation that inspires.”']],
+  did:'It started with rides. Later its app added more services, such as food delivery.',
+  whyLbl:'Why it helps',why:'The purpose is wide. It allowed growth beyond rides.',
+  lesson:'A clear purpose can guide a venture as it grows.'});
 
-const CASE_CAREEM=caseCard({tag:'Case · focus',org:'Careem',place:'UAE (Dubai)',year:'2012',mini:miniPorter('focus'),
-  did:'It started with car bookings for companies only. Later it opened rides to everyone.',
-  why:'One small group with a clear need. Careem learned fast, then grew.',
-  lesson:'Start with one group. Serve it very well. Grow later.'});
+/* ---------- team example (fictional, step by step) ---------- */
+const STEPS=[
+  {t:'Vision',s:'1',d:'“Every student on campus drinks clean water without plastic bottles.”'},
+  {t:'Mission',s:'2',d:'We install refill stations (what) for CUD students (for whom) to cut plastic waste (why).'},
+  {t:'Goal',s:'3',d:'Reduce plastic bottles bought on campus.'},
+  {t:'Objectives',s:'4',d:'Install 3 stations by 15 Dec. Get 200 refills a week by end of January.'},
+  {t:'Tactics',s:'5',d:'Ask Facilities for 3 spots. Design a poster. Count refills each Friday.'}];
 
-/* ---------- in-depth case (real, cited) ---------- */
-const DEPTH=`<div class="rc"><span class="lbl">Real case · read it twice</span>
-<p><b>Careem: start small, then grow.</b> Careem started in Dubai in 2012. Its co-founders included Mudassir Sheikha and Magnus Olsson. Both had worked at McKinsey, a consulting firm.</p>
-<p>At first, Careem did not serve everyone. It booked cars for companies and their staff. This was one group with a clear need.</p>
-<p>Careem studied its region closely. Many people did not use bank cards, so riders could pay in cash. Its drivers are called captains.</p>
-<p>In 2013, a big rival arrived in Dubai: Uber. Careem competed with its local knowledge.</p>
-<p>Later, Careem opened to all riders. It grew to many cities in the Middle East, North Africa and Pakistan.</p>
-<p>In March 2019, Uber announced it would buy Careem for US$3.1 billion. Careem kept its own brand in the region. Later, it added more services to its app, such as food delivery.</p></div>`;
+const SMART=[
+  {t:'Specific',s:'S',d:'Say exactly what will change.'},
+  {t:'Measurable',s:'M',d:'Use a number you can count.'},
+  {t:'Achievable',s:'A',d:'Your team can really do it.'},
+  {t:'Relevant',s:'R',d:'It moves the goal forward.'},
+  {t:'Time-bound',s:'T',d:'It has a date.'}];
 
 const FIX=[
-  {q:'“Our idea is the cheapest <i>and</i> the best, for everyone.”',hint:'Porter calls this “stuck in the middle”: no clear way to win. Choose one way.'},
-  {q:'“We have no competitors.”',hint:'What users do today is your competitor. Even waiting in the sun. Name it.'},
-  {q:'“We will win because we are first.”',hint:'First is not enough. Facebook came after Friendster and MySpace. Say what keeps you ahead.'}];
+  {q:'“Our vision is to sell the best app.”',hint:'That is a product, not a vision. Describe the better world your users will live in.'},
+  {q:'“Objective: help many students.”',hint:'Not SMART. Add a number and a date. Example: 50 students by 30 January.'},
+  {q:'“Tactic: be successful.”',hint:'A tactic is an action. Write a verb: call, build, post, count.'}];
 
 Lecture.mount({
   id:'ent141-w10', week:10, clo:'1, 3', course:'ENT 141', short:'Week 10 · Entrepreneurial Strategy', instructor:'Nadia',
-  title:'Entrepreneurial Strategy', meta:'Byers et al. (2019), Porter (1985) · 2-hour lecture',
+  title:'Entrepreneurial Strategy', meta:'Byers et al. (2019), Ch. 3 · 2-hour lecture',
   scenes:[
-  { nav:'Start here', title:'Why can two very different shops both win?', minutes:5,
-    narration:[`Project 1 is done. Today we start Project 2. We learn what a strategy is, and Porter's three ways to win. <span class="mono">CLO 1 · CLO 3.</span>`],
-    think:`Near campus, one cafeteria sells cheap karak in paper cups. A café nearby charges more, with seats and Wi-Fi. Both are always full. How?`,
-    src:`Reading: Byers, T. H., Dorf, R. C., &amp; Nelson, A. J. (2019). <em>Technology ventures: From idea to enterprise</em> (5th ed.). McGraw-Hill. · Porter, M. E. (1985). <em>Competitive advantage</em>. Free Press.`,
-    fig:{label:`Today's lecture · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`Your grades map`,5,'c'],[`Project 2 map`,5,'c'],[`What is a strategy?`,8,'l'],[`Three ways to win`,7,'l'],[`1 · Cost leadership`,8,'l'],[`2 · Differentiation`,8,'l'],[`3 · Focus`,8,'l'],[`Case study in depth`,20,'a'],[`Mistake → fix`,6,'c'],[`Team: three idea directions`,30,'a'],[`Think about it`,10,'c']])} },
+  { nav:'Start here', title:'Where is your team going?', minutes:5,
+    narration:[`Project 1 is done. Today we start Project 2. We learn vision, mission, goals, objectives and tactics. <span class="mono">CLO 1 · CLO 3.</span>`],
+    think:`You plan a trip from Dubai to Abu Dhabi. First you choose the place. Then the road. Then you start the car. Which comes first in a venture?`,
+    src:`Reading: Byers, T. H., Dorf, R. C., &amp; Nelson, A. J. (2019). <em>Technology ventures: From idea to enterprise</em> (5th ed.), Ch. 3. McGraw-Hill.`,
+    fig:{label:`Today's lecture · 120 minutes`, build:el=>W.agenda(el,[[`Start here`,5,'l'],[`Your grades map`,5,'c'],[`Project 2 map`,5,'c'],[`Vision`,8,'l'],[`Mission`,8,'l'],[`The strategy ladder`,8,'l'],[`SMART objectives`,8,'l'],[`Team example`,8,'l'],[`How will we win?`,5,'l'],[`Case: Careem`,15,'a'],[`Mistake → fix`,5,'c'],[`Team: our strategy`,30,'a'],[`Think about it`,10,'c']])} },
 
   { nav:'Your grades map', title:'Your grades map', kind:'review', minutes:5,
     narration:[`Half of your marks are done. The other half come from Activity 2 (alone) and Project 2 (team).`],
@@ -204,69 +217,74 @@ Lecture.mount({
     fig:{label:`Course marks · 100%`, html:GRADES_HTML} },
 
   { nav:'Project 2 map', title:'Project 2 map', kind:'review', minutes:5,
-    narration:[`Project 2 is one team report. We build one section in each lecture. Today you start section 1: three ideas.`,
+    narration:[`Project 2 is one team report. We build one section in each lecture. Today you start section 1 with your team strategy.`,
       `<a class="btn" href="project-2.html">Open the Project 2 builder →</a>`],
     src:`ENT 141 Project 2 · Idea Validation Report (40%, team), due Thu 17 Dec, 23:59, on Moodle.`,
     fig:{label:`The road to 17 December`, html:ROAD_HTML} },
 
-  { nav:'What is a strategy?', title:'What is a strategy?', minutes:8,
-    narration:[`A <b>strategy</b> is a plan to win. It answers two questions. Where do we compete? How do we win there?`],
-    src:`Byers et al. (2019), competitive strategy. · Porter, M. E. (1996). What is strategy? <em>Harvard Business Review</em>, 74(6), 61–78. · IKEA. (n.d.). <em>The IKEA story</em>: 1950s, flat packs.`,
-    fig:{label:`Case study · where + how`, html:CASE_IKEA} },
+  { nav:'Vision', title:'Vision: where we want to be', minutes:8,
+    narration:[`A <b>vision</b> describes the future you want to create. It is big and long term. It inspires the team.`],
+    src:`Byers et al. (2019), Ch. 3. · IKEA. (n.d.). <em>This is IKEA</em>: vision. ikea.com.`,
+    fig:{label:`Case study · a real vision`, html:CASE_IKEA} },
 
-  { nav:'Three ways to win', title:'Porter: three ways to win', minutes:7,
-    narration:[`Porter gives three ways to win. Be the <b>cheapest</b>. Be <b>different and better</b>. Or <b>focus</b> on one small group. Pick one, not all three.`],
+  { nav:'Mission', title:'Mission: what we do, for whom, why', minutes:8,
+    narration:[`A <b>mission</b> answers three questions. What do we do? For whom? Why does it matter?`],
+    src:`Byers et al. (2019), Ch. 3. · Patagonia. (n.d.). <em>Our purpose</em>; Chouinard, Y. (2022, September 14). <em>Earth is now our only shareholder</em>. patagonia.com.`,
+    fig:{label:`Case study · a real mission`, html:CASE_PAT} },
+
+  { nav:'The strategy ladder', title:'The strategy ladder', minutes:8,
+    narration:[`Vision and mission sit at the top. Under them: <b>goals</b>, then <b>objectives</b>, then <b>tactics</b>. Each step is smaller and more concrete.`],
+    src:`Byers et al. (2019), Ch. 3: vision, mission, goals and objectives.`,
+    fig:{label:`Concept · from vision to action`, html:SVG_LADDER} },
+
+  { nav:'SMART objectives', title:'Objectives must be SMART', minutes:8,
+    narration:[`A goal is broad. An <b>objective</b> makes it measurable. Check each objective with SMART. Click each letter.`],
+    src:`Doran, G. T. (1981). There's a S.M.A.R.T. way to write management's goals and objectives. <em>Management Review</em>, 70(11), 35–36.`,
+    fig:{label:`Concept · SMART check · click or play`, flow:SMART} },
+
+  { nav:'Team example', title:'Team example, step by step', minutes:8,
+    narration:[`A student team wants less plastic on campus. Follow their ladder from vision to tactics. This team is fictional.`],
+    src:`Fictional example for practice.`,
+    fig:{label:`Worked example · click or play`, flow:STEPS} },
+
+  { nav:'How will we win?', title:'How will we win?', minutes:5,
+    narration:[`Tactics also show how you win. Porter gives three ways: be the cheapest, be different, or focus on one group.`],
     src:`Porter, M. E. (1985). <em>Competitive advantage</em>. Free Press.`,
     fig:{label:`Concept · Porter's grid`, html:SVG_PORTER} },
 
-  { nav:'1 · Cost leadership', title:'1 · Cost leadership', minutes:8,
-    narration:[`<b>Cost leadership</b> means the lowest cost in the market. The venture keeps costs very low. So it can charge less than rivals.`],
-    src:`Porter, M. E. (1996). What is strategy? <em>Harvard Business Review</em>, 74(6), 61–78 (Southwest Airlines).`,
-    fig:{label:`Case study · cost leadership`, html:CASE_SW} },
+  { nav:'Case: Careem', title:'Case study · Careem’s purpose', kind:'activity', minutes:15, wide:true,
+    narration:[`Read Careem’s purpose. Answer the three questions alone. Then compare with a partner.`, CASE_CAREEM],
+    src:`Careem. (n.d.). <em>Our purpose</em>. why.careem.com. · Uber Technologies. (2019, March 26). <em>Uber to acquire Careem</em> [Press release].`,
+    fig:{label:`Three questions · saves in your browser`, build:el=>W.worksheet(el,{id:'ent141-w10-careem',title:'ENT 141 · Week 10 · Case study: Careem’s purpose',fields:[
+      {l:'Q1 · What does Careem do, for whom, and why?',rows:2},
+      {l:'Q2 · Is this closer to a vision or a mission? Why?',rows:2},
+      {l:'Q3 · Write one SMART objective Careem could set',rows:2}]})} },
 
-  { nav:'2 · Differentiation', title:'2 · Differentiation', minutes:8,
-    narration:[`<b>Differentiation</b> means being different and better. Users get something they value. So they agree to pay more.`],
-    src:`Chouinard, Y. (2005). <em>Let my people go surfing</em>. Penguin. · Patagonia. (n.d.). <em>Worn Wear</em>. · 1% for the Planet. (n.d.). <em>Our story</em>.`,
-    fig:{label:`Case study · differentiation`, html:CASE_PAT} },
-
-  { nav:'3 · Focus', title:'3 · Focus', minutes:8,
-    narration:[`<b>Focus</b> means serving one small group. Serve it better than anyone. Many new ventures start this way.`],
-    src:`Careem. (2026). In <em>Wikipedia</em>: history (corporate car bookings, 2012).`,
-    fig:{label:`Case study · focus`, html:CASE_CAREEM} },
-
-  { nav:'Case study in depth', title:'Case study in depth · Careem', kind:'activity', minutes:20, wide:true,
-    narration:[`Read the real case twice. Then answer the three questions alone. Compare with a partner.`, DEPTH],
-    src:`Careem. (2026). In <em>Wikipedia</em>. · Uber Technologies. (2019, March 26). <em>Uber to acquire Careem</em> [Press release]. · VentureBeat. (2019, March). Uber confirms it's acquiring Middle East rival Careem for $3.1 billion.`,
-    fig:{label:`Three questions · saves in your browser`, build:el=>W.worksheet(el,{id:'ent141-w10-careem',title:'ENT 141 · Week 10 · Case study in depth: Careem',fields:[
-      {l:'Q1 · Where did Careem compete first? Which users?',rows:2},
-      {l:'Q2 · Which of Porter\'s three ways fits its start? Give one fact.',rows:2},
-      {l:'Q3 · One lesson from Careem for our team idea',rows:2}]})} },
-
-  { nav:'Mistake → fix', title:'Mistake → fix', kind:'review', minutes:6,
-    narration:[`Teams often say these three things. Say the fix first, then reveal it.`],
-    src:`Porter (1985): “stuck in the middle”. · boyd, d. m., &amp; Ellison, N. B. (2007). Social network sites: Definition, history, and scholarship. <em>Journal of Computer-Mediated Communication</em>, 13(1), 210–230.`,
+  { nav:'Mistake → fix', title:'Mistake → fix', kind:'review', minutes:5,
+    narration:[`Teams often write these three lines. Say the fix first, then reveal it.`],
+    src:`Byers et al. (2019), Ch. 3. · Doran (1981).`,
     fig:{label:`Common mistakes · reveal the fix`, build:el=>W.practice(el,FIX,{label:'Fix',prefix:'<b>Fix:</b> '})} },
 
-  { nav:'Team: three idea directions', title:'Team · Three idea directions', kind:'activity', minutes:30, wide:true,
-    narration:[`Start from your Project 1 problem. Write one idea for each way to win. This starts section 1 of Project 2. Finish it next week.`,
+  { nav:'Team: our strategy', title:'Team · Our strategy ladder', kind:'activity', minutes:30, wide:true,
+    narration:[`Start from your Project 1 problem. Build your ladder, top to bottom. This starts section 1 of Project 2.`,
       `<a class="btn" href="project-2.html#p-s1">Open Project 2, sections 1 and 2 →</a>`],
-    fig:{label:`Team worksheet · saves in your browser`, build:el=>W.worksheet(el,{id:'ent141-w10-directions',title:'ENT 141 · Week 10 · Three idea directions',fields:[
-      {l:'Our Project 1 problem (one sentence, from the poster)',rows:2},
-      {l:'Where we compete: which users, which place?',rows:2},
-      {l:'Idea A · Cost leadership: the cheapest way to solve it',rows:2},
-      {l:'Idea B · Differentiation: a different, better way',rows:2},
-      {l:'Idea C · Focus: one small group we serve best',rows:2},
-      {l:'What do users do today instead? (our real competitor)',rows:2}]})} },
+    fig:{label:`Team worksheet · saves in your browser`, build:el=>W.worksheet(el,{id:'ent141-w10-directions',title:'ENT 141 · Week 10 · Our strategy ladder',fields:[
+      {l:'Our vision: where we want to be',rows:2},
+      {l:'Our mission: what we do, for whom, why',rows:2},
+      {l:'One goal',rows:1},
+      {l:'SMART objective 1 (number + date)',rows:2},
+      {l:'SMART objective 2 (number + date)',rows:2},
+      {l:'Three tactics: actions we start this week',rows:3}]})} },
 
   { nav:'Think about it', title:'Think about it', kind:'review', minutes:10,
     narration:[`Discuss with your team. There is no single right answer.`,
-      `<b>Exit question:</b> in one sentence, where does your team compete, and how will it win?`,
-      `<b>Next week:</b> Overview of Entrepreneurial Strategies. Five more strategies, and Activity 2 in class. Bring your three idea directions.`,
+      `<b>Exit question:</b> read your mission aloud. Would a user understand it in ten seconds?`,
+      `<b>Next week:</b> Overview of Entrepreneurial Strategies. How to share and review a strategy. Activity 2 in class.`,
       `<a class="btn" href="week-11.html">Next lecture · Week 11 · Overview of Entrepreneurial Strategies →</a>`],
     fig:{label:`Reflection · strategy`, build:el=>W.practice(el,[
-      {q:'Is the cheapest idea always best for people with low income?',hint:'Not always. If quality drops, they pay again. Ask users what they value.'},
-      {q:'Which of your three ideas would your interviewees choose? Why?',hint:'Go back to your Project 1 quotes. Not your own taste.'},
-      {q:'Can a social venture use cost leadership?',hint:'Yes. A low cost can help a solution reach many people.'}],{label:'One view',prefix:''})} },
+      {q:'Should a vision change every year?',hint:'Usually not. Objectives and tactics change. The vision stays as the direction.'},
+      {q:'Does your mission match what your interviewees told you?',hint:'Go back to your Project 1 quotes. Users decide, not your own taste.'},
+      {q:'Which tactic can your team start before next week?',hint:'Pick the smallest one. Then check if it helped.'}],{label:'One view',prefix:''})} },
   ]
 });
 </script>

@@ -131,7 +131,7 @@ const STEPS=[
  [10,'How big is the market?','Find real data; mistake → fix.','week-12.html#s6','Open Week 12'],
  [25,'Team: PESTLE for your idea','Fill the worksheet, paste into Project 2, section 3.','week-12.html#s9','Open Week 12'],
  [15,'Activity 2 · start','Choose your real case and start the PESTLE. Due Thu 3 Dec.','activity-2.html','Open Activity 2']];
-const COL=['var(--muted)','var(--wk)','color-mix(in srgb,var(--wk) 70%,var(--bg))','color-mix(in srgb,var(--wk) 45%,var(--bg))','var(--good)'];
+const COL=['var(--muted)','var(--wk)','color-mix(in srgb,var(--wk) 85%,var(--bg))','color-mix(in srgb,var(--wk) 70%,var(--bg))','color-mix(in srgb,var(--wk) 45%,var(--bg))','var(--good)'];
 document.getElementById('tbar').innerHTML=STEPS.map((s,i)=>`<i style="width:${s[0]/1.2}%;background:${COL[i]}" title="${s[1]} · ${s[0]} min"></i>`).join('');
 document.getElementById('steps').innerHTML=STEPS.map(([m,t,p,l,b])=>`<li><span class="m">${m}<small>min</small></span><div><b>${esc(t)}</b><p>${esc(p)}</p></div><a class="go" href="${l}">${b} →</a></li>`).join('');
 </script>

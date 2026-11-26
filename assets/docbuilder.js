@@ -18,6 +18,8 @@ let CFG, D={}, mode='edit', IMGS=[];
 const store=()=>{ try{ localStorage.setItem(CFG.key,JSON.stringify(D)); }catch(e){} };
 const src=()=>mode==='ex'?CFG.ex:D;
 const V=k=>String(src()[k]==null?'':src()[k]).trim();
+const byOf=s=>s.items&&s.items.some(it=>it.k===`by_${s.id}`)?V(`by_${s.id}`):null;
+const byTxt=s=>{ const n=byOf(s); return n?`Done by: <b>${esc(n)}</b>`:'Done by: <i>add name below</i>'; };
 const fmt=id=>src()['fmt-'+id]||'qa';
 /* images */
 const IDB={db:null,name:()=>CFG.key+'-img',open(){ return this.db?Promise.resolve(this.db):new Promise((res,rej)=>{ try{ const r=indexedDB.open(this.name(),1); r.onupgradeneeded=()=>r.result.createObjectStore('img',{keyPath:'id'}); r.onsuccess=()=>{ this.db=r.result; res(r.result); }; r.onerror=()=>rej(r.error); }catch(e){ rej(e); } }); },
@@ -48,7 +50,7 @@ const FMT=id=>`<div class="fmt" role="group" aria-label="How this part appears i
 function draw(){
   const root=CFG.root; root.classList.toggle('exmode',mode==='ex');
   root.querySelector('#doc').innerHTML=`<div class="pf-doc">${CFG.sections.map(s=>`<section class="pg ${s.cover?'cover':''} ${s.fmt?fmt(s.id):''}" id="p-${s.id}">
-    ${s.cover?`<div><span class="k">${esc(CFG.docTitle)}</span><h1>${F(s.titleKey,s.titlePh,1,'input')}</h1></div>`:`<div class="pg-h"><span class="n">${esc(s.n)}</span><h2>${esc(s.title)}</h2>${s.tag?`<span class="t">${esc(s.tag)}</span>`:''}${s.fmt?FMT(s.id):''}</div>`}
+    ${s.cover?`<div><span class="k">${esc(CFG.docTitle)}</span><h1>${F(s.titleKey,s.titlePh,1,'input')}</h1></div>`:`<div class="pg-h"><span class="n">${esc(s.n)}</span><h2>${esc(s.title)}</h2>${byOf(s)!==null?`<span class="by" data-by="${s.id}">${byTxt(s)}</span>`:''}${s.tag?`<span class="t">${esc(s.tag)}</span>`:''}${s.fmt?FMT(s.id):''}</div>`}
     ${s.howto?`<p class="howto">${s.howto}</p>`:''}${s.items.map(it=>item(it,s)).join('')}${s.wc?`<p class="wc" data-wc="${s.id}"></p>`:''}</section>`).join('')}</div>`;
   root.querySelectorAll('textarea.fld').forEach(grow); drawFigs(); counts(); }
 const grow=t=>{ t.style.height='auto'; t.style.height=(t.scrollHeight+2)+'px'; };
@@ -65,10 +67,10 @@ function matrixRefresh(){ CFG.sections.forEach(s=>s.items.filter(it=>it.t==='mat
 
 /* ---------- output blocks (same words; Q&A or paragraphs) ---------- */
 function blocks(){ const o=[];
-  CFG.sections.forEach(s=>{ if(s.cover) return; o.push({h:`${s.n} · ${s.title}`}); const f=s.fmt?fmt(s.id):'qa'; const para=[];
+  CFG.sections.forEach(s=>{ if(s.cover) return; o.push({h:`${s.n} · ${s.title}${byOf(s)?` — Done by: ${byOf(s)}`:''}`}); const f=s.fmt?fmt(s.id):'qa'; const para=[];
     const flush=()=>{ if(para.length){ o.push({p:para.join(' ')}); para.length=0; } };
     s.items.forEach(it=>{
-      if(it.t==='q'||it.t==='in'||it.t==='pick'){ const v=V(it.k); if(!v) return; if(f==='para'&&it.t==='q'){ para.push(v); if(/\n/.test(v)||it.brk) flush(); } else { flush(); if(it.t==='q') { o.push({h3:it.label}); v.split(/\n+/).forEach(p=>o.push({p})); } else o.push({p:`${it.label}: ${v}`}); } }
+      if(it.t==='q'||it.t==='in'||it.t==='pick'){ const v=V(it.k); if(!v||/^by_/.test(it.k)) return; if(f==='para'&&it.t==='q'){ para.push(v); if(/\n/.test(v)||it.brk) flush(); } else { flush(); if(it.t==='q') { o.push({h3:it.label}); v.split(/\n+/).forEach(p=>o.push({p})); } else o.push({p:`${it.label}: ${v}`}); } }
       else if(it.t==='boxes'){ flush(); const B=it.boxes.map(b=>[b.h,b.items.map(([k],i)=>V(k)?`${i+1}. ${V(k)}`:'').filter(Boolean).join('\n')]);
         if(f==='para') B.forEach(([h,t])=>{ if(t) o.push({p:`${h}: `+t.replace(/^\d\. /gm,'').split('\n').join('; ')+'.'}); });
         else { const rows=[]; for(let i=0;i<B.length;i+=2){ rows.push([B[i][0],(B[i+1]||[''])[0]]); rows.push([B[i][1],(B[i+1]||['',''])[1]]); } o.push({table:rows,head:rows.map((_,i)=>i).filter(i=>i%2===0)}); } }
@@ -111,7 +113,7 @@ const msg=t=>{ const m=document.getElementById('msg'); if(!m) return; m.textCont
 
 function mount(cfg){ CFG=cfg; try{ D=JSON.parse(localStorage.getItem(cfg.key)||'{}')||{}; }catch(e){ D={}; }
   const root=cfg.root;
-  root.addEventListener('input',e=>{ const f=e.target.closest('[data-k]'); if(f){ D[f.dataset.k]=f.value; store(); if(f.tagName==='TEXTAREA') grow(f); counts(); matrixRefresh(); return; }
+  root.addEventListener('input',e=>{ const f=e.target.closest('[data-k]'); if(f){ D[f.dataset.k]=f.value; store(); if(/^by_/.test(f.dataset.k)){ const sec=CFG.sections.find(x=>`by_${x.id}`===f.dataset.k); const b=sec&&CFG.root.querySelector(`[data-by="${sec.id}"]`); if(b) b.innerHTML=byTxt(sec); } if(f.tagName==='TEXTAREA') grow(f); counts(); matrixRefresh(); return; }
     const c=e.target.closest('[data-cap]'); if(c){ const m=IMGS.find(x=>x.id===c.dataset.cap); if(m){ m.cap=c.value; IDB.put(m); } } });
   root.addEventListener('change',async e=>{ const s=e.target.closest('select[data-k]'); if(s){ D[s.dataset.k]=s.value; store(); counts(); return; }
     const f=e.target.closest('input[type=file][data-slot]'); if(!f) return;

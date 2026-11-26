@@ -35,8 +35,8 @@ window.COURSE={
       revise:[['How to present','project-1.html#s11']],done:true},
     {id:'a2',name:'Activity 2 · PESTLE of a real case (in class)',short:'Activity 2',type:'Activity',weight:'10%',date:'2026-12-03T09:00:00+04:00',time:false,covers:['Choose a real case (not your Activity 1 case)','PESTLE: six forces with facts and sources, opportunity, threat, reflection'],clos:'1, 3',format:'Individual',
       submit:{link:'https://my.cud.ac.ae/mod/assign/view.php?id=23251',due:'2026-12-03T23:59:00+04:00',dueText:'Thu 3 Dec'},revise:[['Activity 2 page','activity-2.html'],['Week 12 · PESTLE','week-12.html']]},
-    {id:'p2',name:'Project 2 · Idea Validation Report',short:'Project 2',type:'Project',weight:'40%',when:'Week 16',date:'2026-12-17T09:00:00+04:00',time:false,covers:['Three social innovation ideas, evaluated and one selected','Market and industry analysis','Value proposition canvas, differentiation, sustainability check'],clos:'1, 3, 4',format:'Team',
-      submit:{link:'https://my.cud.ac.ae/mod/assign/view.php?id=23253',due:'2026-12-17T23:59:00+04:00',dueText:'Thu 17 Dec'},revise:[['Project 2 builder','project-2.html']]}
+    {id:'p2',name:'Project 2 · Idea Validation Report',short:'Project 2',type:'Project',weight:'40%',when:'Week 15',date:'2026-12-08T09:00:00+04:00',time:false,covers:['Three social innovation ideas, evaluated and one selected','Market and industry analysis','Value proposition canvas, differentiation, sustainability check'],clos:'1, 3, 4',format:'Team',
+      submit:{link:'https://my.cud.ac.ae/mod/assign/view.php?id=23253',due:'2026-12-08T23:59:00+04:00',dueText:'Tue 8 Dec'},revise:[['Project 2 builder','project-2.html']]}
   ],
 
   /* semester calendar: lec = [title, link] (no link = in preparation) */
@@ -55,8 +55,8 @@ window.COURSE={
     {w:'12', lec:['Market/Industry Analysis','week-12.html']},
     {w:'13', lec:['Value Proposition Canvas (Part 1)','week-13.html']},
     {w:'14', lec:['Value Proposition Canvas (Part 2)','week-14.html']},
-    {w:'15', lec:['Product Differentiation (Part 1)','week-15.html']},
-    {w:'16', lec:['Product Differentiation (Part 2)','week-16.html'], ev:['p2']}
+        {w:'15', lec:['Product Differentiation (Part 1)','week-15.html'], ev:['p2']},
+    {w:'16', lec:['Product Differentiation (Part 2)','week-16.html']}
   ],
 
   clos:[
@@ -67,7 +67,7 @@ window.COURSE={
   ],
 
   faqExtra:[
-    ['What is next after Project 1?','Activity 1 (case analysis, due Thu 19 Nov), Activity 2 (PESTLE of a real case, due Thu 3 Dec) and Project 2, the Idea Validation Report (team, due Thu 17 Dec). <a href="roadmap.html">See the roadmap →</a>'],
+    ['What is next after Project 1?','Activity 1 (case analysis, due Thu 19 Nov), Activity 2 (PESTLE of a real case, due Thu 3 Dec) and Project 2, the Idea Validation Report (team, due Tue 8 Dec). <a href="roadmap.html">See the roadmap →</a>'],
     ['What is Project 1?','A team poster about one real social problem: you interview people, map what they feel, suggest solutions and draw a prototype. <a href="project-1.html">See the project guide, one part per page →</a>'],
     ['Are there exams in this course?','No written exams. You are assessed on two projects, a presentation and two activities.'],
     ['How do we register our team?','The registration link will be on the <a href="project-1.html#s2">project guide</a> as soon as your professor shares it.'],

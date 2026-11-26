@@ -82,7 +82,7 @@ const CHECK=[
   ['Section 5','Competitor table, positioning map and positioning statement (Weeks 15–16)'],
   ['Section 6','Main SDG and target; people, planet, profit with evidence'],
   ['References','Every source in the text listed in APA style'],
-  ['Submit','One file per team on Moodle by Thursday 17 December, 23:59']];
+  ['Submit','One file per team on Moodle by Tuesday 8 December, 23:59']];
 function checklist(el){
   const key='ent141-w16-check'; let st; try{st=JSON.parse(store.get(key)||'null')}catch(e){} if(!st) st=CHECK.map(()=>0);
   el.innerHTML=`<div class="chk">${CHECK.map(([s,t],i)=>`<label><input type="checkbox" data-i="${i}" ${st[i]?'checked':''}><span><b>${s}</b> · ${t}</span></label>`).join('')}<div class="meter" aria-hidden="true"><i></i></div><div class="feedback" id="ck-o"></div></div>`;
@@ -155,7 +155,7 @@ Lecture.mount({
     fig:{label:`Project 2 checklist · saves in your browser`, build:checklist} },
 
   { nav:'Think about it', title:'Think about it', kind:'review', minutes:10,
-    narration:[`Discuss with your team. There is no single right answer.`,`<b>Next:</b> finish and submit Project 2 by Thursday 17 December, 23:59, on Moodle.<br><a class="btn" href="project-2.html">Project 2 builder →</a>`],
+    narration:[`Discuss with your team. There is no single right answer.`,`<b>Next:</b> Project 2 was due Tuesday 8 December, 23:59, on Moodle.<br><a class="btn" href="project-2.html">Project 2 builder →</a>`],
     fig:{label:`Reflection`, html:reflect([`How did your idea change from section 1 to section 5?`,`Which evidence in your report would convince a sceptical investor?`,`If you continued this venture next semester, what would you test first?`],`In one sentence: why would your customer choose you over “do nothing”?`)} },
   ]
 });
